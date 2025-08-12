@@ -2,13 +2,18 @@
   "name": "tsumiki",
   "private": false,
   "version": "0.0.6",
-  "description": "A CLI tool for install tsumiki commands",
+  "description": "AI-driven development framework providing command templates for Claude Code from requirements to implementation",
   "keywords": [
     "cli",
     "tsumiki",
     "claude",
     "claudecode",
-    "ai"
+    "ai",
+    "tdd",
+    "aitdd",
+    "test-driven-development",
+    "requirements",
+    "automation"
   ],
   "homepage": "https://github.com/classmethod/tsumiki#readme",
   "bugs": {

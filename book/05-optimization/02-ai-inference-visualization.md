@@ -1,221 +1,221 @@
-# 5.2 AI推論の可視化技術
+# 5.2 AI Inference Visualization Techniques
 
-## はじめに
+## Introduction
 
-AI生成コードの品質管理において最も重要なのは、AIがどの部分を「推測」したかを明確に把握することです。信号機システムを用いたAI推論の可視化技術により、効率的なレビューと高い品質保証を実現できます。
+The most important aspect of AI-generated code quality management is clearly understanding which parts AI has "inferred." AI inference visualization techniques using the traffic light system enable efficient reviews and high-quality assurance.
 
-## 信号機システムの理論的背景
+## Theoretical Background of the Traffic Light System
 
-### 課題の特定
+### Problem Identification
 
-AI生成コードには以下の特性があります：
+AI-generated code has the following characteristics:
 
-- **自動補完の広範囲性**: AIは明示されていない部分も自動的に補完
-- **それっぽさの罠**: 生成内容が妥当に見えるが、実際の意図と異なる場合がある
-- **推測根拠の不明確性**: どの情報に基づいて生成されたかが不明
+- **Extensive Auto-completion**: AI automatically fills in parts that are not explicitly specified
+- **The Plausibility Trap**: Generated content may appear reasonable but differ from actual intent
+- **Unclear Inference Basis**: It's unclear what information the generation was based on
 
-### 解決アプローチ
+### Solution Approach
 
-信号機システムは、AI生成内容を以下の基準で分類し、レビューの優先度を明確化します：
+The traffic light system classifies AI-generated content based on the following criteria and clarifies review priorities:
 
 ```
-🟢 青信号 → 🟡 黄信号 → 🔴 赤信号
-  安全      注意       危険
+🟢 Green Light → 🟡 Yellow Light → 🔴 Red Light
+    Safe           Caution         Danger
 ```
 
-## 信号機システムの詳細定義
+## Detailed Definition of the Traffic Light System
 
-### 🟢 青信号（高確信度・安全）
+### 🟢 Green Light (High Confidence・Safe)
 
-**定義：** 参照した元ファイルから明確に推測できる内容
+**Definition:** Content that can be clearly inferred from referenced source files
 
-**特徴：**
-- 元の指示や仕様書に明記されている内容に基づく生成
-- 既存コードのパターンに従った実装
-- 明確な根拠がある実装判断
+**Characteristics:**
+- Generated based on content explicitly stated in original instructions or specifications
+- Implementation following existing code patterns
+- Implementation decisions with clear rationale
 
-**具体例：**
+**Example:**
 ```javascript
-// 仕様書に「ユーザーIDは必須」と明記されている場合
+// When specification states "User ID is required"
 function validateUser(userId) {
-  if (!userId) {  // 🟢 仕様書から明確に導出
+  if (!userId) {  // 🟢 Clearly derived from specification
     throw new Error('User ID is required');
   }
 }
 ```
 
-**レビュー優先度：** 低
-**確認ポイント：** 実装の正確性、パフォーマンス影響
+**Review Priority:** Low
+**Check Points:** Implementation accuracy, performance impact
 
-### 🟡 黄信号（中確信度・注意）
+### 🟡 Yellow Light (Medium Confidence・Caution)
 
-**定義：** 参照した元ファイルにはないが、妥当だと思われる内容
+**Definition:** Content not in referenced source files but appears reasonable
 
-**特徴：**
-- AIの合理的な推測による補完
-- 一般的なベストプラクティスに基づく実装
-- ドメイン知識を活用した推論
+**Characteristics:**
+- Completion through AI's reasonable speculation
+- Implementation based on general best practices
+- Inference utilizing domain knowledge
 
-**具体例：**
+**Example:**
 ```javascript
-// 仕様書に詳細がない場合のエラーハンドリング
+// Error handling when specification lacks details
 function processData(data) {
   try {
     return transform(data);
-  } catch (error) {  // 🟡 一般的だが確認が必要
+  } catch (error) {  // 🟡 Common but needs verification
     console.error('Data processing failed:', error);
     return null;
   }
 }
 ```
 
-**レビュー優先度：** 高
-**確認ポイント：** 推測の妥当性、ビジネス要件との整合性
+**Review Priority:** High
+**Check Points:** Validity of speculation, alignment with business requirements
 
-### 🔴 赤信号（要判断・危険）
+### 🔴 Red Light (Requires Judgment・Danger)
 
-**定義：** 参照した元ファイルになく、直接推測もできない内容
+**Definition:** Content not in referenced source files and not directly inferable
 
-**特徴：**
-- AIの独自判断による生成
-- 組織固有の慣習やルールの想定
-- 明確な根拠のない実装選択
+**Characteristics:**
+- Generated through AI's independent judgment
+- Assumptions about organization-specific customs or rules
+- Implementation choices without clear rationale
 
-**具体例：**
+**Example:**
 ```javascript
-// 組織のログ形式について情報がない場合
+// When there's no information about organization's log format
 function logUserAction(action) {
-  // 🔴 ログ形式は組織固有、要確認
+  // 🔴 Log format is organization-specific, requires verification
   logger.info(`[AUDIT] User performed: ${action} at ${new Date().toISOString()}`);
 }
 ```
 
-**レビュー優先度：** 最高
-**確認ポイント：** 組織ルールとの整合性、セキュリティ影響
+**Review Priority:** Highest
+**Check Points:** Alignment with organizational rules, security impact
 
-## 実装方法とTODOファイル形式
+## Implementation Methods and TODO File Format
 
-### 標準TODOファイル形式
+### Standard TODO File Format
 
 ```markdown
-## [ステップ名]結果TODO
+## [Step Name] Results TODO
 
-### 🟢 高確信度項目
-- [ ] [utils.js](./src/utils.js) の型定義が仕様書と一致することを確認
-- [ ] [validation.js](./src/validation.js) の必須項目チェック実装の確認
+### 🟢 High Confidence Items
+- [ ] [utils.js](./src/utils.js) Verify type definitions match specification
+- [ ] [validation.js](./src/validation.js) Confirm required field check implementation
 
-### 🟡 中確信度項目
-- [ ] [error-handler.js](./src/error-handler.js) のエラーレスポンス形式の妥当性確認
-- [ ] [config.js](./src/config.js) のデフォルト値設定の組織ポリシー適合性
+### 🟡 Medium Confidence Items
+- [ ] [error-handler.js](./src/error-handler.js) Verify validity of error response format
+- [ ] [config.js](./src/config.js) Check default value settings for organizational policy compliance
 
-### 🔴 要判断項目
-- [ ] 詳細確認: [logger.js](./src/logger.js) のログ出力形式が組織標準に準拠
-- [ ] 詳細確認: [auth.js](./src/auth.js) のセッション管理方式の選択根拠
+### 🔴 Requires Judgment Items
+- [ ] Detailed verification: [logger.js](./src/logger.js) Log output format compliance with organizational standards
+- [ ] Detailed verification: [auth.js](./src/auth.js) Rationale for session management approach selection
 ```
 
-### プロンプトでの指示方法
+### Instruction Methods in Prompts
 
-**基本指示テンプレート：**
+**Basic Instruction Template:**
 ```markdown
-## AI推論可視化指示
+## AI Inference Visualization Instructions
 
-以下の作業を実行し、生成内容を信号機システムで分類してください：
+Please execute the following task and classify generated content using the traffic light system:
 
-**作業内容：**
-[具体的なタスク内容]
+**Task Content:**
+[Specific task content]
 
-**分類基準：**
-- 🟢 青信号：参照ファイル（[ファイル名]）から明確に導出可能
-- 🟡 黄信号：合理的推測だが参照ファイルに明記なし
-- 🔴 赤信号：独自判断による生成（組織固有の内容等）
+**Classification Criteria:**
+- 🟢 Green Light: Clearly derivable from reference files ([file names])
+- 🟡 Yellow Light: Reasonable speculation but not explicitly stated in reference files
+- 🔴 Red Light: Generated through independent judgment (organization-specific content etc.)
 
-**出力ファイル：** `./todos/[ステップ名]-inference-check.md`
+**Output File:** `./todos/[step-name]-inference-check.md`
 
-**出力フォーマット：**
-各生成項目について信号機マークを付与し、TODO形式でチェック項目を作成
+**Output Format:**
+Add traffic light marks to each generated item and create check items in TODO format
 ```
 
-### 参照元ファイルの管理方法
+### Reference Source File Management
 
-**ファイル関係性の記録：**
+**Recording File Relationships:**
 ```markdown
-## 参照ファイル管理
+## Reference File Management
 
-**主要参照（Primary References）：**
-- [`requirements.md`](./docs/requirements.md) - 基本要件定義
-- [`api-spec.yaml`](./docs/api-spec.yaml) - API仕様
+**Primary References:**
+- [`requirements.md`](./docs/requirements.md) - Basic requirements definition
+- [`api-spec.yaml`](./docs/api-spec.yaml) - API specification
 
-**補助参照（Secondary References）：**
-- [`existing-code/`](./src/existing/) - 既存実装パターン
-- [`config-samples/`](./config/) - 設定ファイル例
+**Secondary References:**
+- [`existing-code/`](./src/existing/) - Existing implementation patterns
+- [`config-samples/`](./config/) - Configuration file examples
 
-**外部参照（External References）：**
-- 技術ドキュメント（フレームワーク公式）
-- 業界標準（RFC、W3C等）
+**External References:**
+- Technical documentation (framework official)
+- Industry standards (RFC, W3C, etc.)
 
-**推論の根拠追跡：**
-- 🟢項目 → 主要参照に明記
-- 🟡項目 → 補助参照＋一般知識
-- 🔴項目 → 根拠不明・独自判断
+**Inference Basis Tracking:**
+- 🟢 items → Explicitly stated in primary references
+- 🟡 items → Secondary references + general knowledge
+- 🔴 items → Unclear basis・independent judgment
 ```
 
-## チェック優先度の設定
+## Setting Check Priorities
 
-### 優先度マトリックス
+### Priority Matrix
 
-| 信号 | 影響度・高 | 影響度・中 | 影響度・低 |
-|------|-----------|-----------|-----------|
-| 🔴 赤信号 | **最優先** | 高優先 | 中優先 |
-| 🟡 黄信号 | 高優先 | 中優先 | 低優先 |
-| 🟢 青信号 | 中優先 | 低優先 | **後回し** |
+| Signal | High Impact | Medium Impact | Low Impact |
+|--------|-------------|---------------|------------|
+| 🔴 Red Signal | **Top Priority** | High Priority | Medium Priority |
+| 🟡 Yellow Signal | High Priority | Medium Priority | Low Priority |
+| 🟢 Green Signal | Medium Priority | Low Priority | **Postpone** |
 
-### 影響度評価基準
+### Impact Assessment Criteria
 
-**影響度・高：**
-- セキュリティに関わる実装
-- データの整合性に影響
-- システム全体の動作に影響
+**High Impact:**
+- Security-related implementation
+- Data integrity impact
+- System-wide operation impact
 
-**影響度・中：**
-- 特定機能の動作に影響
-- ユーザー体験に影響
-- パフォーマンスに影響
+**Medium Impact:**
+- Specific functionality operation impact
+- User experience impact
+- Performance impact
 
-**影響度・低：**
-- ログ出力やコメント
-- 内部的な変数名
-- 補助的な機能
+**Low Impact:**
+- Log output and comments
+- Internal variable names
+- Auxiliary functionality
 
-### 実践的なチェック順序
+### Practical Check Order
 
-1. **🔴×影響度・高** - 即座に確認・修正
-2. **🔴×影響度・中** および **🟡×影響度・高** - 次回作業開始前に確認
-3. **その他の🔴項目** - 実装完了前に必ず確認
-4. **🟡項目** - レビュー時に確認
-5. **🟢項目** - 最終チェック時に確認
+1. **🔴×High Impact** - Immediate verification and correction
+2. **🔴×Medium Impact** and **🟡×High Impact** - Verify before next work session
+3. **Other 🔴 items** - Must verify before implementation completion
+4. **🟡 items** - Verify during review
+5. **🟢 items** - Verify during final check
 
-## 実際の運用例とケーススタディ
+## Practical Examples and Case Studies
 
-### ケーススタディ1: REST API実装
+### Case Study 1: REST API Implementation
 
-**シナリオ：** ユーザー管理APIの実装
-**参照ファイル：** `user-api-spec.yaml`, `existing-user-model.js`
+**Scenario:** User management API implementation
+**Reference Files:** `user-api-spec.yaml`, `existing-user-model.js`
 
-**AI生成結果の分類：**
+**AI Generation Result Classification:**
 
 ```javascript
-// 🟢 API仕様書に明記されたエンドポイント
+// 🟢 Endpoint specified in API specification
 app.post('/api/users', async (req, res) => {
   
-  // 🟡 一般的なバリデーションだが詳細は仕様書になし
+  // 🟡 Common validation but details not in specification
   if (!req.body.email || !req.body.password) {
     return res.status(400).json({ error: 'Email and password required' });
   }
   
-  // 🔴 ハッシュ化アルゴリズムが組織固有ポリシーに依存
+  // 🔴 Hashing algorithm depends on organization-specific policy
   const hashedPassword = bcrypt.hashSync(req.body.password, 12);
   
-  // 🟢 既存モデルのパターンに従った実装
+  // 🟢 Implementation following existing model patterns
   const user = new User({
     email: req.body.email,
     password: hashedPassword
@@ -223,282 +223,282 @@ app.post('/api/users', async (req, res) => {
 });
 ```
 
-**生成されたTODO：**
+**Generated TODO:**
 ```markdown
-## API実装結果TODO
+## API Implementation Results TODO
 
-### 🟢 高確信度項目
-- [ ] [user-controller.js](./src/controllers/user.js) のエンドポイント定義が仕様書と一致
-- [ ] [user-model.js](./src/models/user.js) の既存パターン踏襲の確認
+### 🟢 High Confidence Items
+- [ ] [user-controller.js](./src/controllers/user.js) Endpoint definition matches specification
+- [ ] [user-model.js](./src/models/user.js) Confirm existing pattern adherence
 
-### 🟡 中確信度項目
-- [ ] [validation.js](./src/middleware/validation.js) のエラーメッセージ形式の妥当性
-- [ ] [user-controller.js](./src/controllers/user.js) のステータスコード選択の確認
+### 🟡 Medium Confidence Items
+- [ ] [validation.js](./src/middleware/validation.js) Error message format validity
+- [ ] [user-controller.js](./src/controllers/user.js) Status code selection verification
 
-### 🔴 要判断項目
-- [ ] 詳細確認: [auth.js](./src/utils/auth.js) のbcryptソルトラウンド数が組織ポリシーに準拠
+### 🔴 Requires Judgment Items
+- [ ] Detailed verification: [auth.js](./src/utils/auth.js) bcrypt salt rounds comply with organizational policy
 ```
 
-### ケーススタディ2: テストケース生成
+### Case Study 2: Test Case Generation
 
-**シナリオ：** 上記APIのテストケース作成
-**参照ファイル：** `user-api-spec.yaml`, `existing-test-patterns.js`
+**Scenario:** Creating test cases for the above API
+**Reference Files:** `user-api-spec.yaml`, `existing-test-patterns.js`
 
-**分類結果：**
+**Classification Results:**
 ```javascript
 describe('User API', () => {
-  // 🟢 仕様書に明記されたテストケース
+  // 🟢 Test case specified in specification
   it('should create user with valid email and password', async () => {
     const response = await request(app)
       .post('/api/users')
       .send({ email: 'test@example.com', password: 'password123' });
     
-    expect(response.status).toBe(201);  // 🟢 仕様書通り
+    expect(response.status).toBe(201);  // 🟢 As per specification
   });
   
-  // 🟡 一般的なエッジケース（仕様書に明記なし）
+  // 🟡 Common edge case (not specified in specification)
   it('should reject invalid email format', async () => {
     const response = await request(app)
       .post('/api/users')
       .send({ email: 'invalid-email', password: 'password123' });
     
-    expect(response.status).toBe(400);  // 🟡 推測による
+    expect(response.status).toBe(400);  // 🟡 Based on speculation
   });
   
-  // 🔴 組織固有のセキュリティ要件による推測
+  // 🔴 Speculation based on organization-specific security requirements
   it('should enforce password complexity requirements', async () => {
     const response = await request(app)
       .post('/api/users')
       .send({ email: 'test@example.com', password: '123' });
     
-    expect(response.status).toBe(400);  // 🔴 組織ポリシー依存
+    expect(response.status).toBe(400);  // 🔴 Organization policy dependent
   });
 });
 ```
 
-## 効果測定と改善方法
+## Effect Measurement and Improvement Methods
 
-### 効果測定指標
+### Effect Measurement Indicators
 
-**定量指標：**
-- レビュー時間の短縮率
-- バグ発見率の向上
-- 修正回数の減少
+**Quantitative Indicators:**
+- Review time reduction rate
+- Bug discovery rate improvement
+- Reduction in number of corrections
 
-**定性指標：**
-- レビューの効率性向上
-- 重要な問題の見落とし防止
-- 開発者の安心感向上
+**Qualitative Indicators:**
+- Review efficiency improvement
+- Prevention of overlooking important issues
+- Improved developer confidence
 
-### 運用データの例
+### Operational Data Examples
 
 ```markdown
-## 信号機システム導入効果（1ヶ月間）
+## Traffic Light System Implementation Effects (1 Month)
 
-**従来のレビュー：**
-- 平均レビュー時間：45分/機能
-- バグ発見率：約60%
-- レビューでの見落とし：月3-4件
+**Traditional Review:**
+- Average review time: 45 minutes/feature
+- Bug discovery rate: ~60%
+- Review oversights: 3-4 cases/month
 
-**信号機システム導入後：**
-- 平均レビュー時間：25分/機能（44%短縮）
-- バグ発見率：約85%（25%向上）
-- レビューでの見落とし：月1件以下
+**After Traffic Light System Implementation:**
+- Average review time: 25 minutes/feature (44% reduction)
+- Bug discovery rate: ~85% (25% improvement)
+- Review oversights: 1 case or less/month
 
-**🔴項目の典型的な問題：**
-- セキュリティ関連：40%
-- 組織ポリシー違反：35%
-- 設定・環境依存：25%
+**Typical Problems in 🔴 Items:**
+- Security-related: 40%
+- Organizational policy violations: 35%
+- Configuration/environment dependent: 25%
 ```
 
-### 継続的改善のアプローチ
+### Continuous Improvement Approach
 
-**1. 分類精度の向上：**
+**1. Classification Accuracy Improvement:**
 ```markdown
-## 分類基準の改善ログ
+## Classification Criteria Improvement Log
 
-**Week 1-2：**
-- 問題：ログ形式の分類が曖昧
-- 改善：組織固有項目のチェックリスト作成
+**Week 1-2:**
+- Problem: Ambiguous log format classification
+- Improvement: Created organization-specific item checklist
 
-**Week 3-4：**
-- 問題：エラーハンドリングの分類が不安定
-- 改善：エラーハンドリングパターンの明文化
+**Week 3-4:**
+- Problem: Unstable error handling classification
+- Improvement: Documented error handling patterns
 
-**Month 2：**
-- 問題：新技術スタックでの分類困難
-- 改善：技術スタック別ガイドライン作成
+**Month 2:**
+- Problem: Classification difficulties with new technology stack
+- Improvement: Created technology stack-specific guidelines
 ```
 
-**2. プロンプト最適化：**
+**2. Prompt Optimization:**
 ```markdown
-## プロンプト改善サイクル
+## Prompt Improvement Cycle
 
-**改善前の課題：**
-- 🔴項目の検出率が70%程度
-- 分類に一貫性がない
+**Pre-improvement Issues:**
+- 🔴 item detection rate around 70%
+- Inconsistent classification
 
-**改善内容：**
-- 組織固有項目の明確なリスト提供
-- 判断基準の具体例を豊富に追加
+**Improvement Content:**
+- Provided clear list of organization-specific items
+- Added abundant specific examples of judgment criteria
 
-**改善後の効果：**
-- 🔴項目の検出率が90%以上に向上
-- 分類の一貫性が大幅に改善
+**Post-improvement Effects:**
+- 🔴 item detection rate improved to 90%+
+- Significantly improved classification consistency
 ```
 
-## 実践的な導入ステップ
+## Practical Implementation Steps
 
-### Step 1: 基本システムの構築
+### Step 1: Basic System Construction
 
 ```bash
-# プロジェクト構造の準備
+# Project structure preparation
 mkdir -p todos
 mkdir -p docs/inference-guides
 
-# 基本テンプレートの作成
+# Basic template creation
 cat > docs/inference-guides/classification-template.md << 'EOF'
-## AI推論分類テンプレート
+## AI Inference Classification Template
 
-### 🟢 青信号の判定基準
-- 参照ファイル「[ファイル名]」に明記されている内容
-- 既存コードの確立されたパターンに従う実装
+### 🟢 Green Light Judgment Criteria
+- Content explicitly stated in reference file "[file name]"
+- Implementation following established patterns in existing code
 
-### 🟡 黄信号の判定基準  
-- 一般的なベストプラクティスに基づく実装
-- 技術的に妥当だが参照ファイルに明記なし
+### 🟡 Yellow Light Judgment Criteria  
+- Implementation based on general best practices
+- Technically valid but not explicitly stated in reference files
 
-### 🔴 赤信号の判定基準
-- 組織固有のポリシーや慣習に依存
-- 明確な根拠なしの独自判断
+### 🔴 Red Light Judgment Criteria
+- Dependent on organization-specific policies or customs
+- Independent judgment without clear rationale
 EOF
 ```
 
-### Step 2: 組織固有ルールの明文化
+### Step 2: Documenting Organization-Specific Rules
 
 ```markdown
-## 組織固有チェックポイント
+## Organization-Specific Check Points
 
-**セキュリティ関連：**
-- [ ] パスワードハッシュ化アルゴリズムと強度
-- [ ] セッション管理方式
-- [ ] API認証方式
+**Security-Related:**
+- [ ] Password hashing algorithm and strength
+- [ ] Session management approach
+- [ ] API authentication method
 
-**ログ・監査関連：**
-- [ ] ログ出力形式とレベル
-- [ ] 監査ログの出力項目
-- [ ] ログ保存期間とローテーション
+**Logging and Audit-Related:**
+- [ ] Log output format and levels
+- [ ] Audit log output items
+- [ ] Log retention period and rotation
 
-**コーディング規約：**
-- [ ] 命名規則（変数、関数、クラス）
-- [ ] エラーハンドリングパターン
-- [ ] コメント記述ルール
+**Coding Conventions:**
+- [ ] Naming conventions (variables, functions, classes)
+- [ ] Error handling patterns
+- [ ] Comment description rules
 ```
 
-### Step 3: チーム運用の確立
+### Step 3: Establishing Team Operations
 
 ```markdown
-## チーム運用ルール
+## Team Operation Rules
 
-**分類作業の担当：**
-- AI実行者が初期分類
-- レビューアが分類の妥当性確認
+**Classification Work Assignment:**
+- AI executor performs initial classification
+- Reviewer confirms classification validity
 
-**チェック作業の分担：**
-- 🔴項目：シニアエンジニアが確認
-- 🟡項目：チーム内でペアレビュー  
-- 🟢項目：自動テスト＋軽微な確認
+**Check Work Distribution:**
+- 🔴 items: Senior engineers verify
+- 🟡 items: Team pair review  
+- 🟢 items: Automated tests + minor verification
 
-**知見の蓄積：**
-- 週1回の分類基準見直し会議
-- 誤分類パターンの共有
-- 改善事例の文書化
+**Knowledge Accumulation:**
+- Weekly classification criteria review meetings
+- Sharing misclassification patterns
+- Documenting improvement cases
 ```
 
-## トラブルシューティング
+## Troubleshooting
 
-### よくある問題と対処法
+### Common Problems and Solutions
 
-**問題1: 分類が一貫しない**
+**Problem 1: Inconsistent Classification**
 
 ```markdown
-**症状：** 同じような内容でも分類結果が異なる
-**原因：** 分類基準が曖昧、プロンプトの指示が不明確
-**対処法：**
-1. 組織固有項目のより具体的なリスト作成
-2. 過去の分類例をプロンプトに含める
-3. 判断迷い事項の記録と基準化
+**Symptoms:** Same type of content gets different classification results
+**Causes:** Ambiguous classification criteria, unclear prompt instructions
+**Solutions:**
+1. Create more specific lists of organization-specific items
+2. Include past classification examples in prompts
+3. Record and standardize uncertain judgment items
 ```
 
-**問題2: 🔴項目の見逃し**
+**Problem 2: Missing 🔴 Items**
 
 ```markdown
-**症状：** 重要な組織固有項目が🟡や🟢に分類される
-**原因：** AIが組織のコンテキストを理解していない
-**対処法：**
-1. 組織固有項目の明示的なリスト提供
-2. 「疑わしい場合は🔴に分類」の原則設定
-3. レビューアによる分類妥当性チェック
+**Symptoms:** Important organization-specific items classified as 🟡 or 🟢
+**Causes:** AI doesn't understand organizational context
+**Solutions:**
+1. Provide explicit list of organization-specific items
+2. Set principle "classify as 🔴 when in doubt"
+3. Reviewer checks classification validity
 ```
 
-**問題3: TODO項目が多すぎる**
+**Problem 3: Too Many TODO Items**
 
 ```markdown
-**症状：** 生成されるTODO項目数が実行可能な範囲を超える
-**原因：** 分類が細かすぎる、影響度評価が甘い
-**対処法：**
-1. 類似項目のグルーピング
-2. 影響度評価の厳格化
-3. 「重要度×緊急度」マトリックスの導入
+**Symptoms:** Generated TODO items exceed executable scope
+**Causes:** Classification too detailed, lenient impact assessment
+**Solutions:**
+1. Group similar items
+2. Stricter impact assessment
+3. Introduce "importance × urgency" matrix
 ```
 
-## 実践演習
+## Practical Exercises
 
-### 演習1: 分類基準の作成
+### Exercise 1: Creating Classification Criteria
 
-以下のコードスニペットを信号機システムで分類してください：
+Please classify the following code snippet using the traffic light system:
 
 ```javascript
 function authenticateUser(username, password) {
-  // ケース1: ユーザー存在チェック
+  // Case 1: User existence check
   const user = await User.findOne({ username });
   if (!user) {
     return { success: false, message: 'User not found' };
   }
   
-  // ケース2: パスワード照合
+  // Case 2: Password verification
   const isValid = await bcrypt.compare(password, user.hashedPassword);
   if (!isValid) {
     return { success: false, message: 'Invalid password' };
   }
   
-  // ケース3: JWTトークン生成
+  // Case 3: JWT token generation
   const token = jwt.sign(
     { userId: user.id, role: user.role },
     process.env.JWT_SECRET,
     { expiresIn: '24h' }
   );
   
-  // ケース4: ログ出力
+  // Case 4: Log output
   console.log(`User ${username} authenticated successfully at ${new Date().toISOString()}`);
   
   return { success: true, token };
 }
 ```
 
-**参照ファイル：** `auth-spec.md`（基本認証フローのみ記載）
+**Reference File:** `auth-spec.md` (only basic authentication flow documented)
 
-### 演習2: TODO項目の優先度設定
+### Exercise 2: Setting TODO Item Priorities
 
-上記の分類結果に基づいて、TODO項目を優先度順に並べてください。
+Based on the above classification results, please arrange TODO items in priority order.
 
-## まとめ
+## Summary
 
-AI推論の可視化技術により、以下の効果を実現できます：
+AI inference visualization techniques enable the following effects:
 
-1. **効率的なレビュー**: 重要な箇所に集中した品質チェック
-2. **リスク軽減**: 高リスクな推測部分の確実な発見
-3. **知見蓄積**: 組織固有の判断基準の明文化と共有
-4. **継続改善**: データに基づく分類基準とプロンプトの最適化
+1. **Efficient Reviews**: Quality checks focused on important areas
+2. **Risk Reduction**: Reliable discovery of high-risk speculation areas
+3. **Knowledge Accumulation**: Documentation and sharing of organization-specific judgment criteria
+4. **Continuous Improvement**: Data-driven optimization of classification criteria and prompts
 
-信号機システムは、AITDDにおけるヒューマンファクターとAI支援のバランスを取る重要な技術です。次のセクションでは、これらの技術を活用した継続的改善とプロンプト最適化について学習します。
+The traffic light system is an important technique for balancing human factors and AI assistance in AITDD. The next section covers continuous improvement and prompt optimization utilizing these techniques.

@@ -1,74 +1,74 @@
-# Tsumiki - AI駆動開発支援フレームワーク
+# Tsumiki - AI-Driven Development Support Framework
 
-TsumikiはAI駆動開発のためのフレームワークです。要件定義から実装まで、AIを活用した効率的な開発プロセスを提供します。
+Tsumiki is a framework for AI-driven development that provides an efficient development process from requirements definition to implementation using AI.
 
-## インストール
+## Installation
 
-Tsumikiを使用するには、次のnpxコマンドでインストールしてください：
+To use Tsumiki, install it with the following npx command:
 
 ```bash
 npx tsumiki install
 ```
 
-このコマンドを実行すると、`.claude/commands/` にTsumikiのClaude Codeスラッシュコマンドがインストールされます。
+This command installs Tsumiki's Claude Code slash commands to `.claude/commands/`.
 
-## 概要
+## Overview
 
-Tsumikiは以下の2つのコマンドで構成されています：
+Tsumiki consists of two main command sets:
 
-- **kairo** - 要件定義から実装までの包括的な開発フロー
-- **tdd** - テスト駆動開発（TDD）の個別実行
+- **kairo** - Comprehensive development flow from requirements to implementation
+- **tdd** - Individual Test-Driven Development (TDD) execution
 
-### Kairoコマンド
+### Kairo Commands
 
-Kairoは要件定義から実装までの開発プロセスを自動化・支援します。以下の開発フローを支援します：
+Kairo automates and supports the development process from requirements definition to implementation. It supports the following development flow:
 
-1. **要件定義** - 概要から詳細な要件定義書を生成
-2. **設計** - 技術設計文書を自動生成
-3. **タスク分割** - 実装タスクを適切に分割・順序付け
-4. **TDD実装** - テスト駆動開発による品質の高い実装
+1. **Requirements Definition** - Generate detailed requirements documents from overview
+2. **Design** - Auto-generate technical design documents
+3. **Task Breakdown** - Properly divide and sequence implementation tasks
+4. **TDD Implementation** - High-quality implementation through test-driven development
 
-## 利用可能なコマンド
+## Available Commands
 
-### Kairoコマンド（包括的開発フロー）
-- `kairo-requirements` - 要件定義
-- `kairo-design` - 設計文書生成
-- `kairo-tasks` - タスク分割
-- `kairo-implement` - 実装実行
+### Kairo Commands (Comprehensive Development Flow)
+- `kairo-requirements` - Requirements definition
+- `kairo-design` - Design document generation
+- `kairo-tasks` - Task breakdown
+- `kairo-implement` - Implementation execution
 
-### TDDコマンド（個別実行）
-- `tdd-requirements` - TDD要件定義
-- `tdd-testcases` - テストケース作成
-- `tdd-red` - テスト実装（Red）
-- `tdd-green` - 最小実装（Green）
-- `tdd-refactor` - リファクタリング
-- `tdd-verify-complete` - TDD完了確認
+### TDD Commands (Individual Execution)
+- `tdd-requirements` - TDD requirements definition
+- `tdd-testcases` - Test case creation
+- `tdd-red` - Test implementation (Red)
+- `tdd-green` - Minimal implementation (Green)
+- `tdd-refactor` - Refactoring
+- `tdd-verify-complete` - TDD completion verification
 
-### リバースエンジニアリングコマンド
-- `rev-tasks` - 既存コードからタスク一覧を逆生成
-- `rev-design` - 既存コードから設計文書を逆生成
-- `rev-specs` - 既存コードからテスト仕様書を逆生成
-- `rev-requirements` - 既存コードから要件定義書を逆生成
+### Reverse Engineering Commands
+- `rev-tasks` - Generate task list from existing code
+- `rev-design` - Generate design documents from existing code
+- `rev-specs` - Generate test specifications from existing code
+- `rev-requirements` - Generate requirements documents from existing code
 
-## クイックスタート
+## Quick Start
 
-### 包括的な開発フロー
+### Comprehensive Development Flow
 
 ```bash
-# 1. 要件定義
+# 1. Requirements definition
 /kairo-requirements
 
-# 2. 設計
+# 2. Design
 /kairo-design
 
-# 3. タスク分割
+# 3. Task breakdown
 /kairo-tasks
 
-# 4. 実装
+# 4. Implementation
 /kairo-implement
 ```
 
-### 個別TDDプロセス
+### Individual TDD Process
 
 ```bash
 /tdd-requirements
@@ -79,29 +79,29 @@ Kairoは要件定義から実装までの開発プロセスを自動化・支援
 /tdd-verify-complete
 ```
 
-### リバースエンジニアリング
+### Reverse Engineering
 
 ```bash
-# 1. 既存コードからタスク構造を分析
+# 1. Analyze task structure from existing code
 /rev-tasks
 
-# 2. 設計文書の逆生成（タスク分析後推奨）
+# 2. Generate design documents (recommended after task analysis)
 /rev-design
 
-# 3. テスト仕様書の逆生成（設計文書後推奨）
+# 3. Generate test specifications (recommended after design documents)
 /rev-specs
 
-# 4. 要件定義書の逆生成（全分析完了後推奨）
+# 4. Generate requirements documents (recommended after complete analysis)
 /rev-requirements
 ```
 
-### 開発環境のクリーンアップ
+### Development Environment Cleanup
 
 ```bash
-# 開発環境をクリーンアップ
+# Clean up development environment
 /clear
 ```
 
-## 詳細なマニュアル
+## Detailed Manual
 
-使用方法の詳細、ディレクトリ構造、ワークフロー例、トラブルシューティングについては [MANUAL.md](./MANUAL.md) を参照してください。
+For detailed usage, directory structure, workflow examples, and troubleshooting, see [MANUAL.md](./MANUAL.md).

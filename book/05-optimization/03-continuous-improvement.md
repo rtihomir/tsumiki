@@ -1,317 +1,317 @@
-# 5.3 継続的改善とプロンプト最適化
+# 5.3 Continuous Improvement and Prompt Optimization
 
-## はじめに
+## Introduction
 
-AITDDの成功は一度のプロンプト設計では達成できません。継続的な改善サイクルによってプロンプトを最適化し、組織の知見を蓄積することで、安定した高品質な開発を実現します。本章では、体系的な改善手法と実践的な最適化技術を学習します。
+AITDD success cannot be achieved through a single prompt design effort. By optimizing prompts through continuous improvement cycles and accumulating organizational knowledge, we achieve stable, high-quality development. This chapter covers systematic improvement methodologies and practical optimization techniques.
 
-## 改善サイクルの設計
+## Designing Improvement Cycles
 
-### 基本的な改善サイクル
+### Basic Improvement Cycle
 
 ```
-計画 → 実行 → 評価 → 改善 → 計画...
+Plan → Do → Check → Act → Plan...
 (Plan) (Do) (Check) (Act)
 ```
 
-**AITDDにおけるPDCAサイクル：**
+**PDCA Cycle in AITDD:**
 
-**Plan（計画）：**
-- プロンプトの改善目標設定
-- 評価指標の定義
-- 改善対象の特定
+**Plan:**
+- Setting prompt improvement goals
+- Defining evaluation metrics
+- Identifying improvement targets
 
-**Do（実行）：**
-- 修正されたプロンプトでの実行
-- データ収集の実施
-- 結果の記録
+**Do:**
+- Executing with modified prompts
+- Implementing data collection
+- Recording results
 
-**Check（評価）：**
-- 出力品質の測定
-- 効率性の評価
-- 問題点の分析
+**Check:**
+- Measuring output quality
+- Evaluating efficiency
+- Analyzing problems
 
-**Act（改善）：**
-- プロンプトの修正
-- ベストプラクティスの更新
-- 知見の文書化
+**Act:**
+- Modifying prompts
+- Updating best practices
+- Documenting insights
 
-### 改善の対象領域
+### Target Areas for Improvement
 
-**1. プロンプトの構造と内容**
-- 指示の明確性
-- 制約条件の適切性
-- 例示の効果性
+**1. Prompt Structure and Content**
+- Clarity of instructions
+- Appropriateness of constraints
+- Effectiveness of examples
 
-**2. 出力品質**
-- コードの正確性
-- 信号機分類の精度
-- TODO項目の適切性
+**2. Output Quality**
+- Code accuracy
+- Precision of traffic light classification
+- Appropriateness of TODO items
 
-**3. 効率性**
-- 実行時間の短縮
-- レビュー工数の削減
-- 修正回数の最小化
+**3. Efficiency**
+- Reducing execution time
+- Reducing review effort
+- Minimizing correction cycles
 
-## 評価指標の設定
+## Setting Evaluation Metrics
 
-### 定量的評価指標
+### Quantitative Evaluation Metrics
 
-**品質指標：**
+**Quality Metrics:**
 ```markdown
-## 品質測定項目
+## Quality Measurement Items
 
-**コード品質：**
-- テスト成功率：95%以上を目標
-- 静的解析エラー数：5件以下/1000行
-- セキュリティ脆弱性：重要度・高は0件
+**Code Quality:**
+- Test success rate: Target 95% or higher
+- Static analysis errors: 5 or fewer per 1000 lines
+- Security vulnerabilities: 0 high-severity issues
 
-**分類精度：**
-- 🔴項目検出率：90%以上
-- 🟡/🟢項目の適切性：85%以上
-- 分類の一貫性：95%以上
+**Classification Accuracy:**
+- 🔴 item detection rate: 90% or higher
+- 🟡/🟢 item appropriateness: 85% or higher
+- Classification consistency: 95% or higher
 
-**効率性：**
-- プロンプト実行時間：5分以内
-- レビュー時間：従来比50%削減
-- 修正イテレーション：平均2回以下
+**Efficiency:**
+- Prompt execution time: Within 5 minutes
+- Review time: 50% reduction from baseline
+- Correction iterations: Average 2 or fewer
 ```
 
-**効率性指標：**
+**Efficiency Metrics:**
 ```markdown
-## 効率測定項目
+## Efficiency Measurement Items
 
-**開発速度：**
-- 機能実装時間：従来比75%短縮
-- TDDサイクル完了時間：2時間以内
-- エラー修正時間：30分以内
+**Development Speed:**
+- Feature implementation time: 75% reduction from baseline
+- TDD cycle completion time: Within 2 hours
+- Error correction time: Within 30 minutes
 
-**工数削減：**
-- 総開発時間：プロジェクト従来比60%
-- レビュー工数：従来比50%削減
-- デバッグ時間：従来比70%削減
+**Effort Reduction:**
+- Total development time: 60% of baseline project
+- Review effort: 50% reduction from baseline
+- Debug time: 70% reduction from baseline
 ```
 
-### 定性的評価指標
+### Qualitative Evaluation Metrics
 
-**開発者体験：**
-- プロンプト作成の難易度
-- AI出力への信頼度
-- ストレス・疲労感の変化
+**Developer Experience:**
+- Difficulty of prompt creation
+- Trust in AI output
+- Changes in stress and fatigue
 
-**コード品質感：**
-- 可読性の向上
-- 保守性の向上
-- 拡張性の確保
+**Code Quality Perception:**
+- Improved readability
+- Improved maintainability
+- Ensured extensibility
 
-### 評価データの収集方法
+### Data Collection Methods
 
-**自動収集：**
+**Automated Collection:**
 ```bash
-# プロンプト実行ログの収集
+# Collecting prompt execution logs
 cat > scripts/collect-metrics.sh << 'EOF'
 #!/bin/bash
 
-# 実行時間の記録
+# Recording execution time
 echo "$(date): Starting prompt execution" >> logs/execution.log
 start_time=$(date +%s)
 
-# プロンプト実行
+# Executing prompt
 $1
 
-# 終了時間の記録
+# Recording end time
 end_time=$(date +%s)
 duration=$((end_time - start_time))
 echo "$(date): Execution completed in ${duration}s" >> logs/execution.log
 
-# 品質メトリクス収集
+# Collecting quality metrics
 npm test -- --reporter=json > logs/test-results.json
 eslint src/ --format=json > logs/lint-results.json
 EOF
 ```
 
-**手動収集：**
+**Manual Collection:**
 ```markdown
-## 週次振り返りテンプレート
+## Weekly Retrospective Template
 
-**実行したプロンプト数：** [数値]
-**成功率：** [パーセンテージ]
-**主要な問題：**
-- [問題1]
-- [問題2]
+**Number of prompts executed:** [Number]
+**Success rate:** [Percentage]
+**Major issues:**
+- [Issue 1]
+- [Issue 2]
 
-**改善すべき点：**
-- [改善点1]
-- [改善点2]
+**Areas for improvement:**
+- [Improvement 1]
+- [Improvement 2]
 
-**うまくいった点：**
-- [成功点1]
-- [成功点2]
+**What went well:**
+- [Success 1]
+- [Success 2]
 ```
 
-## プロンプトの評価方法
+## Prompt Evaluation Methods
 
-### 出力品質の多角的評価
+### Multi-dimensional Output Quality Evaluation
 
-**1. 機能的正確性評価**
+**1. Functional Accuracy Evaluation**
 ```javascript
-// 評価項目の例
+// Example evaluation criteria
 const evaluationCriteria = {
   functionality: {
-    requirements_coverage: 0.95,    // 要件カバレッジ
-    edge_case_handling: 0.85,       // エッジケース対応
-    error_handling: 0.90            // エラーハンドリング
+    requirements_coverage: 0.95,    // Requirements coverage
+    edge_case_handling: 0.85,       // Edge case handling
+    error_handling: 0.90            // Error handling
   },
   code_quality: {
-    readability: 0.88,              // 可読性
-    maintainability: 0.85,          // 保守性
-    performance: 0.80               // パフォーマンス
+    readability: 0.88,              // Readability
+    maintainability: 0.85,          // Maintainability
+    performance: 0.80               // Performance
   },
   inference_accuracy: {
-    green_precision: 0.92,          // 🟢の精度
-    yellow_recall: 0.88,            // 🟡の再現率
-    red_detection: 0.95             // 🔴の検出率
+    green_precision: 0.92,          // 🟢 precision
+    yellow_recall: 0.88,            // 🟡 recall
+    red_detection: 0.95             // 🔴 detection rate
   }
 };
 ```
 
-**2. 効率性評価**
+**2. Efficiency Evaluation**
 ```markdown
-## 効率性評価チェックリスト
+## Efficiency Evaluation Checklist
 
-**時間効率：**
-- [ ] プロンプト実行時間が目標内
-- [ ] レビュー時間が短縮されている
-- [ ] 修正サイクルが最小化されている
+**Time Efficiency:**
+- [ ] Prompt execution time within target
+- [ ] Review time reduced
+- [ ] Correction cycles minimized
 
-**工数効率：**
-- [ ] 総開発時間が短縮されている
-- [ ] 人的リソースが効率的に活用されている
-- [ ] 並行作業が可能になっている
+**Effort Efficiency:**
+- [ ] Total development time reduced
+- [ ] Human resources efficiently utilized
+- [ ] Parallel work enabled
 
-**品質効率：**
-- [ ] バグ発見率が向上している
-- [ ] 重要な問題の見逃しが減少
-- [ ] セキュリティ課題の早期発見
+**Quality Efficiency:**
+- [ ] Bug detection rate improved
+- [ ] Reduced oversight of critical issues
+- [ ] Early detection of security issues
 ```
 
-### A/Bテストの活用
+### Utilizing A/B Testing
 
-**プロンプトバリエーションテスト：**
+**Prompt Variation Testing:**
 ```markdown
-## A/Bテスト設計例
+## A/B Test Design Example
 
-**テスト対象：** テストケース生成プロンプト
-**仮説：** 具体例を多く含むプロンプトの方が適切なテストケースを生成
+**Test Target:** Test case generation prompt
+**Hypothesis:** Prompts with more concrete examples generate better test cases
 
-**バリエーションA（制御群）：**
+**Variation A (Control Group):**
 ```
-以下の仕様に基づいてテストケースを作成してください。
-[仕様内容]
-```
-
-**バリエーションB（実験群）：**
-```
-以下の仕様に基づいてテストケースを作成してください。
-[仕様内容]
-
-参考例：
-- 正常系：[具体例]
-- 異常系：[具体例]
-- 境界値：[具体例]
+Please create test cases based on the following specification.
+[Specification content]
 ```
 
-**評価項目：**
-- テストケース数の適切性
-- エッジケースのカバレッジ
-- 実行時間と品質のバランス
+**Variation B (Experimental Group):**
+```
+Please create test cases based on the following specification.
+[Specification content]
 
-**測定期間：** 2週間
-**サンプル数：** 各20回の実行
+Reference examples:
+- Normal case: [Concrete example]
+- Error case: [Concrete example]
+- Boundary value: [Concrete example]
 ```
 
-## 最適化の具体的手法
+**Evaluation Items:**
+- Appropriateness of test case count
+- Edge case coverage
+- Balance of execution time and quality
 
-### 1. プロンプト構造の最適化
+**Measurement Period:** 2 weeks
+**Sample Size:** 20 executions each
+```
 
-**Before（改善前）：**
+## Specific Optimization Techniques
+
+### 1. Prompt Structure Optimization
+
+**Before (Pre-improvement):**
 ```markdown
-以下の仕様を実装してください。
-[仕様内容]
-テストも作成してください。
+Please implement the following specification.
+[Specification content]
+Please also create tests.
 ```
 
-**After（改善後）：**
+**After (Post-improvement):**
 ```markdown
-## 実装タスク
+## Implementation Task
 
-**目的：** [明確な目的]
-**制約：** [制約事項]
-**参照：** [参照ファイル]
+**Purpose:** [Clear purpose]
+**Constraints:** [Constraint items]
+**References:** [Reference files]
 
-**実装手順：**
-1. テストケース作成
-2. 最小実装
-3. リファクタリング
+**Implementation Steps:**
+1. Create test cases
+2. Minimal implementation
+3. Refactoring
 
-**出力フォーマット：**
-- 信号機分類付き
-- TODO項目の記録
+**Output Format:**
+- With traffic light classification
+- Record TODO items
 
-**品質基準：**
-- 全テスト成功
-- 静的解析エラー0件
+**Quality Standards:**
+- All tests pass
+- 0 static analysis errors
 ```
 
-### 2. コンテキスト情報の最適化
+### 2. Context Information Optimization
 
-**効果的なコンテキスト設計：**
+**Effective Context Design:**
 ```markdown
-## コンテキスト最適化パターン
+## Context Optimization Patterns
 
-**必要最小限の情報：**
-- 直接関連する仕様のみ
-- 参照すべきファイルの明確な指定
-- 制約事項の明確化
+**Minimal Necessary Information:**
+- Only directly related specifications
+- Clear specification of files to reference
+- Clarification of constraints
 
-**段階的詳細化：**
-- Level 1: 基本要件
-- Level 2: 詳細仕様  
-- Level 3: 実装制約
+**Gradual Detailing:**
+- Level 1: Basic requirements
+- Level 2: Detailed specifications  
+- Level 3: Implementation constraints
 
-**例示の効果的活用：**
-- Good Example: 期待する出力の具体例
-- Bad Example: 避けるべきパターン
-- Edge Case: 特殊な状況での処理
+**Effective Use of Examples:**
+- Good Example: Concrete examples of expected output
+- Bad Example: Patterns to avoid
+- Edge Case: Handling special situations
 ```
 
-### 3. フィードバックループの構築
+### 3. Building Feedback Loops
 
-**即座のフィードバック収集：**
+**Immediate Feedback Collection:**
 ```bash
-# プロンプト実行後の自動フィードバック収集
+# Automated feedback collection after prompt execution
 cat > scripts/feedback-collector.sh << 'EOF'
 #!/bin/bash
 
-echo "プロンプト実行が完了しました。"
-echo "品質評価（1-5）："
+echo "Prompt execution completed."
+echo "Quality evaluation (1-5):"
 read quality_score
 
-echo "効率性評価（1-5）："
+echo "Efficiency evaluation (1-5):"
 read efficiency_score
 
-echo "改善提案があれば記入："
+echo "Please enter improvement suggestions if any:"
 read improvement_suggestion
 
-# ログファイルに記録
+# Record in log file
 echo "$(date),${quality_score},${efficiency_score},${improvement_suggestion}" >> logs/feedback.csv
 EOF
 ```
 
-## ログ分析による課題発見
+## Issue Discovery Through Log Analysis
 
-### 実行ログの体系的分析
+### Systematic Analysis of Execution Logs
 
-**ログ収集項目：**
+**Log Collection Items:**
 ```json
 {
   "timestamp": "2025-06-21T10:30:00Z",
@@ -329,153 +329,153 @@ EOF
     "red_count": 1
   },
   "issues": [
-    "組織固有のログ形式が不明確",
-    "エラーハンドリングパターンの推測"
+    "Organization-specific log format unclear",
+    "Error handling pattern inference"
   ]
 }
 ```
 
-**分析パターンの例：**
+**Analysis Pattern Examples:**
 ```python
-# ログ分析スクリプトの例
+# Example log analysis script
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# ログデータの読み込み
+# Loading log data
 df = pd.read_json('logs/execution_log.json', lines=True)
 
-# 成功率の分析
+# Success rate analysis
 success_rate = df.groupby('prompt_type')['success'].mean()
-print("プロンプトタイプ別成功率:")
+print("Success rate by prompt type:")
 print(success_rate)
 
-# 実行時間の分析
+# Execution time analysis
 execution_time_stats = df.groupby('prompt_type')['execution_time'].describe()
-print("実行時間統計:")
+print("Execution time statistics:")
 print(execution_time_stats)
 
-# 問題パターンの分析
+# Issue pattern analysis
 issues_flat = [issue for issues in df['issues'] for issue in issues]
 issue_counts = pd.Series(issues_flat).value_counts()
-print("頻出問題パターン:")
+print("Frequent issue patterns:")
 print(issue_counts.head(10))
 ```
 
-### 課題パターンの特定
+### Identifying Issue Patterns
 
-**典型的な課題パターン：**
+**Typical Issue Patterns:**
 ```markdown
-## 課題分析結果
+## Issue Analysis Results
 
-**高頻度課題（週3回以上）：**
-1. 組織固有ポリシーの推測（🔴分類の見逃し）
-2. エラーメッセージ形式の不統一
-3. テストデータの現実性不足
+**High Frequency Issues (3+ times per week):**
+1. Organization-specific policy inference (🔴 classification oversight)
+2. Error message format inconsistency
+3. Lack of realism in test data
 
-**中頻度課題（週1-2回）：**
-1. パフォーマンス考慮の不足
-2. 既存コードとの整合性不足
-3. ドキュメント生成の品質低下
+**Medium Frequency Issues (1-2 times per week):**
+1. Insufficient performance consideration
+2. Inconsistency with existing code
+3. Degraded documentation generation quality
 
-**低頻度課題（月1-2回）：**
-1. セキュリティ脆弱性の見逃し
-2. 国際化対応の考慮不足
-3. アクセシビリティ要件の不足
+**Low Frequency Issues (1-2 times per month):**
+1. Security vulnerability oversight
+2. Insufficient internationalization consideration
+3. Accessibility requirement deficiency
 ```
 
-## チーム知見の蓄積と共有
+## Team Knowledge Accumulation and Sharing
 
-### ナレッジベースの構築
+### Building a Knowledge Base
 
-**知見カテゴリ：**
+**Knowledge Categories:**
 ```markdown
-## AITDD知見データベース
+## AITDD Knowledge Database
 
-### プロンプトパターン集
-**カテゴリ：** [分類]
-**適用場面：** [シナリオ]
-**効果：** [定量的効果]
-**注意点：** [留意事項]
+### Prompt Pattern Collection
+**Category:** [Classification]
+**Application Scenario:** [Scenario]
+**Effect:** [Quantitative effect]
+**Cautions:** [Considerations]
 
-### 失敗事例集
-**問題：** [発生した問題]
-**原因：** [根本原因]
-**対処法：** [解決方法]
-**予防策：** [再発防止策]
+### Failure Case Collection
+**Problem:** [Occurred problem]
+**Cause:** [Root cause]
+**Solution:** [Resolution method]
+**Prevention:** [Recurrence prevention measures]
 
-### ベストプラクティス集
-**手法：** [手法名]
-**効果：** [効果測定結果]
-**適用条件：** [適用できる条件]
-**実装方法：** [具体的手順]
+### Best Practices Collection
+**Method:** [Method name]
+**Effect:** [Effect measurement results]
+**Application Conditions:** [Applicable conditions]
+**Implementation Method:** [Specific procedures]
 ```
 
-**知見共有の仕組み：**
+**Knowledge Sharing Mechanisms:**
 ```markdown
-## 知見共有プロセス
+## Knowledge Sharing Process
 
-**週次共有会：**
-- 各メンバーの改善事例発表
-- 課題と解決策の議論
-- 次週の改善目標設定
+**Weekly Sharing Sessions:**
+- Improvement case presentations by each member
+- Discussion of issues and solutions
+- Setting improvement goals for next week
 
-**月次レビュー：**
-- データに基づく効果測定
-- プロンプトライブラリの更新
-- 組織標準の見直し
+**Monthly Reviews:**
+- Data-driven effect measurement
+- Prompt library updates
+- Organizational standard reviews
 
-**四半期評価：**
-- ROI（投資対効果）の測定
-- 長期トレンドの分析
-- 戦略的改善方針の決定
+**Quarterly Evaluations:**
+- ROI (Return on Investment) measurement
+- Long-term trend analysis
+- Strategic improvement policy decisions
 ```
 
-### 標準化プロセスの確立
+### Establishing Standardization Processes
 
-**プロンプト標準化：**
+**Prompt Standardization:**
 ```markdown
-## プロンプト標準化フロー
+## Prompt Standardization Flow
 
-**段階1：実験的使用**
-- 個人レベルでの試行
-- 基本的な効果測定
-- 初期フィードバック収集
+**Stage 1: Experimental Use**
+- Individual-level trials
+- Basic effect measurement
+- Initial feedback collection
 
-**段階2：チーム検証**
-- チーム内での複数人検証
-- 一貫性の確認
-- 改善点の特定
+**Stage 2: Team Validation**
+- Multi-person validation within team
+- Consistency verification
+- Improvement point identification
 
-**段階3：組織標準化**
-- 正式プロンプトライブラリ登録
-- 使用ガイドラインの作成
-- 訓練プログラムの実施
+**Stage 3: Organizational Standardization**
+- Official prompt library registration
+- Usage guideline creation
+- Training program implementation
 
-**段階4：継続改善**
-- 定期的な効果測定
-- バージョン管理
-- 廃止基準の適用
+**Stage 4: Continuous Improvement**
+- Regular effect measurement
+- Version management
+- Deprecation criteria application
 ```
 
-## 自動化可能部分の検討
+## Considering Automatable Parts
 
-### 自動化の対象選定
+### Automation Target Selection
 
-**自動化優先度マトリックス：**
+**Automation Priority Matrix:**
 
-| 作業 | 頻度 | 複雑さ | 自動化優先度 |
-|------|------|--------|--------------|
-| ログ収集 | 高 | 低 | **最高** |
-| 品質メトリクス計算 | 高 | 中 | **高** |
-| プロンプト実行 | 中 | 低 | 高 |
-| 課題パターン分析 | 中 | 高 | 中 |
-| 改善提案生成 | 低 | 高 | 低 |
+| Task | Frequency | Complexity | Automation Priority |
+|------|-----------|------------|-------------------|
+| Log Collection | High | Low | **Highest** |
+| Quality Metrics Calculation | High | Medium | **High** |
+| Prompt Execution | Medium | Low | High |
+| Issue Pattern Analysis | Medium | High | Medium |
+| Improvement Suggestion Generation | Low | High | Low |
 
-### 自動化実装例
+### Automation Implementation Examples
 
-**品質メトリクス自動収集：**
+**Automated Quality Metrics Collection:**
 ```javascript
-// 自動品質測定スクリプト
+// Automated quality measurement script
 const fs = require('fs');
 const { execSync } = require('child_process');
 
@@ -530,7 +530,7 @@ class QualityMetrics {
   }
 
   getInferenceAnalysis() {
-    // TODO分析の自動化
+    // TODO analysis automation
     const todoFiles = this.findTodoFiles();
     let greenCount = 0, yellowCount = 0, redCount = 0;
 
@@ -546,9 +546,9 @@ class QualityMetrics {
 }
 ```
 
-**改善提案の自動生成：**
+**Automated Improvement Suggestion Generation:**
 ```python
-# 改善提案自動生成システム
+# Automated improvement suggestion system
 import pandas as pd
 from datetime import datetime, timedelta
 
@@ -557,70 +557,70 @@ class ImprovementSuggester:
         self.df = pd.DataFrame(metrics_data)
     
     def analyze_trends(self):
-        """トレンド分析に基づく改善提案"""
+        """Improvement suggestions based on trend analysis"""
         suggestions = []
         
-        # 成功率の低下傾向を検出
+        # Detect declining success rate trend
         recent_success = self.df.tail(7)['success_rate'].mean()
         overall_success = self.df['success_rate'].mean()
         
         if recent_success < overall_success * 0.9:
             suggestions.append({
                 'priority': 'high',
-                'issue': '成功率低下',
-                'suggestion': 'プロンプトの見直しと品質基準の再確認'
+                'issue': 'Success rate decline',
+                'suggestion': 'Prompt review and quality standard reconfirmation'
             })
         
-        # 実行時間の増加傾向を検出
+        # Detect increasing execution time trend
         recent_time = self.df.tail(7)['execution_time'].mean()
         overall_time = self.df['execution_time'].mean()
         
         if recent_time > overall_time * 1.2:
             suggestions.append({
                 'priority': 'medium',
-                'issue': '実行時間増加',
-                'suggestion': 'プロンプトの簡略化またはタスク分割の検討'
+                'issue': 'Execution time increase',
+                'suggestion': 'Consider prompt simplification or task division'
             })
         
         return suggestions
 ```
 
-## 実践演習
+## Practical Exercises
 
-### 演習1: 改善計画の立案
+### Exercise 1: Creating an Improvement Plan
 
-以下の状況に対する改善計画を作成してください：
+Create an improvement plan for the following situation:
 
-**現状：**
-- テスト生成プロンプトの成功率：70%
-- 🔴項目の検出率：60%
-- レビュー時間：従来と同程度
+**Current Status:**
+- Test generation prompt success rate: 70%
+- 🔴 item detection rate: 60%
+- Review time: Same as baseline
 
-**目標：**
-- 成功率を85%以上に向上
-- 🔴項目検出率を90%以上に向上
-- レビュー時間を30%削減
+**Goals:**
+- Improve success rate to 85% or higher
+- Improve 🔴 item detection rate to 90% or higher
+- Reduce review time by 30%
 
-**制約：**
-- 改善期間：4週間
-- チームメンバー：3名
-- 既存プロジェクトへの影響最小化
+**Constraints:**
+- Improvement period: 4 weeks
+- Team members: 3 people
+- Minimize impact on existing projects
 
-### 演習2: 評価指標の設計
+### Exercise 2: Evaluation Metrics Design
 
-新しいプロンプトパターンの効果を測定するための評価指標を設計してください：
+Design evaluation metrics to measure the effectiveness of a new prompt pattern:
 
-**対象：** エラーハンドリング生成プロンプト
-**改善仮説：** 具体的なエラーシナリオを含むことで適切性が向上
-**測定期間：** 2週間
+**Target:** Error handling generation prompt
+**Improvement Hypothesis:** Including specific error scenarios improves appropriateness
+**Measurement Period:** 2 weeks
 
-## まとめ
+## Summary
 
-継続的改善とプロンプト最適化により、以下の成果を実現できます：
+Through continuous improvement and prompt optimization, the following outcomes can be achieved:
 
-1. **持続的な品質向上**: データドリブンな改善による安定した品質確保
-2. **組織知見の蓄積**: チーム全体のスキル向上と標準化の実現  
-3. **効率性の最大化**: 自動化と最適化による開発効率の継続的向上
-4. **リスク軽減**: 体系的な分析による問題の早期発見と対処
+1. **Sustained Quality Improvement**: Stable quality assurance through data-driven improvement
+2. **Organizational Knowledge Accumulation**: Team-wide skill improvement and standardization
+3. **Efficiency Maximization**: Continuous development efficiency improvement through automation and optimization
+4. **Risk Mitigation**: Early problem detection and response through systematic analysis
 
-AITDDの成功は、技術的な手法だけでなく、継続的な改善文化の確立にあります。次章では、これらの技術を活用した人間とAIの効果的な協調について学習します。
+AITDD success lies not only in technical methods but also in establishing a continuous improvement culture. The next chapter will cover effective human-AI collaboration utilizing these technologies.

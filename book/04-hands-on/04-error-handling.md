@@ -1,164 +1,164 @@
-# 4.4 エラーハンドリングとデバッグ
+# 4.4 Error Handling and Debugging
 
-## 学習目標
+## Learning Objectives
 
-この章では、AITDD開発中に発生する各種エラーの対処法と効果的なデバッグ手法を習得します：
+This chapter covers approaches to various errors that occur during AITDD development and effective debugging techniques:
 
-- AI生成コード特有のエラーパターンの理解
-- プロンプト起因エラーの特定と修正方法
-- 効率的なデバッグプロセスの確立
-- 手動実装への切り替え判断とその実践
-- エラー予防のためのベストプラクティス
+- Understanding error patterns specific to AI-generated code
+- Identifying and fixing prompt-related errors
+- Establishing efficient debugging processes
+- Making decisions to switch to manual implementation and practicing it
+- Best practices for error prevention
 
-## エラーの分類と対処戦略
+## Error Classification and Response Strategies
 
-AITDD開発では、従来の開発とは異なる種類のエラーが発生します。これらを適切に分類し、それぞれに応じた対処法を適用することが重要です。
+AITDD development encounters different types of errors than traditional development. It's important to properly classify these and apply appropriate solutions for each.
 
-### エラーの基本分類
+### Basic Error Classification
 
-**1. プロンプト起因エラー**
-- 指示の曖昧さによるもの
-- 要件の不明確さによるもの
-- コンテキスト不足によるもの
+**1. Prompt-Related Errors**
+- Due to ambiguous instructions
+- Due to unclear requirements
+- Due to insufficient context
 
-**2. AI実装起因エラー**
-- AI生成コードのバグ
-- 既存コードとの整合性問題
-- パフォーマンス問題
+**2. AI Implementation Errors**
+- Bugs in AI-generated code
+- Consistency issues with existing code
+- Performance problems
 
-**3. 統合起因エラー**
-- 複数機能統合時の問題
-- インターフェース不整合
-- 依存関係の問題
+**3. Integration Errors**
+- Problems during multi-feature integration
+- Interface inconsistencies
+- Dependency issues
 
-**4. 従来型エラー**
-- 一般的なプログラミングエラー
-- 環境設定の問題
-- 外部依存の問題
+**4. Traditional Errors**
+- General programming errors
+- Environment configuration problems
+- External dependency issues
 
-## 実践的デバッグプロセス
+## Practical Debugging Process
 
-### ステップ1：エラー情報の包括的収集
+### Step 1: Comprehensive Error Information Collection
 
-エラーが発生した場合、まず情報を系統的に収集します。
+When an error occurs, first systematically collect information.
 
-**収集する情報**：
+**Information to Collect**:
 ```markdown
-## エラー情報収集チェックリスト
+## Error Information Collection Checklist
 
-### 基本情報
-- [ ] エラーメッセージ（完全版）
-- [ ] スタックトレース
-- [ ] 発生タイミング
-- [ ] 実行環境
+### Basic Information
+- [ ] Error message (complete version)
+- [ ] Stack trace
+- [ ] Occurrence timing
+- [ ] Execution environment
 
-### コンテキスト情報
-- [ ] 実行されたコマンド
-- [ ] 入力データ
-- [ ] 期待していた動作
-- [ ] 実際の動作
+### Context Information
+- [ ] Executed command
+- [ ] Input data
+- [ ] Expected behavior
+- [ ] Actual behavior
 
-### AI関連情報
-- [ ] 使用したプロンプト
-- [ ] AI生成コードの該当部分
-- [ ] 関連する既存コード
+### AI-Related Information
+- [ ] Used prompt
+- [ ] Relevant AI-generated code section
+- [ ] Related existing code
 
-### 実行環境
-- [ ] OS・ブラウザ情報
-- [ ] Node.js/TypeScriptバージョン
-- [ ] 依存パッケージの状態
+### Execution Environment
+- [ ] OS/Browser information
+- [ ] Node.js/TypeScript version
+- [ ] Dependency package status
 ```
 
-**情報収集の実例**：
+**Information Collection Example**:
 ```
-エラー発生時の記録例：
+Error occurrence record example:
 
-エラーメッセージ：
+Error Message:
 TypeError: Cannot read property 'map' of undefined
     at getAllTasks (TaskController.ts:15)
     at Router.handle (express/lib/router/layer.js:95)
 
-発生タイミング：
-GET /api/tasks エンドポイントのテスト実行時
+Occurrence Timing:
+During GET /api/tasks endpoint test execution
 
-入力データ：
+Input Data:
 GET http://localhost:3000/api/tasks
 
-期待動作：
-空配列を含むレスポンスが返される
+Expected Behavior:
+Response containing empty array should be returned
 
-実際の動作：
-undefined に対して map を呼び出しエラー
+Actual Behavior:
+Error calling map on undefined
 
-使用プロンプト：
-「TaskManagerクラスの getAllTasks メソッドを呼び出してレスポンスを返すAPIエンドポイントを実装してください」
+Used Prompt:
+"Please implement an API endpoint that calls the getAllTasks method of the TaskManager class and returns a response"
 ```
 
-### ステップ2：AIによる原因分析
+### Step 2: AI-Assisted Cause Analysis
 
-収集した情報を全てAIに渡し、エラーの原因分析を依頼します。
+Pass all collected information to AI and request error cause analysis.
 
-**効果的な分析プロンプト**：
+**Effective Analysis Prompt**:
 ```
-以下のエラーについて原因を分析してください：
+Please analyze the causes of the following error:
 
-## エラー情報
-[収集したエラー情報を全て貼り付け]
+## Error Information
+[Paste all collected error information]
 
-## 関連コード
-[エラーが発生したソースコード一式]
+## Related Code
+[Complete source code where error occurred]
 
-## 分析要求
-1. エラーの直接的な原因
-2. 根本的な原因（設計・実装の問題）
-3. プロンプト起因の可能性
-4. 修正方針の提案
-5. 類似エラーの予防策
+## Analysis Requirements
+1. Direct cause of the error
+2. Root cause (design/implementation issues)
+3. Possibility of prompt-related causes
+4. Proposed fix approach
+5. Prevention measures for similar errors
 
-できるだけ具体的で実践的な分析をお願いします。
-```
-
-**AIによる分析例**：
-```
-## エラー分析結果
-
-### 直接的な原因
-TaskController.getAllTasks メソッドで、taskManager.getAllTasks() が undefined を返している
-
-### 根本的な原因
-1. TaskManagerクラスのインスタンス化に問題
-2. getAllTasks メソッドの実装でタスク配列が初期化されていない
-
-### プロンプト起因の可能性
-「既存のTaskManagerクラスを使用」という指示が曖昧で、
-実際のクラス定義を確認せずに実装した可能性
-
-### 修正方針
-1. TaskManagerクラスの初期化を確認
-2. getAllTasks メソッドの戻り値を検証
-3. null/undefined チェックを追加
-
-### 予防策
-1. 既存コードの詳細をプロンプトに含める
-2. 戻り値の型安全性を強化
-3. 単体テストでnull/undefined ケースを追加
+Please provide as specific and practical analysis as possible.
 ```
 
-### ステップ3：段階的調査と仮説検証
+**AI Analysis Example**:
+```
+## Error Analysis Results
 
-AIの分析に基づいて、段階的に問題を調査します。
+### Direct Cause
+In TaskController.getAllTasks method, taskManager.getAllTasks() is returning undefined
 
-**調査手順例**：
+### Root Cause
+1. Problem with TaskManager class instantiation
+2. Task array not initialized in getAllTasks method implementation
+
+### Prompt-Related Possibility
+The instruction "use existing TaskManager class" was ambiguous,
+possibly implemented without checking actual class definition
+
+### Fix Approach
+1. Verify TaskManager class initialization
+2. Validate getAllTasks method return value
+3. Add null/undefined checks
+
+### Prevention Measures
+1. Include existing code details in prompt
+2. Strengthen return value type safety
+3. Add null/undefined cases to unit tests
+```
+
+### Step 3: Step-by-Step Investigation and Hypothesis Verification
+
+Based on AI analysis, investigate the problem step by step.
+
+**Investigation Procedure Example**:
 ```typescript
-// 1. TaskManagerクラスの状態確認
-describe('TaskManagerデバッグ', () => {
-  test('TaskManagerインスタンス化確認', () => {
+// 1. TaskManager class state verification
+describe('TaskManager Debug', () => {
+  test('TaskManager instantiation verification', () => {
     const manager = new TaskManager();
     console.log('TaskManager instance:', manager);
     expect(manager).toBeDefined();
   });
 
-  test('getAllTasks戻り値確認', () => {
+  test('getAllTasks return value verification', () => {
     const manager = new TaskManager();
     const result = manager.getAllTasks();
     console.log('getAllTasks result:', result);
@@ -166,7 +166,7 @@ describe('TaskManagerデバッグ', () => {
     expect(result).toBeDefined();
   });
 
-  test('タスク配列の初期状態確認', () => {
+  test('Task array initial state verification', () => {
     const manager = new TaskManager();
     const tasks = manager.getAllTasks();
     expect(Array.isArray(tasks)).toBe(true);
@@ -175,178 +175,178 @@ describe('TaskManagerデバッグ', () => {
 });
 ```
 
-**デバッグ実行**：
+**Debug Execution**:
 ```bash
-npm test -- --verbose TaskManagerデバッグ
+npm test -- --verbose TaskManagerDebug
 ```
 
-### ステップ4：AIと協力した修正実装
+### Step 4: AI-Collaborated Fix Implementation
 
-調査結果をAIにフィードバックし、修正実装を依頼します。
+Provide investigation results feedback to AI and request fix implementation.
 
-**修正依頼プロンプト**：
+**Fix Request Prompt**:
 ```
-デバッグ調査の結果、以下が判明しました：
+Based on debugging investigation, the following was discovered:
 
-## 調査結果
-[デバッグテストの出力結果]
+## Investigation Results
+[Debug test output results]
 
-## 判明した問題
-1. TaskManagerクラスの配列初期化が不適切
-2. getAllTasks メソッドの戻り値がundefined
+## Identified Problems
+1. Improper array initialization in TaskManager class
+2. getAllTasks method return value is undefined
 
-## 修正要求
-以下を満たす修正を実装してください：
-1. 配列が適切に初期化される
-2. 型安全性が確保される
-3. null/undefined チェックが追加される
-4. 既存のテストが通る
-5. 新しいテストケースも追加
+## Fix Requirements
+Please implement fixes that satisfy the following:
+1. Array is properly initialized
+2. Type safety is ensured
+3. null/undefined checks are added
+4. Existing tests pass
+5. New test cases are also added
 
-修正後のコードと、修正理由の説明もお願いします。
-```
-
-## プロンプト起因エラーの特定と修正
-
-### プロンプト問題の判断基準
-
-**頻度による判定**：
-```
-同様のエラーパターンの発生状況：
-- 1回目：実装エラーとして処理
-- 2回目：プロンプト問題の可能性を検討
-- 3回目：プロンプト修正必須
+Please provide the fixed code and explanation of the fix reasons.
 ```
 
-**典型的なプロンプト問題の兆候**：
-- 同じ要求で異なる実装が生成される
-- 期待と大きく異なる出力
-- 既存コードを意図せず修正
-- 指示範囲を超えた実装
+## Identifying and Fixing Prompt-Related Errors
 
-### プロンプト問題の修正プロセス
+### Prompt Problem Judgment Criteria
 
-#### 1. プロンプト診断
-
-**AIによる診断依頼**：
+**Frequency-Based Assessment**:
 ```
-以下のプロンプトを分析し、問題点を指摘してください：
-
-## 使用したプロンプト
-[問題のあったプロンプト]
-
-## 期待した結果
-[期待していた出力]
-
-## 実際の結果
-[実際の出力]
-
-## 診断要求
-1. プロンプトの曖昧な部分
-2. 不足している情報
-3. 誤解を招く可能性がある表現
-4. 改善提案
+Occurrence pattern of similar errors:
+- 1st time: Handle as implementation error
+- 2nd time: Consider possibility of prompt problem
+- 3rd time: Prompt modification mandatory
 ```
 
-#### 2. プロンプト改善案の作成
+**Typical Signs of Prompt Problems**:
+- Different implementations generated for same request
+- Output significantly different from expectations
+- Unintended modification of existing code
+- Implementation exceeding instruction scope
 
-**改善プロンプトの例**：
+### Prompt Problem Correction Process
+
+#### 1. Prompt Diagnosis
+
+**AI Diagnosis Request**:
 ```
-改善前（問題のあったプロンプト）：
-「TaskManagerクラスを使ってAPIエンドポイントを作成してください」
+Please analyze the following prompt and point out problems:
 
-改善後：
-「以下の既存TaskManagerクラスを使用し、GET /api/tasks エンドポイントを実装してください。
+## Used Prompt
+[The problematic prompt]
 
-既存コード：
-[TaskManagerクラスの完全なコード]
+## Expected Result
+[Expected output]
 
-要件：
-1. 既存コードは一切変更しない
-2. Express.jsのRouterを使用
-3. レスポンス形式：{ success: boolean, data: Task[] }
-4. エラーハンドリングを含める
-5. TypeScriptの型安全性を確保
+## Actual Result
+[Actual output]
 
-出力形式：
-- routes/tasks.ts ファイル
-- controllers/TaskController.ts ファイル
-- 対応するテストファイル」
+## Diagnosis Request
+1. Ambiguous parts of the prompt
+2. Missing information
+3. Expressions that may cause misunderstanding
+4. Improvement suggestions
 ```
 
-#### 3. 改善プロンプトの検証
+#### 2. Creating Prompt Improvement Plan
 
-**検証プロセス**：
+**Improved Prompt Example**:
+```
+Before improvement (problematic prompt):
+"Create API endpoint using TaskManager class"
+
+After improvement:
+"Implement GET /api/tasks endpoint using the following existing TaskManager class.
+
+Existing Code:
+[Complete TaskManager class code]
+
+Requirements:
+1. Do not modify existing code at all
+2. Use Express.js Router
+3. Response format: { success: boolean, data: Task[] }
+4. Include error handling
+5. Ensure TypeScript type safety
+
+Output Format:
+- routes/tasks.ts file
+- controllers/TaskController.ts file
+- Corresponding test files"
+```
+
+#### 3. Improved Prompt Verification
+
+**Verification Process**:
 ```typescript
-describe('プロンプト改善検証', () => {
-  test('改善前プロンプトでの問題再現', async () => {
-    // 問題のあったプロンプトで実装を依頼
-    // 期待する問題が発生することを確認
+describe('Prompt Improvement Verification', () => {
+  test('Problem reproduction with old prompt', async () => {
+    // Request implementation with problematic prompt
+    // Verify expected problem occurs
   });
 
-  test('改善後プロンプトでの解決確認', async () => {
-    // 改善されたプロンプトで実装を依頼
-    // 問題が解決されることを確認
+  test('Solution confirmation with improved prompt', async () => {
+    // Request implementation with improved prompt
+    // Verify problem is resolved
   });
 
-  test('改善プロンプトの副作用確認', async () => {
-    // 改善により新たな問題が発生していないことを確認
+  test('Side effect check for improved prompt', async () => {
+    // Verify no new problems arise from improvement
   });
 });
 ```
 
-## 手動実装への切り替え判断
+## Decision to Switch to Manual Implementation
 
-### 切り替えタイミングの判断
+### Timing Decision for Switching
 
-**実装開始前の判断**：
+**Pre-Implementation Decision**:
 ```markdown
-## 手動実装検討チェックリスト
+## Manual Implementation Consideration Checklist
 
-### 実装イメージの有無
-- [ ] 具体的な実装手順が思い浮かぶ
-- [ ] 使用する技術・ライブラリが明確
-- [ ] 実装の落とし穴が予測できる
+### Existence of Implementation Image
+- [ ] Specific implementation steps come to mind
+- [ ] Technologies/libraries to use are clear
+- [ ] Implementation pitfalls can be predicted
 
-### 技術的複雑さ
-- [ ] パフォーマンス最適化が必要
-- [ ] 複雑なアルゴリズムが必要
-- [ ] 深いドメイン知識が必要
+### Technical Complexity
+- [ ] Performance optimization required
+- [ ] Complex algorithms required
+- [ ] Deep domain knowledge required
 
-### AIへの説明困難度
-- [ ] 要件を明確に言語化できない
-- [ ] プロンプトが異常に長くなる
-- [ ] 前提知識の説明が困難
+### Difficulty Explaining to AI
+- [ ] Requirements can be clearly verbalized
+- [ ] Prompt becomes abnormally long
+- [ ] Explaining prerequisite knowledge is difficult
 ```
 
-**実装中の切り替え判断**：
+**Mid-Implementation Switching Decision**:
 ```
-切り替え判断の基準：
-1. 同じエラーが3回以上発生
-2. プロンプト修正でも解決しない
-3. デバッグ時間が実装時間を超過
-4. AI生成コードの品質が一貫しない
+Switching decision criteria:
+1. Same error occurs 3+ times
+2. Prompt modification doesn't resolve
+3. Debug time exceeds implementation time
+4. AI-generated code quality is inconsistent
 ```
 
-### 効果的な手動実装アプローチ
+### Effective Manual Implementation Approach
 
-#### 段階的AI併用戦略
+#### Gradual AI Collaboration Strategy
 
-**完全手動ではなく、部分的AI活用**：
+**Partial AI Utilization Rather Than Complete Manual**:
 ```typescript
-// 1. 複雑なロジック部分は手動実装
+// 1. Manual implementation for complex logic parts
 const complexAlgorithm = (data: any[]) => {
-  // 手動で実装（AIに説明困難な部分）
+  // Manually implement (parts difficult to explain to AI)
   let result = [];
   for (let i = 0; i < data.length; i++) {
-    // 複雑な計算ロジック
+    // Complex calculation logic
   }
   return result;
 };
 
-// 2. 定型的なコードはAIに依頼
+// 2. Request AI for routine code
 const generateApiResponse = (data: any) => {
-  // この部分はAIで生成可能
+  // This part can be generated by AI
   return {
     success: true,
     data,
@@ -357,130 +357,130 @@ const generateApiResponse = (data: any) => {
   };
 };
 
-// 3. 組み合わせて最終実装
+// 3. Combine for final implementation
 export const processData = async (inputData: any[]) => {
   try {
-    const processedData = complexAlgorithm(inputData); // 手動部分
-    return generateApiResponse(processedData); // AI生成部分
+    const processedData = complexAlgorithm(inputData); // Manual part
+    return generateApiResponse(processedData); // AI-generated part
   } catch (error) {
-    // エラーハンドリングもAI支援可能
+    // Error handling can also be AI-assisted
   }
 };
 ```
 
-#### 手動実装でのAI支援活用
+#### AI Assistance Utilization in Manual Implementation
 
-**1. IDE補完機能の活用**：
+**1. IDE Completion Feature Utilization**:
 ```typescript
-// VS Code等のAI補完を積極的に使用
+// Actively use AI completion in VS Code etc.
 const taskManager = new TaskManager();
-// ↑ここでAI補完が効く部分は活用
+// ↑ Utilize AI completion for parts where it's effective
 ```
 
-**2. 部分的なコード生成依頼**：
+**2. Partial Code Generation Requests**:
 ```
-明確な実装イメージがある部分のAI依頼例：
+Example AI request for parts with clear implementation image:
 
-「以下の型定義に基づいて、バリデーション関数を作成してください：
+"Please create a validation function based on the following type definition:
 
 interface TaskInput {
   title: string;
   description?: string;
 }
 
-要件：
-- titleは1-100文字必須
-- descriptionは0-500文字任意
-- 不正な場合は具体的なエラーメッセージ
-- TypeScriptの型ガードとして機能
+Requirements:
+- title is required, 1-100 characters
+- description is optional, 0-500 characters
+- Specific error messages for invalid cases
+- Function as TypeScript type guard
 ```
 
-#### 品質プロセスの継続
+#### Continuing Quality Process
 
-**手動実装でもValidationステップは必須**：
+**Validation Step Mandatory Even for Manual Implementation**:
 ```
-手動実装のValidationチェック項目：
-1. 仕様要件との整合性
-2. 型安全性の確保
-3. エラーハンドリングの適切性
-4. テストカバレッジの確認
-5. パフォーマンスの妥当性
-6. コードの可読性・保守性
-```
-
-## エラー予防のベストプラクティス
-
-### プロンプト設計の改善
-
-**1. コンテキストの明確化**：
-```
-良いプロンプト例：
-
-「以下の既存システムに新機能を追加してください：
-
-既存コード：
-[関連する全てのコードを貼り付け]
-
-新機能要件：
-[具体的で明確な要件]
-
-制約条件：
-- 既存コードは変更禁止
-- TypeScript型安全性確保
-- エラーハンドリング必須
-
-期待する出力：
-- 実装コード
-- テストコード
-- 使用例
-- 注意点」
+Manual Implementation Validation Check Items:
+1. Consistency with specification requirements
+2. Type safety assurance
+3. Appropriate error handling
+4. Test coverage verification
+5. Performance validity
+6. Code readability and maintainability
 ```
 
-**2. 段階的な実装指示**：
+## Error Prevention Best Practices
+
+### Prompt Design Improvement
+
+**1. Context Clarification**:
 ```
-複雑な機能の段階的実装：
+Good prompt example:
 
-「以下を段階的に実装してください：
+"Please add new functionality to the following existing system:
 
-ステップ1：インターフェース設計
-ステップ2：基本実装
-ステップ3：エラーハンドリング
-ステップ4：テスト作成
+Existing Code:
+[Paste all related code]
 
-各ステップで確認を取りながら進めてください。」
+New Feature Requirements:
+[Specific and clear requirements]
+
+Constraints:
+- Existing code modification prohibited
+- TypeScript type safety assurance
+- Error handling mandatory
+
+Expected Output:
+- Implementation code
+- Test code
+- Usage examples
+- Important notes"
 ```
 
-### テスト戦略の強化
+**2. Step-by-Step Implementation Instructions**:
+```
+Step-by-step implementation for complex features:
 
-**1. AI生成コード特有のテスト**：
+"Please implement the following step by step:
+
+Step 1: Interface design
+Step 2: Basic implementation
+Step 3: Error handling
+Step 4: Test creation
+
+Please proceed with confirmation at each step."
+```
+
+### Test Strategy Enhancement
+
+**1. Tests Specific to AI-Generated Code**:
 ```typescript
-describe('AI生成コード検証テスト', () => {
-  test('意図しない既存コード修正がないことを確認', () => {
-    // 既存の重要な関数が変更されていないことをテスト
+describe('AI-Generated Code Verification Tests', () => {
+  test('Verify no unintended existing code modifications', () => {
+    // Test that important existing functions haven't been changed
     const originalFunction = require('./legacy/original-module');
     expect(originalFunction.criticalMethod).toBeDefined();
     expect(typeof originalFunction.criticalMethod).toBe('function');
   });
 
-  test('推測による実装範囲の確認', () => {
-    // AIが推測で実装した部分が要件内であることを確認
+  test('Verify speculative implementation scope', () => {
+    // Verify AI-implemented parts are within requirements
     const implementation = new FeatureImplementation();
     expect(implementation.getImplementedFeatures())
       .toEqual(expect.arrayContaining(REQUIRED_FEATURES));
   });
 
-  test('型安全性の確認', () => {
-    // TypeScriptの型チェックが正しく機能することを確認
-    // コンパイルエラーが発生しないことをテスト
+  test('Type safety verification', () => {
+    // Verify TypeScript type checking works correctly
+    // Test that no compilation errors occur
   });
 });
 ```
 
-**2. 統合テストの強化**：
+**2. Integration Test Enhancement**:
 ```typescript
-describe('機能統合テスト', () => {
-  test('3機能統合でのレグレッション確認', async () => {
-    // 3つの機能が組み合わされても正常動作することをテスト
+describe('Feature Integration Tests', () => {
+  test('Regression check with 3-feature integration', async () => {
+    // Test that 3 features work normally when combined
     const feature1 = await executeFeature1();
     const feature2 = await executeFeature2(feature1.result);
     const feature3 = await executeFeature3(feature2.result);
@@ -490,61 +490,61 @@ describe('機能統合テスト', () => {
 });
 ```
 
-### 継続的改善プロセス
+### Continuous Improvement Process
 
-**1. エラーパターンの蓄積**：
+**1. Error Pattern Accumulation**:
 ```markdown
-## エラーパターン管理
+## Error Pattern Management
 
-### 発生頻度の高いエラー
-1. undefined/null アクセスエラー
-   - 原因：AI生成コードでの初期化不足
-   - 対策：明示的な初期化指示
+### High-Frequency Errors
+1. undefined/null access errors
+   - Cause: Insufficient initialization in AI-generated code
+   - Solution: Explicit initialization instructions
 
-2. 型不整合エラー
-   - 原因：プロンプトでの型情報不足
-   - 対策：型定義を明示的に提供
+2. Type mismatch errors
+   - Cause: Insufficient type information in prompts
+   - Solution: Explicitly provide type definitions
 
-3. 既存コード改変エラー
-   - 原因：「変更禁止」指示の不徹底
-   - 対策：具体的な制約指示
+3. Existing code modification errors
+   - Cause: Inadequate "modification prohibited" instructions
+   - Solution: Specific constraint instructions
 ```
 
-**2. プロンプトテンプレートの改善**：
+**2. Prompt Template Improvement**:
 ```
-改善されたプロンプトテンプレート：
+Improved prompt template:
 
-### 基本テンプレート
+### Basic Template
 ```
-機能: [機能名]
-実装対象: [具体的な実装内容]
+Feature: [Feature name]
+Implementation target: [Specific implementation content]
 
-既存コード:
-[関連コード全て]
+Existing Code:
+[All related code]
 
-要件:
-[明確で具体的な要件]
+Requirements:
+[Clear and specific requirements]
 
-制約:
-- 既存コードは変更禁止
-- [その他の制約]
+Constraints:
+- Existing code modification prohibited
+- [Other constraints]
 
-出力要求:
-- [期待する出力形式]
+Output Requirements:
+- [Expected output format]
 
-品質要件:
-- TypeScript型安全性
-- エラーハンドリング
-- テストコード含む
+Quality Requirements:
+- TypeScript type safety
+- Error handling
+- Include test code
 ```
 
-## 実践的デバッグテクニック
+## Practical Debugging Techniques
 
-### ログベースデバッグ
+### Log-Based Debugging
 
-**効果的なログ出力**：
+**Effective Log Output**:
 ```typescript
-// デバッグ用ログヘルパー
+// Debug log helper
 class DebugLogger {
   static log(context: string, data: any) {
     if (process.env.NODE_ENV === 'development') {
@@ -564,7 +564,7 @@ class DebugLogger {
   }
 }
 
-// 使用例
+// Usage example
 export const taskController = {
   getAllTasks: async (req, res, next) => {
     try {
@@ -585,22 +585,22 @@ export const taskController = {
 };
 ```
 
-### テスト駆動デバッグ
+### Test-Driven Debugging
 
-**失敗テストからの逆算**：
+**Reverse Engineering from Failed Tests**:
 ```typescript
-describe('バグ再現テスト', () => {
-  test('特定条件でのnullエラー再現', () => {
-    // バグが発生する最小条件を特定
+describe('Bug Reproduction Tests', () => {
+  test('Reproduce null error under specific conditions', () => {
+    // Identify minimum conditions for bug occurrence
     const manager = new TaskManager();
     const result = manager.getAllTasks();
     
-    // この時点でエラーが発生するはず
+    // Error should occur at this point
     expect(() => result.map(x => x.id)).toThrow();
   });
 
-  test('修正後の動作確認', () => {
-    // 修正後に期待する動作をテスト
+  test('Verify behavior after fix', () => {
+    // Test expected behavior after fix
     const manager = new TaskManager();
     const result = manager.getAllTasks();
     
@@ -610,24 +610,24 @@ describe('バグ再現テスト', () => {
 });
 ```
 
-## まとめ
+## Summary
 
-この章では、AITDD開発における包括的なエラーハンドリングとデバッグ手法を学習しました：
+This chapter covered comprehensive error handling and debugging techniques in AITDD development:
 
-**主要な学習成果**：
-- エラーの適切な分類と対処法
-- AI活用による効率的デバッグプロセス
-- プロンプト起因エラーの特定と修正
-- 手動実装への切り替え判断とAI併用戦略
-- エラー予防のベストプラクティス
+**Key Learning Outcomes**:
+- Appropriate error classification and response methods
+- Efficient debugging process utilizing AI
+- Identification and correction of prompt-related errors
+- Decision-making for switching to manual implementation and AI collaboration strategies
+- Best practices for error prevention
 
-**実践的スキル**：
-- 包括的な情報収集技法
-- AIと協力したエラー分析
-- 段階的な問題解決アプローチ
-- 品質管理の継続的改善
+**Practical Skills**:
+- Comprehensive information collection techniques
+- AI-collaborated error analysis
+- Step-by-step problem-solving approaches
+- Continuous improvement of quality management
 
-**次章への準備**：
-これらのスキルにより、より高度なAITDD手法と最適化技術を学習する準備が整いました。プロンプト設計とAI活用の最適化に進みます。
+**Preparation for Next Chapter**:
+These skills prepare you for learning more advanced AITDD techniques and optimization technologies. We will proceed to prompt design and AI utilization optimization.
 
-AITDDの実践ハンズオンシリーズを通じて、基礎から応用まで一通りの技術を習得しました。次部では、これらの技術をさらに洗練させ、実際のプロダクション環境で活用するための高度な技法を学習していきます。
+Through the practical hands-on AITDD series, you have acquired techniques from basics to applications. The next section will cover advanced techniques for refining these technologies and utilizing them in actual production environments.

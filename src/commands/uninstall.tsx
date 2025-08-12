@@ -22,11 +22,11 @@ const UninstallComponent: React.FC = () => {
       try {
         setStatus("checking");
 
-        // 現在のディレクトリを取得
+        // Get current directory
         const currentDir = process.cwd();
         const targetDir = path.join(currentDir, ".claude", "commands");
 
-        // .claude/commandsディレクトリが存在するかチェック
+        // Check if .claude/commands directory exists
         const dirExists = await fs.pathExists(targetDir);
         if (!dirExists) {
           setStatus("not_found");
@@ -36,13 +36,13 @@ const UninstallComponent: React.FC = () => {
           return;
         }
 
-        // tsumikiのcommandsディレクトリを取得
+        // Get tsumiki commands directory
         const __filename = fileURLToPath(import.meta.url);
         const __dirname = path.dirname(__filename);
-        // ビルド後はdist/commandsを参照（cli.jsがdist/にあるため）
+        // After build, references dist/commands (since cli.js is in dist/)
         const tsumikiDir = path.join(__dirname, "commands");
 
-        // tsumikiのファイル一覧を取得
+        // Get tsumiki file list
         const tsumikiFiles = await fs.readdir(tsumikiDir);
         const tsumikiTargetFiles = tsumikiFiles.filter(
           (file) => file.endsWith(".md") || file.endsWith(".sh"),
@@ -50,7 +50,7 @@ const UninstallComponent: React.FC = () => {
 
         setStatus("removing");
 
-        // .claude/commands内のファイルをチェックして、tsumiki由来のファイルのみ削除
+        // Check files in .claude/commands and remove only tsumiki-origin files
         const installedFiles = await fs.readdir(targetDir);
         const removedFilesList: string[] = [];
 
@@ -62,12 +62,12 @@ const UninstallComponent: React.FC = () => {
           }
         }
 
-        // 削除後に.claude/commandsディレクトリが空になったかチェック
+        // Check if .claude/commands directory is empty after removal
         const remainingFiles = await fs.readdir(targetDir);
         if (remainingFiles.length === 0) {
-          // 空のディレクトリを削除
+          // Remove empty directory
           await fs.rmdir(targetDir);
-          // .claudeディレクトリも空の場合は削除
+          // Remove .claude directory if it's also empty
           const claudeDir = path.dirname(targetDir);
           const claudeFiles = await fs.readdir(claudeDir);
           if (claudeFiles.length === 0) {
@@ -78,7 +78,7 @@ const UninstallComponent: React.FC = () => {
         setRemovedFiles(removedFilesList);
         setStatus("completed");
 
-        // 2秒後に終了
+        // Exit after 2 seconds
         setTimeout(() => {
           process.exit(0);
         }, 2000);
@@ -100,7 +100,7 @@ const UninstallComponent: React.FC = () => {
   if (status === "starting") {
     return (
       <Box>
-        <Text color="cyan">🗑️ Tsumiki アンインストールを開始します...</Text>
+        <Text color="cyan">🗑️ Starting Tsumiki uninstallation...</Text>
       </Box>
     );
   }
@@ -108,7 +108,7 @@ const UninstallComponent: React.FC = () => {
   if (status === "checking") {
     return (
       <Box>
-        <Text color="yellow">📋 インストール状況をチェック中...</Text>
+        <Text color="yellow">📋 Checking installation status...</Text>
       </Box>
     );
   }
@@ -116,7 +116,7 @@ const UninstallComponent: React.FC = () => {
   if (status === "removing") {
     return (
       <Box>
-        <Text color="blue">🗑️ コマンドテンプレートを削除中...</Text>
+        <Text color="blue">🗑️ Removing command templates...</Text>
       </Box>
     );
   }
@@ -124,10 +124,8 @@ const UninstallComponent: React.FC = () => {
   if (status === "not_found") {
     return (
       <Box flexDirection="column">
-        <Text color="yellow">
-          ⚠️ .claude/commands ディレクトリが見つかりません
-        </Text>
-        <Text color="gray">Tsumikiはインストールされていないようです。</Text>
+        <Text color="yellow">⚠️ .claude/commands directory not found</Text>
+        <Text color="gray">Tsumiki does not appear to be installed.</Text>
       </Box>
     );
   }
@@ -135,7 +133,7 @@ const UninstallComponent: React.FC = () => {
   if (status === "error") {
     return (
       <Box flexDirection="column">
-        <Text color="red">❌ エラーが発生しました:</Text>
+        <Text color="red">❌ An error occurred:</Text>
         <Text color="red">{error}</Text>
       </Box>
     );
@@ -145,9 +143,9 @@ const UninstallComponent: React.FC = () => {
     if (removedFiles.length === 0) {
       return (
         <Box flexDirection="column">
-          <Text color="yellow">⚠️ 削除対象のファイルが見つかりませんでした</Text>
+          <Text color="yellow">⚠️ No files to remove were found</Text>
           <Text color="gray">
-            Tsumikiのコマンドはインストールされていないようです。
+            Tsumiki commands do not appear to be installed.
           </Text>
         </Box>
       );
@@ -155,9 +153,9 @@ const UninstallComponent: React.FC = () => {
 
     return (
       <Box flexDirection="column">
-        <Text color="green">✅ アンインストールが完了しました!</Text>
+        <Text color="green">✅ Uninstallation completed!</Text>
         <Newline />
-        <Text>削除されたファイル ({removedFiles.length}個):</Text>
+        <Text>Removed files ({removedFiles.length} files):</Text>
         {removedFiles.map((file) => (
           <Text key={file} color="gray">
             {" "}
@@ -166,7 +164,7 @@ const UninstallComponent: React.FC = () => {
         ))}
         <Newline />
         <Text color="cyan">
-          TsumikiのClaude Codeコマンドテンプレートが削除されました。
+          Tsumiki Claude Code command templates have been removed.
         </Text>
       </Box>
     );

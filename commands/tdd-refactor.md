@@ -1,304 +1,303 @@
-# TDD Refactorフェーズ（コード改善）
+# TDD Refactor Phase (Code Improvement)
 
-TDDのRefactorフェーズを実行します。
+Execute the TDD Refactor phase.
 
-## 事前準備
+## Preliminary Preparation
 
-開発コンテキストの準備を行います：
+Prepare the development context:
 
-1. **@agent-symbol-searcher でリファクタリング関連情報を検索し、見つかったファイルを読み込み**
-   - 既存のコードスタイルやベストプラクティスを検索し、スタイルガイドをReadツールで読み込み
-   - プロジェクト全体のアーキテクチャパターンを特定し、設計文書をReadツールで読み込み
-   - 再利用可能なユーティリティ関数やコンポーネントを確認し、関連ファイルをReadツールで読み込み
+1. **Search for refactoring-related information with @agent-symbol-searcher and read found files**
+   - Search for existing code styles and best practices, read style guides with Read tool
+   - Identify project-wide architecture patterns, read design documents with Read tool
+   - Check reusable utility functions and components, read related files with Read tool
 
-2. **関連ファイルを直接読み込み**
-   - `docs/implements/{{task_id}}/{feature_name}-memo.md` - 既存の開発履歴を確認
-   - `docs/implements/{{task_id}}/{feature_name}-requirements.md` - 要件定義を確認
-   - `docs/implements/{{task_id}}/{feature_name}-testcases.md` - テストケース定義を確認
-   - `docs/implements/{{task_id}}/{feature_name}-green-phase.md` - Greenフェーズの実装を確認
-   - 関連する設計文書やタスクファイルも必要に応じて読み込み
+2. **Directly read related files**
+   - `docs/implements/{{task_id}}/{feature_name}-memo.md` - Check existing development history
+   - `docs/implements/{{task_id}}/{feature_name}-requirements.md` - Check requirements definition
+   - `docs/implements/{{task_id}}/{feature_name}-testcases.md` - Check test case definition
+   - `docs/implements/{{task_id}}/{feature_name}-green-phase.md` - Check Green phase implementation
+   - Also read related design documents or task files as needed
 
-読み込み完了後、準備されたコンテキスト情報を基にRefactorフェーズ（コード改善）の作業を開始します。
+After completing the reading, start Refactor phase (code improvement) work based on the prepared context information.
 
-## 信頼性レベル指示
+## Reliability Level Instructions
 
-リファクタリング時には、各改善内容について元の資料との照合状況を以下の信号でコメントしてください：
+When refactoring, comment on the verification status against source materials using the following signals:
 
-- 🟢 **青信号**: 元の資料を参考にしてほぼ推測していない場合
-- 🟡 **黄信号**: 元の資料から妥当な推測の場合
-- 🔴 **赤信号**: 元の資料にない推測の場合
+- 🟢 **Green Signal**: When referencing source materials with minimal guesswork
+- 🟡 **Yellow Signal**: When making reasonable inferences from source materials
+- 🔴 **Red Signal**: When making assumptions not found in source materials
 
-## 目標
+## Objective
 
-Greenフェーズで実装されたコードを以下の観点で改善してください。**テストは必ず通り続けること**が大前提です。
+Improve the code implemented in the Green phase from the following perspectives. **Tests must continue to pass** is the fundamental prerequisite.
 
-## 改善の観点
+## Improvement Perspectives
 
-### 1. 可読性の向上
+### 1. Readability Enhancement
 
-- 変数名・関数名の改善
-- 日本語コメントの充実
-- コードの構造を分かりやすく
+- Improve variable names and function names
+- Enhance Japanese comments
+- Make code structure more understandable
 
-### 2. 重複コードの除去（DRY原則）
+### 2. Remove Duplicate Code (DRY Principle)
 
-- 同じような処理の共通化
-- 定数の抽出
-- ヘルパー関数の作成
+- Consolidate similar processes
+- Extract constants
+- Create helper functions
 
-### 3. 設計の改善
+### 3. Design Improvement
 
-- 単一責任原則の適用
-- 依存関係の整理
-- モジュール化の検討
+- Apply single responsibility principle
+- Organize dependencies
+- Consider modularization
 
-- NEVER: 実装コード内でのモック・スタブの記述
-- NEVER: 実装コード内でDBに代わるインメモリーストレージの利用
+- NEVER: Write mocks/stubs in implementation code
+- NEVER: Use in-memory storage as DB replacement in implementation code
 
-### 4. ファイルサイズの最適化
+### 4. File Size Optimization
 
-- ファイルサイズが500行未満になるよう分割・最適化
-- 長大なファイルの機能別分割
-- 適切なモジュール境界の設定
+- Split and optimize files to be under 500 lines
+- Split large files by functionality
+- Set appropriate module boundaries
 
-### 5. コード品質の確保
+### 5. Code Quality Assurance
 
-- lintエラーの解消
-- typecheckエラーの解消
-- フォーマットの統一
-- 静的解析ツールのチェッククリア
+- Resolve lint errors
+- Resolve typecheck errors
+- Unify formatting
+- Clear static analysis tool checks
 
-### 6. セキュリティレビュー
+### 6. Security Review
 
-- 脆弱性に繋がる実装の検出と修正
-- 入力値検証の強化
-- SQLインジェクション対策の確認
-- XSS（Cross-Site Scripting）対策の確認
-- CSRF（Cross-Site Request Forgery）対策の確認
-- データ漏洩リスクの回避
-- 認証・認可の適切な実装
+- Detect and fix implementations that could lead to vulnerabilities
+- Strengthen input validation
+- Check SQL injection countermeasures
+- Check XSS (Cross-Site Scripting) countermeasures
+- Check CSRF (Cross-Site Request Forgery) countermeasures
+- Avoid data leakage risks
+- Proper implementation of authentication and authorization
 
-### 7. パフォーマンスレビュー
+### 7. Performance Review
 
-- アルゴリズムの計算量解析
-- メモリ使用量の最適化
-- 不要な処理の削除
-- キャッシュ戦略の検討
-- データベースクエリの最適化
-- ループ処理の効率化
-- 非同期処理の適切な実装
+- Algorithm computational complexity analysis
+- Memory usage optimization
+- Remove unnecessary processing
+- Consider caching strategies
+- Database query optimization
+- Loop processing efficiency
+- Proper asynchronous processing implementation
 
-### 8. エラーハンドリングの充実
+### 8. Enhanced Error Handling
 
-- 入力値の検証
-- 適切なエラーメッセージ
-- 例外処理の改善
+- Input validation
+- Appropriate error messages
+- Improved exception handling
 
-## リファクタリング時の日本語コメント強化要件
+## Japanese Comment Enhancement Requirements for Refactoring
 
-リファクタリングでは既存の日本語コメントを改善し、新たなコメントを追加してください：
+In refactoring, improve existing Japanese comments and add new comments:
 
-### 改善された関数・メソッドのコメント
+### Improved Function/Method Comments
 
 ```javascript
 /**
- * 【機能概要】: [リファクタ後の機能の詳細説明]
- * 【改善内容】: [どのような改善を行ったかを説明]
- * 【設計方針】: [なぜこの設計にしたかの理由]
- * 【パフォーマンス】: [性能面での考慮事項]
- * 【保守性】: [メンテナンスしやすくするための工夫]
- * 🟢🟡🔴 信頼性レベル: [この改善が元資料のどの程度に基づいているか]
- * @param {type} paramName - [パラメータの詳細説明と制約]
- * @returns {type} - [戻り値の詳細説明と保証事項]
+ * 【機能概要】: [Detailed explanation of functionality after refactoring]
+ * 【改善内容】: [Explain what improvements were made]
+ * 【設計方針】: [Reason for choosing this design]
+ * 【パフォーマンス】: [Performance considerations]
+ * 【保守性】: [Measures to improve maintainability]
+ * 🟢🟡🔴 信頼性レベル: [How much this improvement is based on source materials]
+ * @param {type} paramName - [Detailed parameter description and constraints]
+ * @returns {type} - [Detailed return value description and guarantees]
  */
 function improvedFunction(paramName) {
-  // 【実装詳細】: [改善された実装の内容と理由]
+  // 【実装詳細】: [Content and reason for improved implementation]
 }
 ```
 
-### ヘルパー関数・ユーティリティのコメント
+### Helper Function/Utility Comments
 
 ```javascript
 /**
- * 【ヘルパー関数】: [この関数の役割と作成理由]
- * 【再利用性】: [どのような場面で再利用できるか]
- * 【単一責任】: [この関数が担当する責任の範囲]
+ * 【ヘルパー関数】: [Role of this function and reason for creation]
+ * 【再利用性】: [In what situations this can be reused]
+ * 【単一責任】: [Scope of responsibility this function handles]
  */
 function helperFunction(input) {
-  // 【処理効率化】: [処理を効率化するための工夫] 🟢🟡🔴
-  // 【可読性向上】: [コードの読みやすさを向上させる仕組み] 🟢🟡🔴
+  // 【処理効率化】: [Measures to improve processing efficiency] 🟢🟡🔴
+  // 【可読性向上】: [Mechanisms to improve code readability] 🟢🟡🔴
 }
 ```
 
-### 定数・設定値のコメント
+### Constant/Configuration Value Comments
 
 ```javascript
-// 【設定定数】: [この定数の役割と設定理由] 🟢🟡🔴
-// 【調整可能性】: [将来的に調整が必要になる可能性と方法] 🟢🟡🔴
-const IMPROVED_CONSTANT = 100; // 【最適化済み】: パフォーマンステストに基づき最適化 🟢🟡🔴
+// 【設定定数】: [Role of this constant and reason for setting] 🟢🟡🔴
+// 【調整可能性】: [Possibility of future adjustments and methods] 🟢🟡🔴
+const IMPROVED_CONSTANT = 100; // 【最適化済み】: Optimized based on performance tests 🟢🟡🔴
 
-// 【設定オブジェクト】: [設定をまとめた理由と管理方針]
+// 【設定オブジェクト】: [Reason for grouping settings and management policy]
 const CONFIG = {
-  // 【各設定項目】: [それぞれの設定値の意味と影響範囲]
-  maxRetries: 3, // 【リトライ回数】: 実運用での経験に基づく適切な回数
-  timeout: 5000, // 【タイムアウト】: ユーザビリティを考慮した時間設定
+  // 【各設定項目】: [Meaning and impact scope of each setting value]
+  maxRetries: 3, // 【リトライ回数】: Appropriate count based on operational experience
+  timeout: 5000, // 【タイムアウト】: Time setting considering usability
 };
 ```
 
-### エラーハンドリング改善のコメント
+### Error Handling Improvement Comments
 
 ```javascript
 try {
-  // 【安全な処理実行】: [例外が発生する可能性と対策]
+  // 【安全な処理実行】: [Possibility of exceptions and countermeasures]
   const result = riskyOperation();
 } catch (error) {
-  // 【詳細エラー処理】: [エラーの種類に応じた適切な処理]
-  // 【ユーザビリティ】: [ユーザーにとって分かりやすいエラー対応]
+  // 【詳細エラー処理】: [Appropriate handling according to error type]
+  // 【ユーザビリティ】: [User-friendly error handling]
   if (error.code === 'SPECIFIC_ERROR') {
-    // 【特定エラー対応】: [このエラーに特化した処理の理由]
+    // 【特定エラー対応】: [Reason for processing specific to this error]
     return handleSpecificError(error);
   }
-  // 【一般エラー対応】: [予期しないエラーへの安全な対処]
+  // 【一般エラー対応】: [Safe handling of unexpected errors]
   return handleGenericError(error);
 }
 ```
 
-## リファクタリングの手順
+## Refactoring Procedure
 
-1. **現在のテストが全て通ることを確認**
-   - 【品質保証】: リファクタ前の動作確認
-   - 【安全性確保】: 変更による機能破綻の防止
-   - 【実行方法】: Taskツールを使用してテストを実行し、結果を詳細に分析
-2. **コード・テスト除外チェック**
-   - 【.gitignore確認】: 本来確認対象のコードファイルが除外されていないかチェック
-   - 【テスト除外確認】: `describe.skip`, `it.skip`, `test.skip`等でテストが無効化されていないかチェック
-   - 【jest設定確認】: `jest.config.js`や`package.json`の`testPathIgnorePatterns`等でテストファイルが除外されていないかチェック
-   - 【実行対象確認】: 実際に実行されるべきテストとコードが適切に対象に含まれているかチェック
-3. **開発時生成ファイルのクリーンアップ**
-   - 【不要ファイル検出】: 開発中に作成された一時的なファイルを検出・削除
-   - 【対象ファイルパターン】: 以下のパターンに該当するファイルを確認
-     - `debug-*.js`, `debug-*.ts`: デバッグ用スクリプト
-     - `test-*.js`, `test-*.ts`, `temp-*.js`: 一時テストファイル
-     - `*.tmp`, `*.temp`, `*.bak`, `*.orig`: 一時・バックアップファイル
-     - `*~`, `.DS_Store`: エディタ・システム生成ファイル
-     - `test-output-*`, `*.test-output`: テスト出力ファイル
-   - 【安全確認】: 削除前に各ファイルの内容を確認し、重要なコードが含まれていないかチェック
-   - 【選択的削除】: 不要と判断されたファイルのみを削除し、必要なファイルは保持
-   - 【削除ログ】: 削除したファイルと削除理由をログとして記録
+1. **Confirm all current tests pass**
+   - 【品質保証】: Verify behavior before refactoring
+   - 【安全性確保】: Prevent functional breakdown due to changes
+   - 【実行方法】: Execute tests using Task tool and analyze results in detail
+2. **Code and test exclusion check**
+   - 【.gitignore確認】: Check if code files that should be reviewed are not excluded
+   - 【テスト除外確認】: Check if tests are disabled with `describe.skip`, `it.skip`, `test.skip`, etc.
+   - 【jest設定確認】: Check if test files are excluded in `jest.config.js` or `testPathIgnorePatterns` in `package.json`
+   - 【実行対象確認】: Check if tests and code that should be executed are properly included in targets
+3. **Development-generated file cleanup**
+   - 【不要ファイル検出】: Detect and delete temporary files created during development
+   - 【対象ファイルパターン】: Check files matching the following patterns
+     - `debug-*.js`, `debug-*.ts`: Debug scripts
+     - `test-*.js`, `test-*.ts`, `temp-*.js`: Temporary test files
+     - `*.tmp`, `*.temp`, `*.bak`, `*.orig`: Temporary and backup files
+     - `*~`, `.DS_Store`: Editor and system-generated files
+     - `test-output-*`, `*.test-output`: Test output files
+   - 【安全確認】: Check content of each file before deletion to ensure no important code is included
+   - 【選択的削除】: Delete only files determined unnecessary, keep necessary files
+   - 【削除ログ】: Record deleted files and deletion reasons as log
    - 【実行手順】: 
-     1. `find . -name "debug-*" -o -name "test-*" -o -name "temp-*" -o -name "*.tmp" -o -name "*.temp" -o -name "*.bak" -o -name "*.orig" -o -name "*~" -o -name ".DS_Store" | grep -v node_modules` でファイル検出
-     2. 各ファイルの内容をReadツールで確認
-     3. 不要と判断されたファイルは削除し、削除理由を記録
-4. **セキュリティレビューの実施**
-   - 【脆弱性検査】: コード全体のセキュリティホールの特定
-   - 【入力検証確認】: 不正な入力値に対する防御機能の確認
-   - 【セキュリティガイドライン適用】: 業界標準のセキュリティベストプラクティスの適用
-5. **パフォーマンスレビューの実施**
-   - 【計算量解析】: アルゴリズムの時間計算量・空間計算量の評価
-   - 【ボトルネック特定】: 処理速度やメモリ使用量の問題箇所の特定
-   - 【最適化戦略】: 具体的なパフォーマンス改善施策の立案
-6. **小さな改善を1つずつ適用**
-   - 【段階的改善】: 影響範囲を限定した安全な変更
-   - 【トレーサビリティ】: 変更内容の追跡可能性確保
-7. **各改善後にテストを実行**
-   - 【継続的検証】: 改善の度に動作確認
-   - 【早期発見】: 問題の早期発見と修正
-   - 【実行方法】: Taskツールを使用してテストを実行し、改善の影響を確認
-8. **テストが失敗したら即座に戻す**
-   - 【迅速復旧】: 問題発生時の素早い対応
-   - 【安定性維持】: システムの安定した状態を保持
+     1. Detect files with `find . -name "debug-*" -o -name "test-*" -o -name "temp-*" -o -name "*.tmp" -o -name "*.temp" -o -name "*.bak" -o -name "*.orig" -o -name "*~" -o -name ".DS_Store" | grep -v node_modules`
+     2. Check content of each file with Read tool
+     3. Delete files determined unnecessary and record deletion reasons
+4. **Conduct security review**
+   - 【脆弱性検査】: Identify security holes in entire codebase
+   - 【入力検証確認】: Check defense functions against malicious input values
+   - 【セキュリティガイドライン適用】: Apply industry standard security best practices
+5. **Conduct performance review**
+   - 【計算量解析】: Evaluate time and space complexity of algorithms
+   - 【ボトルネック特定】: Identify problem areas in processing speed or memory usage
+   - 【最適化戦略】: Plan specific performance improvement measures
+6. **Apply small improvements one by one**
+   - 【段階的改善】: Safe changes with limited impact scope
+   - 【トレーサビリティ】: Ensure traceability of change content
+7. **Run tests after each improvement**
+   - 【継続的検証】: Verify behavior with each improvement
+   - 【早期発見】: Early detection and correction of problems
+   - 【実行方法】: Execute tests using Task tool and check impact of improvements
+8. **Immediately revert if tests fail**
+   - 【迅速復旧】: Quick response when problems occur
+   - 【安定性維持】: Maintain stable system state
 
-## 注意事項
+## Precautions
 
-- **機能的な変更は行わない**（新機能追加はNG）
-- **テストが通らなくなったら即座に修正**
-- **一度に大きな変更をしない**
-- **日本語コメントの品質も向上させる**
-- **品質確認のためのテスト実行時はTaskツールを利用する**
+- **Do not make functional changes** (adding new features is NG)
+- **Fix immediately if tests stop passing**
+- **Do not make large changes at once**
+- **Also improve quality of Japanese comments**
+- **Use Task tool when running tests for quality verification**
 
+## Please Provide
 
-## 提供してください
+1. **Security Review Results**: Presence of vulnerabilities and countermeasures
+2. **Performance Review Results**: Analysis of performance issues and improvement measures
+3. **Improved Code**: Code after refactoring (with enhanced Japanese comments)
+4. **Explanation of Improvement Points**: What and how improvements were made (including security and performance perspectives)
+5. **Test Execution Results**: Confirm all tests continue to pass using Task tool
+6. **Quality Assessment**: Current code quality level (including security and performance evaluation)
+7. **Comment Improvement Content**: How Japanese comments were enhanced
 
-1. **セキュリティレビュー結果**: 脆弱性の有無と対応策
-2. **パフォーマンスレビュー結果**: 性能課題の分析と改善策
-3. **改善されたコード**: リファクタリング後のコード（強化された日本語コメント付き）
-4. **改善ポイントの説明**: 何をどのように改善したか（セキュリティ・パフォーマンス観点を含む）
-5. **テスト実行結果**: Taskツールを使用して全てのテストが引き続き通ることの確認
-6. **品質評価**: 現在のコードの品質レベル（セキュリティ・パフォーマンス評価を含む）
-7. **コメント改善内容**: 日本語コメントをどのように強化したか
-
-## リファクタリング例
+## Refactoring Example
 
 ```javascript
-// Before: ハードコーディング
+// Before: Hard coding
 function add(a, b) {
-  return 5; // とりあえず動く実装
+  return 5; // Just working implementation
 }
 
-// After: 適切な実装（改善された日本語コメント付き）
+// After: Proper implementation (with improved Japanese comments)
 /**
- * 【機能概要】: 2つの数値を加算し、結果を返す
- * 【改善内容】: ハードコーディングを削除し、実際の加算処理を実装
- * 【設計方針】: 入力値検証と型安全性を重視した設計
- * 【エラー処理】: 不正な入力に対する適切な例外処理を実装
+ * 【機能概要】: Add two numbers and return the result
+ * 【改善内容】: Removed hard coding and implemented actual addition processing
+ * 【設計方針】: Design emphasizing input validation and type safety
+ * 【エラー処理】: Implemented proper exception handling for invalid input
  */
 function add(firstNumber, secondNumber) {
-  // 【入力値検証】: 数値以外の入力を早期に検出してエラーを防ぐ
-  // 【型安全性】: TypeScriptの型チェックと併せて実行時検証を実施
+  // 【入力値検証】: Early detection of non-numeric input to prevent errors
+  // 【型安全性】: Runtime validation combined with TypeScript type checking
   if (typeof firstNumber !== 'number' || typeof secondNumber !== 'number') {
-    // 【ユーザビリティ】: 開発者にとって分かりやすいエラーメッセージを提供
+    // 【ユーザビリティ】: Provide clear error messages for developers
     throw new Error('引数は数値である必要があります');
   }
 
-  // 【メイン処理】: シンプルで確実な加算処理
-  // 【パフォーマンス】: 不要な処理を避けた効率的な実装
+  // 【メイン処理】: Simple and reliable addition processing
+  // 【パフォーマンス】: Efficient implementation avoiding unnecessary processing
   return firstNumber + secondNumber;
 }
 ```
 
-リファクタリング完了後、以下を実行してください：
+After completing refactoring, execute the following:
 
-1. **メモファイル最終更新**: docs/implements/{{task_id}}/{feature_name}-memo.mdファイルのRefactorフェーズセクションと概要を更新
-   - 改善内容、セキュリティレビュー結果、パフォーマンスレビュー結果を記録
-   - 最終コード、品質評価を記録
-   - 概要セクションの現在のフェーズを「完了」に更新
-2. リファクタリング内容と設計改善をdocs/implements/{{task_id}}/{feature_name}-refactor-phase.mdに保存（既存ファイルがある場合は追記）
-3. TODOステータスを更新（Refactorフェーズ完了をマーク）
-4. **品質判定**: リファクタリング成果の品質を以下の基準で判定
-   - テスト結果: 全てのテストが引き続き成功
-   - セキュリティ: 重大な脆弱性が発見されていない
-   - パフォーマンス: 重大な性能課題が発見されていない
-   - リファクタ品質: 目標が達成されている
-   - コード品質: 適切なレベルに向上
-5. **次のステップ表示**: 判定結果に関わらず、次のお勧めコマンドを表示
-   - 「次のお勧めステップ: `/tdd-verify-complete` で完全性検証を実行します。」
+1. **Final memo file update**: Update Refactor phase section and overview in docs/implements/{{task_id}}/{feature_name}-memo.md
+   - Record improvement content, security review results, performance review results
+   - Record final code and quality assessment
+   - Update current phase in overview section to "completed"
+2. Save refactoring content and design improvements to docs/implements/{{task_id}}/{feature_name}-refactor-phase.md (append if existing file)
+3. Update TODO status (mark Refactor phase completion)
+4. **Quality Assessment**: Judge refactoring results quality by the following criteria
+   - Test Results: All tests continue to succeed
+   - Security: No critical vulnerabilities discovered
+   - Performance: No critical performance issues discovered
+   - Refactor Quality: Goals achieved
+   - Code Quality: Improved to appropriate level
+5. **Display Next Step**: Regardless of assessment results, display next recommended command
+   - "Next recommended step: Execute completeness verification with `/tdd-verify-complete`."
 
-## 品質判定基準
-
-```
-✅ 高品質:
-- テスト結果: Taskツールによる実行で全て継続成功
-- セキュリティ: 重大な脆弱性なし
-- パフォーマンス: 重大な性能課題なし
-- リファクタ品質: 目標達成
-- コード品質: 適切なレベル
-- ドキュメント: 完成
-
-⚠️ 要改善:
-- テストの一部失敗（Taskツールで検出）
-- セキュリティ脆弱性発見
-- パフォーマンス課題発見
-- リファクタ目標未達成
-- 品質改善不十分
-- ドキュメント不備
-```
-
-## TODO更新パターン
+## Quality Assessment Criteria
 
 ```
-- 現在のTODO「Refactorフェーズ（品質改善）」を「completed」にマーク
-- リファクタリングフェーズの完了をTODO内容に反映
-- 品質判定結果をTODO内容に記録
-- 次のフェーズ「完全性検証」をTODOに追加
-- 改善が必要な箇所がある場合は新たなTODOとして追加
+✅ High Quality:
+- Test Results: All continue to succeed with Task tool execution
+- Security: No critical vulnerabilities
+- Performance: No critical performance issues
+- Refactor Quality: Goals achieved
+- Code Quality: Appropriate level
+- Documentation: Complete
+
+⚠️ Needs Improvement:
+- Some tests fail (detected by Task tool)
+- Security vulnerabilities discovered
+- Performance issues discovered
+- Refactor goals not achieved
+- Insufficient quality improvement
+- Documentation deficiencies
+```
+
+## TODO Update Pattern
+
+```
+- Mark current TODO "Refactor Phase (Quality Improvement)" as "completed"
+- Reflect refactoring phase completion in TODO content
+- Record quality assessment results in TODO content
+- Add next phase "Completeness Verification" to TODO
+- Add new TODOs for areas that need improvement if any
 ```

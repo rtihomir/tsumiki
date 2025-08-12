@@ -1,116 +1,116 @@
-# TDD関連ファイル読み込み・コンテキスト準備 (非推奨)
+# TDD Related File Loading and Context Preparation (Deprecated)
 
-**注意**: このコマンドは非推奨です。他のTDDコマンドでは@agent-symbol-searcherとReadツールを直接使用してコンテキストを準備します。
+**Note**: This command is deprecated. Other TDD commands directly use @agent-symbol-searcher and Read tools to prepare context.
 
-以下は参考情報として保持しています。
+The following is maintained as reference information.
 
-## 実行タスク
+## Execution Tasks
 
-以下の@agent-symbol-searcherとTaskツールによる並列読み込み・検索を実行します：
+Execute the following parallel loading and searching using @agent-symbol-searcher and Task tools:
 
-### 0. **@agent-symbol-searcher で関連情報を検索**
-   - 対象機能に関連する既存シンボル・関数・クラスを検索
-   - 類似機能の実装パターンやアーキテクチャを特定
-   - TDD関連のツール・フレームワークの使用方法を確認
+### 0. **Search for related information with @agent-symbol-searcher**
+   - Search for existing symbols, functions, and classes related to target features
+   - Identify implementation patterns and architecture of similar features
+   - Check usage of TDD-related tools and frameworks
 
 ```
-1. 【読み込み】TDDメモファイルの確認
-   - Readツール: `docs/implements/{{task_id}}/{feature_name}-memo.md`
-   - 既存の開発履歴、フェーズ情報、検証結果を把握
+1. 【Reading】Check TDD memo files
+   - Read tool: `docs/implements/{{task_id}}/{feature_name}-memo.md`
+   - Understand existing development history, phase information, verification results
 
-2. 【読み込み】要件定義文書の確認  
-   - Readツール: `docs/implements/{{task_id}}/{feature_name}-requirements.md`
-   - 機能仕様、入出力、制約条件を把握
+2. 【Reading】Check requirements definition documents  
+   - Read tool: `docs/implements/{{task_id}}/{feature_name}-requirements.md`
+   - Understand feature specifications, input/output, constraints
 
-3. 【読み込み】テストケース定義の確認
-   - Readツール: `docs/implements/{{task_id}}/{feature_name}-testcases.md` 
-   - 予定テストケース、分類、期待値を把握
+3. 【Reading】Check test case definitions
+   - Read tool: `docs/implements/{{task_id}}/{feature_name}-testcases.md` 
+   - Understand planned test cases, classifications, expected values
 
-4. 【探索のみ】プロジェクト設計文書の特定
-   - Globツール: `docs/spec/{feature_name}-requirements.md` の存在確認
-   - Globツール: `docs/design/{feature_name}/` ディレクトリ内ファイルの特定
-   - 見つかったファイルパスを記録（読み込みは実行せず）
+4. 【Exploration only】Identify project design documents
+   - Glob tool: Check existence of `docs/spec/{feature_name}-requirements.md`
+   - Glob tool: Identify files in `docs/design/{feature_name}/` directory
+   - Record found file paths (do not execute reading)
 
-5. 【探索のみ】プロジェクト構造・ライブラリファイルの特定
-   - Globツール: `package.json` の存在確認
-   - Globツール: 既存テストファイル構造の把握（`**/*test*.js`, `**/*spec*.js`等）
-   - Grepツール: 類似機能の実装パターン調査（関連キーワード検索）
-   - 見つかったファイルパスを記録（読み込みは実行せず）
+5. 【Exploration only】Identify project structure and library files
+   - Glob tool: Check existence of `package.json`
+   - Glob tool: Understand existing test file structure (`**/*test*.js`, `**/*spec*.js`, etc.)
+   - Grep tool: Survey implementation patterns of similar features (search related keywords)
+   - Record found file paths (do not execute reading)
 
-6. 【探索のみ】タスク管理文書の特定
-   - Globツール: `docs/tasks/{要件名}-tasks.md` の存在確認
-   - 見つかったファイルパスを記録（読み込みは実行せず）
+6. 【Exploration only】Identify task management documents
+   - Glob tool: Check existence of `docs/tasks/{requirement name}-tasks.md`
+   - Record found file paths (do not execute reading)
 ```
 
-## 読み込み結果の整理
+## Organize Loading Results
 
-読み込み・探索完了後、以下の形式で情報を整理します：
+After loading and exploration completion, organize information in the following format:
 
-### 📋 開発コンテキスト情報
+### 📋 Development Context Information
 
 ```markdown
-## TDD開発コンテキスト
+## TDD Development Context
 
-### 🎯 現在のフェーズ・状況
-- **対象機能**: {feature_name}
-- **現在のTDDフェーズ**: [Requirements/TestCases/Red/Green/Refactor/Verify]
-- **前回の完了フェーズ**: [前回完了したフェーズ]
-- **今回の実行予定**: [実行すべき次のステップ]
+### 🎯 Current Phase and Status
+- **Target Feature**: {feature_name}
+- **Current TDD Phase**: [Requirements/TestCases/Red/Green/Refactor/Verify]
+- **Previously Completed Phase**: [Previously completed phase]
+- **Planned Execution**: [Next step to execute]
 
-### 📄 要件・仕様情報
-- **機能概要**: [要件定義書から抽出した機能の概要]
-- **入力仕様**: [入力パラメータの型・制約・範囲]
-- **出力仕様**: [出力形式・構造・期待値]
-- **制約条件**: [パフォーマンス・セキュリティ・技術制約]
-- **参照EARS要件**: [REQ-XXX, NFR-XXX等の要件ID]
+### 📄 Requirements and Specification Information
+- **Feature Overview**: [Feature overview extracted from requirements definition]
+- **Input Specification**: [Input parameter types, constraints, ranges]
+- **Output Specification**: [Output format, structure, expected values]
+- **Constraints**: [Performance, security, technical constraints]
+- **Referenced EARS Requirements**: [Requirement IDs like REQ-XXX, NFR-XXX]
 
-### 🔧 技術・実装情報
-- **使用言語**: [JavaScript/TypeScript等]
-- **テストフレームワーク**: [Jest/Mocha等]
-- **関連ファイル**: [探索で見つかった関連ファイルパス一覧]
-- **設計文書パス**: [見つかった設計文書のパス一覧]
-- **類似実装パス**: [参考にできる既存実装のファイルパス]
+### 🔧 Technical and Implementation Information
+- **Language Used**: [JavaScript/TypeScript, etc.]
+- **Test Framework**: [Jest/Mocha, etc.]
+- **Related Files**: [List of related file paths found in exploration]
+- **Design Document Paths**: [List of found design document paths]
+- **Similar Implementation Paths**: [File paths of existing implementations for reference]
 
-### 📈 進捗・品質情報
-- **全体タスク進捗**: [完了数]/[総数] ([%])
-- **前回の検証結果**: [合格/不合格/未実施]
-- **品質課題**: [セキュリティ・パフォーマンス課題]
-- **改善要求事項**: [前回記録された改善点]
+### 📈 Progress and Quality Information
+- **Overall Task Progress**: [Completed]/[Total] ([%])
+- **Previous Verification Results**: [Pass/Fail/Not Implemented]
+- **Quality Issues**: [Security and performance issues]
+- **Improvement Requirements**: [Improvement points recorded previously]
 
-### ⚠️ 注意事項・制約
-- **技術的制約**: [アーキテクチャ・互換性制約]
-- **実装時の注意点**: [前回記録された重要な注意事項]
-- **未解決課題**: [継続対応が必要な課題]
+### ⚠️ Cautions and Constraints
+- **Technical Constraints**: [Architecture and compatibility constraints]
+- **Implementation Cautions**: [Important cautions recorded previously]
+- **Unresolved Issues**: [Issues requiring continued attention]
 ```
 
-## 信頼性レベル判定
+## Reliability Level Assessment
 
-読み込んだ各情報について信頼性レベルを判定：
+Assess reliability level for each piece of loaded information:
 
-- 🟢 **青信号**: ファイルが存在し、詳細な情報が利用可能
-- 🟡 **黄信号**: ファイルが存在するが情報が部分的
-- 🔴 **赤信号**: ファイルが存在しない、または推測が必要
+- 🟢 **Green Signal**: File exists and detailed information is available
+- 🟡 **Yellow Signal**: File exists but information is partial
+- 🔴 **Red Signal**: File does not exist or requires guesswork
 
-## 使用方法
+## Usage
 
-各TDDコマンドの冒頭で以下のように使用：
+Use at the beginning of each TDD command as follows:
 
 ```markdown
-## 事前準備
+## Preliminary Preparation
 
-開発コンテキストの準備を行います：
+Prepare development context:
 
-**Taskツール実行**: `/tdd-load-context` でTDD関連ファイルの読み込み・探索とコンテキスト準備を実行
+**Task Tool Execution**: Execute TDD-related file loading, exploration, and context preparation with `/tdd-load-context`
 
-読み込み完了後、準備されたコンテキスト情報を基に{現在のフェーズ}の作業を開始します。
+After loading completion, start work for {current phase} based on prepared context information.
 ```
 
-## 効果
+## Effects
 
-- **効率化**: メモ・要件・テストケースは読み込み、その他は探索のみで時間短縮
-- **一貫性**: 全TDDフェーズで統一されたコンテキスト準備
-- **品質向上**: 必要情報の読み込み漏れ防止
-- **保守性**: ファイル読み込み・探索ロジックの一元管理
-- **軽量化**: 関連ファイルは特定のみで、必要に応じて個別に読み込み可能
+- **Efficiency**: Time saving by reading memos, requirements, test cases and only exploring others
+- **Consistency**: Unified context preparation across all TDD phases
+- **Quality Improvement**: Prevent omission of necessary information loading
+- **Maintainability**: Centralized management of file loading and exploration logic
+- **Lightweight**: Related files are only identified, can be read individually as needed
 
-このタスクにより、@agent-symbol-searcherでの検索結果と既存TDDファイルの情報を組み合わせ、TDD開発の各フェーズで必要な情報を効率的に準備できます。
+This task enables efficient preparation of necessary information for each phase of TDD development by combining search results from @agent-symbol-searcher with existing TDD file information.

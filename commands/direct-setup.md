@@ -1,78 +1,78 @@
 # direct-setup
 
-## 目的
+## Purpose
 
-DIRECTタスクの設定作業を実行します。設計文書に基づいて環境構築、設定ファイル作成、依存関係のインストールなどを行います。
+Execute DIRECT task setup work. Perform environment construction, configuration file creation, dependency installation, etc. based on design documents.
 
-## 前提条件
+## Prerequisites
 
-- タスクIDが提供されている
-- 関連する設計文書が存在する
-- 必要な権限と環境が準備されている
+- Task ID is provided
+- Related design documents exist
+- Necessary permissions and environment are prepared
 
-## 実行内容
+## Execution Content
 
-1. **設計文書の確認**
-   - @agent-symbol-searcher で関連設計文書や設定パターンを検索し、見つかったファイルをReadツールで読み込み
-   - `docs/design/{要件名}/architecture.md` をReadツールで読み込み
-   - `docs/design/{要件名}/database-schema.sql` をReadツールで読み込み
-   - その他関連する設計文書をReadツールで読み込み
+1. **Design Document Verification**
+   - Search for related design documents and configuration patterns with @agent-symbol-searcher, read found files with Read tool
+   - Read `docs/design/{requirement-name}/architecture.md` with Read tool
+   - Read `docs/design/{requirement-name}/database-schema.sql` with Read tool
+   - Read other related design documents with Read tool
 
-2. **設定作業の実行**
-   - @agent-symbol-searcher で既存の設定ファイルや環境変数を検索し、見つかったファイルをReadツールで読み込み
-   - 環境変数の設定
-   - 設定ファイルの作成・更新
-   - 依存関係のインストール
-   - データベースの初期化
-   - サービスの起動設定
-   - 権限の設定
+2. **Setup Work Execution**
+   - Search for existing configuration files and environment variables with @agent-symbol-searcher, read found files with Read tool
+   - Environment variable configuration
+   - Configuration file creation/update
+   - Dependency installation
+   - Database initialization
+   - Service startup configuration
+   - Permission configuration
 
-3. **作業記録の作成**
-   - 実行したコマンドの記録
-   - 変更した設定の記録
-   - 遭遇した問題と解決方法の記録
+3. **Work Record Creation**
+   - Record of executed commands
+   - Record of changed configurations
+   - Record of encountered problems and solutions
 
-## 出力先
+## Output Destination
 
-作業記録は `docs/implements/{TASK-ID}/` ディレクトリに以下のファイルとして作成されます：
-- `setup-report.md`: 設定作業実行記録
+Work records are created as the following files in `docs/implements/{TASK-ID}/` directory:
+- `setup-report.md`: Setup work execution record
 
-## 出力フォーマット例
+## Output Format Example
 
 ````markdown
-# {TASK-ID} 設定作業実行
+# {TASK-ID} Setup Work Execution
 
-## 作業概要
+## Work Overview
 
-- **タスクID**: {TASK-ID}
-- **作業内容**: {設定作業の概要}
-- **実行日時**: {実行日時}
-- **実行者**: {実行者}
+- **Task ID**: {TASK-ID}
+- **Work Content**: {Setup work overview}
+- **Execution Date/Time**: {Execution date/time}
+- **Executor**: {Executor}
 
-## 設計文書参照
+## Design Document Reference
 
-- **参照文書**: {参照した設計文書のリスト}
-- **関連要件**: {REQ-XXX, REQ-YYY}
+- **Referenced Documents**: {List of referenced design documents}
+- **Related Requirements**: {REQ-XXX, REQ-YYY}
 
-## 実行した作業
+## Executed Work
 
-### 1. 環境変数の設定
+### 1. Environment Variable Configuration
 
 ```bash
-# 実行したコマンド
+# Executed commands
 export NODE_ENV=development
 export DATABASE_URL=postgresql://localhost:5432/mydb
 ```
 ````
 
-**設定内容**:
+**Configuration Content**:
 
-- NODE_ENV: 開発環境に設定
-- DATABASE_URL: PostgreSQLデータベースのURL
+- NODE_ENV: Set to development environment
+- DATABASE_URL: PostgreSQL database URL
 
-### 2. 設定ファイルの作成
+### 2. Configuration File Creation
 
-**作成ファイル**: `config/database.json`
+**Created File**: `config/database.json`
 
 ```json
 {
@@ -84,62 +84,62 @@ export DATABASE_URL=postgresql://localhost:5432/mydb
 }
 ```
 
-### 3. 依存関係のインストール
+### 3. Dependency Installation
 
 ```bash
-# 実行したコマンド
+# Executed commands
 npm install express pg
 ```
 
-**インストール内容**:
+**Installation Content**:
 
-- express: Webフレームワーク
-- pg: PostgreSQLクライアント
+- express: Web framework
+- pg: PostgreSQL client
 
-### 4. データベースの初期化
+### 4. Database Initialization
 
 ```bash
-# 実行したコマンド
+# Executed commands
 createdb mydb
 psql -d mydb -f database-schema.sql
 ```
 
-**実行内容**:
+**Execution Content**:
 
-- データベース作成
-- スキーマの適用
+- Database creation
+- Schema application
 
-## 作業結果
+## Work Results
 
-- [ ] 環境変数の設定完了
-- [ ] 設定ファイルの作成完了
-- [ ] 依存関係のインストール完了
-- [ ] データベースの初期化完了
-- [ ] サービスの起動設定完了
+- [ ] Environment variable configuration completed
+- [ ] Configuration file creation completed
+- [ ] Dependency installation completed
+- [ ] Database initialization completed
+- [ ] Service startup configuration completed
 
-## 遭遇した問題と解決方法
+## Encountered Problems and Solutions
 
-### 問題1: {問題の概要}
+### Problem 1: {Problem overview}
 
-- **発生状況**: {問題が発生した状況}
-- **エラーメッセージ**: {エラーメッセージ}
-- **解決方法**: {解決方法}
+- **Occurrence Situation**: {Situation where problem occurred}
+- **Error Message**: {Error message}
+- **Solution**: {Solution}
 
-## 次のステップ
+## Next Steps
 
-- `direct-verify.md` を実行して設定を確認
-- 必要に応じて設定の調整を実施
+- Execute `direct-verify.md` to verify configuration
+- Adjust configuration as needed
 
 ```
 
-## 実行後の確認
-- `docs/implements/{TASK-ID}/setup-report.md` ファイルが作成されていることを確認
-- 設定が正しく適用されていることを確認
-- 次のステップ（direct-verify）の準備が整っていることを確認
+## Post-Execution Verification
+- Verify that `docs/implements/{TASK-ID}/setup-report.md` file is created
+- Verify that configuration is applied correctly
+- Verify that preparation for next step (direct-verify) is complete
 
-## ディレクトリ作成
+## Directory Creation
 
-実行前に必要なディレクトリを作成してください：
+Create necessary directories before execution:
 ```bash
 mkdir -p docs/implements/{TASK-ID}
 ```

@@ -21,42 +21,42 @@ const InstallComponent: React.FC = () => {
       try {
         setStatus("checking");
 
-        // 現在のディレクトリを取得
+        // Get current directory
         const currentDir = process.cwd();
         const commandsTargetDir = path.join(currentDir, ".claude", "commands");
         const agentsTargetDir = path.join(currentDir, ".claude", "agents");
 
-        // tsumikiのcommandsディレクトリとagentsディレクトリを取得
+        // Get tsumiki commands and agents directories
         const __filename = fileURLToPath(import.meta.url);
         const __dirname = path.dirname(__filename);
-        // ビルド後はdist/commands, dist/agentsを参照（cli.jsがdist/にあるため）
+        // After build, references dist/commands, dist/agents (since cli.js is in dist/)
         const tsumikiCommandsDir = path.join(__dirname, "commands");
         const tsumikiAgentsDir = path.join(__dirname, "agents");
 
-        // .claude/commandsと.claude/agentsディレクトリが存在しない場合は作成
+        // Create .claude/commands and .claude/agents directories if they don't exist
         await fs.ensureDir(commandsTargetDir);
         await fs.ensureDir(agentsTargetDir);
 
         setStatus("copying");
 
-        // commandsディレクトリ内のすべての.mdファイルと.shファイルを取得
+        // Get all .md and .sh files in commands directory
         const commandFiles = await fs.readdir(tsumikiCommandsDir);
         const targetCommandFiles = commandFiles.filter(
           (file) => file.endsWith(".md") || file.endsWith(".sh"),
         );
 
-        // agentsディレクトリ内のすべての.mdファイルを取得
+        // Get all .md files in agents directory
         let targetAgentFiles: string[] = [];
         try {
           const agentFiles = await fs.readdir(tsumikiAgentsDir);
           targetAgentFiles = agentFiles.filter((file) => file.endsWith(".md"));
         } catch {
-          // agentsディレクトリが存在しない場合はスキップ
+          // Skip if agents directory doesn't exist
         }
 
         const copiedFilesList: string[] = [];
 
-        // commandsファイルをコピー
+        // Copy commands files
         for (const file of targetCommandFiles) {
           const sourcePath = path.join(tsumikiCommandsDir, file);
           const targetPath = path.join(commandsTargetDir, file);
@@ -65,7 +65,7 @@ const InstallComponent: React.FC = () => {
           copiedFilesList.push(`commands/${file}`);
         }
 
-        // agentsファイルをコピー
+        // Copy agents files
         for (const file of targetAgentFiles) {
           const sourcePath = path.join(tsumikiAgentsDir, file);
           const targetPath = path.join(agentsTargetDir, file);
@@ -77,7 +77,7 @@ const InstallComponent: React.FC = () => {
         setCopiedFiles(copiedFilesList);
         setStatus("completed");
 
-        // 2秒後に終了
+        // Exit after 2 seconds
         setTimeout(() => {
           process.exit(0);
         }, 2000);
@@ -99,7 +99,7 @@ const InstallComponent: React.FC = () => {
   if (status === "starting") {
     return (
       <Box>
-        <Text color="cyan">🚀 Tsumiki インストールを開始します...</Text>
+        <Text color="cyan">🚀 Starting Tsumiki installation...</Text>
       </Box>
     );
   }
@@ -107,7 +107,7 @@ const InstallComponent: React.FC = () => {
   if (status === "checking") {
     return (
       <Box>
-        <Text color="yellow">📋 環境をチェック中...</Text>
+        <Text color="yellow">📋 Checking environment...</Text>
       </Box>
     );
   }
@@ -115,7 +115,7 @@ const InstallComponent: React.FC = () => {
   if (status === "copying") {
     return (
       <Box>
-        <Text color="blue">📝 コマンドテンプレートをコピー中...</Text>
+        <Text color="blue">📝 Copying command templates...</Text>
       </Box>
     );
   }
@@ -123,7 +123,7 @@ const InstallComponent: React.FC = () => {
   if (status === "error") {
     return (
       <Box flexDirection="column">
-        <Text color="red">❌ エラーが発生しました:</Text>
+        <Text color="red">❌ An error occurred:</Text>
         <Text color="red">{error}</Text>
       </Box>
     );
@@ -132,9 +132,9 @@ const InstallComponent: React.FC = () => {
   if (status === "completed") {
     return (
       <Box flexDirection="column">
-        <Text color="green">✅ インストールが完了しました!</Text>
+        <Text color="green">✅ Installation completed!</Text>
         <Newline />
-        <Text>コピーされたファイル ({copiedFiles.length}個):</Text>
+        <Text>Copied files ({copiedFiles.length} files):</Text>
         {copiedFiles.map((file) => (
           <Text key={file} color="gray">
             {" "}
@@ -143,7 +143,7 @@ const InstallComponent: React.FC = () => {
         ))}
         <Newline />
         <Text color="cyan">
-          Claude Codeで以下のようにコマンドを使用できます:
+          You can use commands in Claude Code as follows:
         </Text>
         <Text color="white"> /tdd-requirements</Text>
         <Text color="white"> /kairo-design</Text>

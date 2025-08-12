@@ -1,60 +1,60 @@
-# AITDD実践ガイド - 目次
+# AITDD Practice Guide - Table of Contents
 
-## 導入編
-- [AITDD入門 - 10分で理解するAI活用テスト駆動開発](./aitdd-getting-started.md)
+## Introduction
+- [AITDD Introduction - Understanding AI-driven Test-Driven Development in 10 Minutes](./aitdd-getting-started.md)
 
-## 第1部：基礎編
+## Part 1: Fundamentals
 
-### 第1章：AITDDとは何か
-- [1.1 AITDDの基本概念と定義](./01-fundamentals/01-aitdd-definition.md)
+### Chapter 1: What is AITDD
+- [1.1 Basic Concepts and Definition of AITDD](./01-fundamentals/01-aitdd-definition.md)
 
-### 第2章：開発環境とツールセットアップ
-- [2.1 必要なツールとセットアップ](./02-environment/01-tools-setup.md)
-- [2.2 Claude Sonnet 4の活用方法](./02-environment/02-claude-usage.md)
-- [2.3 開発環境とワークフロー構築](./02-environment/03-workflow-setup.md)
+### Chapter 2: Development Environment and Tool Setup
+- [2.1 Required Tools and Setup](./02-environment/01-tools-setup.md)
+- [2.2 How to Utilize Claude Sonnet 4](./02-environment/02-claude-usage.md)
+- [2.3 Development Environment and Workflow Construction](./02-environment/03-workflow-setup.md)
 
-## 第2部：実践編
+## Part 2: Practice
 
-### 第3章：AITDDプロセスの詳細
-- [3.1 拡張TDDプロセスの全体フロー](./03-process/01-extended-tdd-flow.md)
-- [3.2 TODO作成と仕様策定](./03-process/02-todo-and-specification.md)
-- [3.3 テストケース作成](./03-process/03-test-case-creation.md)
-- [3.4 Red-Green-Refactor-Validationサイクル](./03-process/04-rgr-validation-cycle.md)
-- [3.5 Validationステップの詳細](./03-process/05-validation-details.md)
+### Chapter 3: AITDD Process Details
+- [3.1 Extended TDD Process Overall Flow](./03-process/01-extended-tdd-flow.md)
+- [3.2 TODO Creation and Specification Definition](./03-process/02-todo-and-specification.md)
+- [3.3 Test Case Creation](./03-process/03-test-case-creation.md)
+- [3.4 Red-Green-Refactor-Validation Cycle](./03-process/04-rgr-validation-cycle.md)
+- [3.5 Validation Step Details](./03-process/05-validation-details.md)
 
-### 第4章：実践ハンズオン
-- [4.1 最初のAITDDプロジェクト](./04-hands-on/01-first-project.md)
-- [4.2 CRUD操作の実装例](./04-hands-on/02-crud-example.md)
-- [4.3 API開発の実践](./04-hands-on/03-api-development.md)
-- [4.4 エラーハンドリングとデバッグ](./04-hands-on/04-error-handling.md)
+### Chapter 4: Hands-On Practice
+- [4.1 Your First AITDD Project](./04-hands-on/01-first-project.md)
+- [4.2 CRUD Operation Implementation Examples](./04-hands-on/02-crud-example.md)
+- [4.3 API Development Practice](./04-hands-on/03-api-development.md)
+- [4.4 Error Handling and Debugging](./04-hands-on/04-error-handling.md)
 
-## 第3部：応用・最適化編
+## Part 3: Application and Optimization
 
-### 第5章：プロンプト設計とAI活用の最適化
-- [5.1 効果的なプロンプト設計の原則](./05-optimization/01-prompt-design.md)
-- [5.2 AI推論の可視化技術](./05-optimization/02-ai-inference-visualization.md)
-- [5.3 継続的改善とプロンプト最適化](./05-optimization/03-continuous-improvement.md)
+### Chapter 5: Prompt Design and AI Utilization Optimization
+- [5.1 Effective Prompt Design Principles](./05-optimization/01-prompt-design.md)
+- [5.2 AI Inference Visualization Techniques](./05-optimization/02-ai-inference-visualization.md)
+- [5.3 Continuous Improvement and Prompt Optimization](./05-optimization/03-continuous-improvement.md)
 
-### 第6章：人間とAIの協調
-- [6.1 過度な依存を避けるバランス戦略](./06-collaboration/01-balance-strategy.md)
-- [6.2 創造性発揮のポイント](./06-collaboration/02-creativity-points.md)
-- [6.3 レビューと品質管理](./06-collaboration/03-review-quality.md)
+### Chapter 6: Human-AI Collaboration
+- [6.1 Balance Strategy to Avoid Over-dependency](./06-collaboration/01-balance-strategy.md)
+- [6.2 Points for Demonstrating Creativity](./06-collaboration/02-creativity-points.md)
+- [6.3 Review and Quality Management](./06-collaboration/03-review-quality.md)
 
-## 第4部：事例・応用編
+## Part 4: Case Studies and Applications
 
-### 第7章：実際の事例と学び
-- [7.1 実験プロジェクトの成果](./07-case-studies/01-experimental-results.md)
-- [7.2 Vibe CodingからTDDへの進化事例](./07-case-studies/02-evolution-case.md)
-- [7.3 失敗事例と対処法](./07-case-studies/03-failure-cases.md)
+### Chapter 7: Real Cases and Lessons Learned
+- [7.1 Experimental Project Results](./07-case-studies/01-experimental-results.md)
+- [7.2 Evolution Case from Vibe Coding to TDD](./07-case-studies/02-evolution-case.md)
+- [7.3 Failure Cases and Countermeasures](./07-case-studies/03-failure-cases.md)
 
-### 第8章：ベストプラクティス集
-- [8.1 技術選択のガイドライン](./08-best-practices/01-tech-selection.md)
-- [8.2 ドキュメント化と保守性](./08-best-practices/02-documentation.md)
-- [8.3 将来展望とロードマップ](./08-best-practices/03-future-vision.md)
+### Chapter 8: Best Practices Collection
+- [8.1 Technology Selection Guidelines](./08-best-practices/01-tech-selection.md)
+- [8.2 Documentation and Maintainability](./08-best-practices/02-documentation.md)
+- [8.3 Future Vision and Roadmap](./08-best-practices/03-future-vision.md)
 
 ---
 
-**この文書について**
-- 対象読者：AITDDの実践を始めたいソフトウェアエンジニア
-- 目標：この文書を読んで、流れに沿ってAITDDを実践できるようになること
-- 更新日：2025年6月21日
+**About This Document**
+- Target Audience: Software engineers who want to start practicing AITDD
+- Goal: To be able to practice AITDD by following the flow after reading this document
+- Last Updated: June 21, 2025

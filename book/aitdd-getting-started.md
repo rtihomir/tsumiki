@@ -1,113 +1,113 @@
-# AITDD入門 - 10分で理解するAI活用テスト駆動開発
+# AITDD Introduction - Understanding AI-driven Test-Driven Development in 10 Minutes
 
-## AITDDって何？
+## What is AITDD?
 
-AITDD（AI + Test-Driven Development）は、AIを活用してテスト駆動開発を効率化する新しい開発手法です。従来のTDDにAIの力を組み合わせることで、開発速度を劇的に向上させながら、品質の高いソフトウェアを作ることができます。
+AITDD (AI + Test-Driven Development) is a new development methodology that enhances test-driven development efficiency by leveraging AI. By combining the power of AI with traditional TDD, you can dramatically improve development speed while creating high-quality software.
 
-## 従来の開発とここが違う
+## How This Differs from Conventional Development
 
-### 従来の開発
-- 手作業でコードを1行ずつ書く
-- 実装に多くの時間を消費
-- 個人のスキルに大きく依存
+### Conventional Development
+- Manually write code line by line
+- Spend significant time on implementation
+- Heavily dependent on individual skills
 
 ### AITDD
-- AIがコード生成を支援
-- 実装負担が大幅に軽減
-- テストで品質を保証しながら高速開発
+- AI assists with code generation
+- Implementation burden significantly reduced
+- High-speed development while ensuring quality through testing
 
-## AITDDの基本的な流れ
+## Basic AITDD Flow
 
-1. **TODO作成** - 何を作るかを明確にする
-2. **仕様策定** - AIと一緒に詳細を決める
-3. **テスト作成** - 期待する動作をテストで表現
-4. **実装** - AIにコードを生成してもらう
-5. **検証** - 人間が最終チェック
+1. **TODO Creation** - Clarify what to build
+2. **Specification Definition** - Decide details together with AI
+3. **Test Creation** - Express expected behavior through tests
+4. **Implementation** - Have AI generate code
+5. **Verification** - Human performs final check
 
-この流れを繰り返すことで、確実に動くソフトウェアを効率的に作っていきます。
+By repeating this flow, you can efficiently create reliable software.
 
-## どんなプロジェクトに向いてる？
+## What Projects Is This Suited For?
 
-### 特に効果的
-- **似たようなコードを多く書くプロジェクト**
-  - CRUD操作
-  - API開発
-  - フォームバリデーション
-- **JavaScript・Python**のプロジェクト
-  - AIがライブラリ情報を調べやすい
+### Particularly Effective
+- **Projects that involve writing similar code frequently**
+  - CRUD operations
+  - API development
+  - Form validation
+- **JavaScript and Python** projects
+  - AI can easily research library information
 
-### 注意が必要
-- 極めて高いパフォーマンスが要求される場合
-- Java・C#などのコンパイル型言語（効果は限定的）
+### Requires Caution
+- Cases requiring extremely high performance
+- Compiled languages like Java and C# (limited effectiveness)
 
-## 使うツール
+## Tools Used
 
 ### Claude Sonnet 4
-- メインのAIアシスタント
-- コード生成から品質チェックまで対応
-- プロンプト（指示）の書き方がポイント
+- Main AI assistant
+- Handles everything from code generation to quality checks
+- How you write prompts (instructions) is key
 
-### 開発環境
-- 普段使っているエディタ・IDE
-- テスト実行環境
-- バージョン管理（Git）
+### Development Environment
+- Your usual editor/IDE
+- Test execution environment
+- Version control (Git)
 
-## 実際の開発例
+## Actual Development Example
 
-### 例：シンプルなタスク管理機能
+### Example: Simple Task Management Feature
 
-1. **TODO**: 「タスクの追加・削除・完了状態変更ができる機能を作る」
+1. **TODO**: "Create functionality that can add, delete, and change completion status of tasks"
 
-2. **仕様策定**: AIと対話しながら詳細を決める
-   - タスクのデータ構造
-   - 必要なAPIエンドポイント
-   - エラーハンドリング
+2. **Specification Definition**: Decide details through dialogue with AI
+   - Task data structure
+   - Required API endpoints
+   - Error handling
 
-3. **テスト作成**: 期待する動作をテストコードで表現
+3. **Test Creation**: Express expected behavior in test code
 
-4. **実装**: AIがテストを通すコードを生成
+4. **Implementation**: AI generates code that passes tests
 
-5. **検証**: 動作確認と品質チェック
+5. **Verification**: Operational confirmation and quality check
 
-## メリット
+## Benefits
 
-- **開発速度**: 従来の数倍の速度で開発可能
-- **品質安定**: テストによる品質保証
-- **学習効果**: AIのコードから新しい技術を学べる
-- **創造性**: 実装作業が減り、設計に集中できる
+- **Development Speed**: Can develop at several times conventional speed
+- **Quality Stability**: Quality assurance through testing
+- **Learning Effect**: Learn new technologies from AI code
+- **Creativity**: Reduced implementation work allows focus on design
 
-## 注意点
+## Important Points
 
-- **AIに完全依存しない**: 最終的な判断は人間が行う
-- **プロンプト設計**: AIへの指示の仕方で品質が変わる
-- **継続的改善**: 実践を通じてプロセスを改善
+- **Don't rely completely on AI**: Final decisions are made by humans
+- **Prompt Design**: Quality changes based on how you instruct AI
+- **Continuous Improvement**: Improve processes through practice
 
-## 始めるための3ステップ
+## 3 Steps to Get Started
 
-### Step 1: 環境準備
-- Claude Sonnet 4のアカウント取得
-- 開発環境の整備
+### Step 1: Environment Setup
+- Obtain Claude Sonnet 4 account
+- Set up development environment
 
-### Step 2: 小さく始める
-- 単純なCRUD操作から開始
-- プロンプトの書き方を練習
+### Step 2: Start Small
+- Begin with simple CRUD operations
+- Practice writing prompts
 
-### Step 3: 継続的改善
-- 実践を通じてプロセスを改善
-- チーム内でのナレッジ共有
+### Step 3: Continuous Improvement
+- Improve processes through practice
+- Share knowledge within team
 
-## まとめ
+## Summary
 
-AITDDは、AIの力を借りて効率的に高品質なソフトウェアを開発する手法です。完全にAIに任せるのではなく、人間とAIが協力することで、従来では考えられない速度と品質を実現できます。
+AITDD is a methodology for efficiently developing high-quality software with AI assistance. Rather than leaving everything to AI, humans and AI collaborate to achieve speed and quality previously unimaginable.
 
-まずは小さなプロジェクトから始めて、AITDDの効果を実感してみてください。実践を通じて、あなたなりのAITDDスタイルが見えてくるはずです。
-
----
-
-**この資料の読了時間**: 約10分  
-**次のステップ**: [AITDD実践ガイド](./toc.md)で詳細なプロセスを学ぶ
+Start with a small project and experience the effects of AITDD firsthand. Through practice, you should discover your own AITDD style.
 
 ---
 
-*作成日: 2025年6月22日*  
-*対象: AI開発初心者*
+**Reading time for this document**: About 10 minutes  
+**Next step**: Learn detailed processes in the [AITDD Practice Guide](./toc.md)
+
+---
+
+*Created: June 22, 2025*  
+*Target: AI development beginners*

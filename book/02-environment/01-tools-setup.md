@@ -1,53 +1,53 @@
-# 2.1 必要なツールとセットアップ
+# 2.1 Required Tools and Setup
 
-AITDDを実践するために必要なツールと環境のセットアップ手順について説明します。AITDDは特別なツールを必要とせず、既存の開発環境にAI支援ツールを追加するだけで始められます。
+This section explains the tools and environment setup procedures necessary for practicing AITDD. AITDD does not require special tools and can be started by simply adding AI support tools to your existing development environment.
 
-## 必要なツール一覧
+## Required Tools List
 
-### 必須ツール
+### Essential Tools
 
 #### 1. Claude Sonnet 4 + Claude Code
-**役割**: メインのAI開発支援ツール  
-**用途**: コード生成、テスト作成、リファクタリング、検証  
-**アクセス方法**: Claude Code経由
+**Role**: Main AI development support tool  
+**Usage**: Code generation, test creation, refactoring, verification  
+**Access Method**: Via Claude Code
 
 #### 2. VS Code
-**役割**: 統合開発環境  
-**用途**: コード編集、デバッグ、プロジェクト管理  
-**特徴**: Claude Codeとの統合が可能
+**Role**: Integrated development environment  
+**Usage**: Code editing, debugging, project management  
+**Features**: Integration with Claude Code possible
 
 #### 3. Git + GitHub
-**役割**: バージョン管理  
-**用途**: コード管理、履歴追跡、復旧  
-**重要性**: AIが期待通りの結果を出さない場合の回復手段
+**Role**: Version control  
+**Usage**: Code management, history tracking, recovery  
+**Importance**: Recovery means when AI doesn't produce expected results
 
-### 補助ツール
+### Auxiliary Tools
 
-#### Gemini（オプション）
-**役割**: 調査・情報収集用AI  
-**用途**: ライブラリ調査、技術情報収集  
-**特徴**: 長いコンテキストを活用した大量情報処理
+#### Gemini (Optional)
+**Role**: AI for research and information gathering  
+**Usage**: Library research, technical information gathering  
+**Features**: Large-scale information processing utilizing long context
 
-## セットアップ手順
+## Setup Procedures
 
-### ステップ1: Claude Proプランの契約
+### Step 1: Claude Pro Plan Subscription
 
-1. **Claudeアカウント作成**
-   - https://claude.ai にアクセス
-   - アカウントを作成
+1. **Claude Account Creation**
+   - Access https://claude.ai
+   - Create an account
 
-2. **Proプランへのアップグレード**
-   - 月額$20のProプランに加入
-   - 最大$200で上限設定可能
-   - API料金のような青天井コストを回避
+2. **Upgrade to Pro Plan**
+   - Subscribe to the $20/month Pro plan
+   - Can set a maximum limit of $200
+   - Avoid unlimited costs like API pricing
 
-3. **Claude Codeの有効化**
-   - Proプランでアクセス可能
-   - 開発用途での自由な使用が可能
+3. **Activate Claude Code**
+   - Accessible with Pro plan
+   - Free usage for development purposes
 
-### ステップ2: VS Codeのセットアップ
+### Step 2: VS Code Setup
 
-1. **VS Codeのインストール**
+1. **Install VS Code**
    ```bash
    # Windows
    winget install Microsoft.VisualStudioCode
@@ -59,270 +59,270 @@ AITDDを実践するために必要なツールと環境のセットアップ手
    sudo apt install code
    ```
 
-2. **基本的な拡張機能のインストール**
-   - Git Graph（Git操作の視覚化）
-   - GitLens（Git情報の表示強化）
-   - 言語固有の拡張（JavaScript、Python等）
+2. **Install Basic Extensions**
+   - Git Graph (Git operation visualization)
+   - GitLens (Enhanced Git information display)
+   - Language-specific extensions (JavaScript, Python, etc.)
 
-3. **Claude Code統合の設定**
-   - VS CodeのプラグインまたはClaude Codeの設定
-   - プロジェクトディレクトリとの連携設定
+3. **Configure Claude Code Integration**
+   - VS Code plugin or Claude Code configuration
+   - Project directory integration settings
 
-### ステップ3: Git環境の構築
+### Step 3: Git Environment Setup
 
-1. **Gitのインストールと設定**
+1. **Git Installation and Configuration**
    ```bash
-   # 基本設定
+   # Basic configuration
    git config --global user.name "Your Name"
    git config --global user.email "your.email@example.com"
    
-   # デフォルトブランチ設定
+   # Default branch setting
    git config --global init.defaultBranch main
    ```
 
-2. **GitHubアカウントの準備**
-   - GitHubアカウントの作成
-   - SSH鍵またはPersonal Access Tokenの設定
-   - リポジトリ作成の準備
+2. **GitHub Account Preparation**
+   - Create GitHub account
+   - Set up SSH key or Personal Access Token
+   - Prepare for repository creation
 
-3. **AITDD用のブランチ戦略**
+3. **AITDD Branch Strategy**
    ```bash
-   # 基本的なワークフロー
+   # Basic workflow
    git checkout -b feature/new-functionality
-   # AITDD実践
+   # AITDD practice
    git add .
    git commit -m "Implement feature with AITDD"
    git push origin feature/new-functionality
    ```
 
-## AIツール比較と選択基準
+## AI Tool Comparison and Selection Criteria
 
-### Claude Sonnet 4を選択する理由
+### Reasons for Choosing Claude Sonnet 4
 
-AITDDを実践するにあたり、多数のAIツールが存在する中でClaude Sonnet 4を主力ツールとして選択した理由を説明します。
+We explain the reasons for selecting Claude Sonnet 4 as the primary tool for practicing AITDD among many existing AI tools.
 
-#### 総合評価による選択
+#### Selection Based on Comprehensive Evaluation
 
-**主要検討要素:**
-1. **コスト効率**: AITDDではトライアルが頻繁なため、妥当なコストレベルが必須
-2. **コーディング性能**: 最高性能よりも安定した性能を重視
-3. **アクセス性**: 制限の少ないプランで自由に使用可能
-4. **統合性**: 開発環境との連携とワークフローの一貫性
+**Main Consideration Factors:**
+1. **Cost Efficiency**: Reasonable cost level essential as AITDD involves frequent trials
+2. **Coding Performance**: Prioritize stable performance over maximum performance
+3. **Accessibility**: Free usage with plans that have few restrictions
+4. **Integration**: Coordination with development environment and workflow consistency
 
-**Claude Sonnet 4の優位性:**
-- **Claude Code統合**: VS Codeプラグイン経由での密接な統合
-- **Proプラン**: 月額$20で上限$200設定可能（APIの青天井コストを回避）
-- **AITDD適性**: トライアル重視の開発スタイルに最適化
-- **総合バランス**: 性能、コスト、使いやすさの最適なバランス
+**Claude Sonnet 4 Advantages:**
+- **Claude Code Integration**: Close integration via VS Code plugin
+- **Pro Plan**: $20/month with $200 limit setting (avoiding unlimited API costs)
+- **AITDD Suitability**: Optimized for trial-focused development style
+- **Overall Balance**: Optimal balance of performance, cost, and usability
 
-#### 他ツールとの比較結果
+#### Comparison Results with Other Tools
 
-**検討済みAIツール:**
-- ChatGPT: 性能は高いがコスト面での課題
-- GitHub Copilot: コード補完に特化、AITDD全体には不十分
-- その他のAIツール: 試用の結果、総合的にClaude Sonnet 4に収束
+**Evaluated AI Tools:**
+- ChatGPT: High performance but cost challenges
+- GitHub Copilot: Specialized in code completion, insufficient for overall AITDD
+- Other AI Tools: Trial results converged to Claude Sonnet 4
 
-**収束理由:**
+**Convergence Reasons:**
 ```
-項目               Claude Sonnet 4    他ツール
-──────────────────────────────────────────
-コスト効率         ◎                △
-コーディング性能   ○                ◎
-アクセス性         ◎                △
-統合性             ◎                ○
-AITDD適性          ◎                △
-──────────────────────────────────────────
-総合評価           最適              課題あり
-```
-
-### Geminiとの使い分け戦略
-
-Claude Sonnet 4を主力としつつ、特定の用途でGeminiを補助的に活用します。
-
-#### 使い分けの基本方針
-
-**Claude Sonnet 4（主力ツール）:**
-- 実装フェーズのすべて（設計〜テスト〜実装〜リファクタリング〜Validation）
-- AITDDプロセス全体の一貫した実行
-- コード生成と品質チェックの両立
-
-**Gemini（補助ツール）:**
-- 技術調査・情報収集
-- 長いコンテキストを活用した大量情報処理
-- 必要なライブラリの調査
-- 大量の調べ物が必要なタスク
-
-#### 具体的な連携パターン
-
-```
-調査フェーズ:
-Gemini → 技術情報収集 → Claude Sonnet 4に情報提供
-
-実装フェーズ:
-Claude Sonnet 4 → 一貫したAITDDプロセス実行
+Item                   Claude Sonnet 4    Other Tools
+──────────────────────────────────────────────
+Cost Efficiency       ◎                 △
+Coding Performance     ○                 ◎
+Accessibility          ◎                 △
+Integration            ◎                 ○
+AITDD Suitability      ◎                 △
+──────────────────────────────────────────────
+Overall Evaluation     Optimal           Issues
 ```
 
-**連携の実例:**
-1. **新しいライブラリ調査**: Geminiで情報収集
-2. **調査結果の統合**: Claude Sonnet 4に調査結果を提供
-3. **実装の実行**: Claude Sonnet 4でAITDDプロセス実行
+### Division Strategy with Gemini
 
-### フォールバック戦略
+While using Claude Sonnet 4 as the primary tool, we utilize Gemini auxiliarily for specific purposes.
 
-AIが期待通りの結果を出さない場合の対処法について説明します。
+#### Basic Policy for Division
 
-#### 基本的なフォールバック手順
+**Claude Sonnet 4 (Primary Tool):**
+- All implementation phases (design → test → implementation → refactoring → validation)
+- Consistent execution of entire AITDD process
+- Both code generation and quality checking
 
-**ステップ1: 状態の復旧**
+**Gemini (Auxiliary Tool):**
+- Technical research and information gathering
+- Large-scale information processing utilizing long context
+- Library research
+- Tasks requiring extensive research
+
+#### Specific Collaboration Patterns
+
+```
+Research Phase:
+Gemini → Technical information gathering → Provide information to Claude Sonnet 4
+
+Implementation Phase:
+Claude Sonnet 4 → Consistent AITDD process execution
+```
+
+**Collaboration Examples:**
+1. **New Library Research**: Information gathering with Gemini
+2. **Research Result Integration**: Provide research results to Claude Sonnet 4
+3. **Implementation Execution**: Execute AITDD process with Claude Sonnet 4
+
+### Fallback Strategy
+
+We explain how to handle cases when AI doesn't produce expected results.
+
+#### Basic Fallback Procedures
+
+**Step 1: State Recovery**
 ```bash
-# 前の状態に戻す
+# Return to previous state
 git reset --hard HEAD~1
-# または特定のコミットまで戻る
+# Or return to specific commit
 git reset --hard <commit-hash>
 ```
 
-**ステップ2: プロンプト調整**
-- 指示の明確化・詳細化
-- 文脈情報の追加
-- 制約条件の明示
+**Step 2: Prompt Adjustment**
+- Clarify and detail instructions
+- Add context information
+- Specify constraint conditions
 
-**ステップ3: 再実行**
-- 同じツール（Claude Sonnet 4）で再試行
-- 別ツールへの切り替えは行わない
-- 一貫性を保った対応
+**Step 3: Re-execution**
+- Retry with same tool (Claude Sonnet 4)
+- Don't switch to different tools
+- Maintain consistency
 
-#### フォールバック判断基準
+#### Fallback Decision Criteria
 
-**git resetを実行するタイミング:**
-- 最終コードが期待から大きくズレた場合
-- 修正依頼より作り直しの方が早いと判断した場合
-- 複数回の修正試行で改善が見られない場合
+**When to Execute git reset:**
+- When final code significantly deviates from expectations
+- When starting over is judged faster than requesting fixes
+- When no improvement is seen after multiple fix attempts
 
-**プロンプト調整の指針:**
+**Prompt Adjustment Guidelines:**
 ```
-# 改善前（曖昧）
-"このコードを修正して"
+# Before improvement (vague)
+"Fix this code"
 
-# 改善後（具体的）
-"このコードの以下の問題を修正して：
-1. バリデーションエラーが適切に処理されていない
-2. 戻り値の型が仕様と異なる
-3. エッジケースのテストが不足している"
+# After improvement (specific)
+"Fix the following issues in this code:
+1. Validation errors are not properly handled
+2. Return value type differs from specification
+3. Edge case tests are insufficient"
 ```
 
-#### フォールバック戦略の特徴
+#### Fallback Strategy Characteristics
 
-**シンプル性:**
-- 複雑な判断ロジックを避ける
-- 迅速な復旧を重視
+**Simplicity:**
+- Avoid complex decision logic
+- Prioritize quick recovery
 
-**一貫性:**
-- 同一ツールでの再試行を基本
-- ツール切り替えによる混乱を回避
+**Consistency:**
+- Basic retry with same tool
+- Avoid confusion from tool switching
 
-**学習性:**
-- 繰り返しで感覚を磨く
-- 経験値を蓄積して判断基準を向上
+**Learning:**
+- Refine intuition through repetition
+- Accumulate experience to improve decision criteria
 
-### 新しいAIツールの評価方法
+### Evaluation Method for New AI Tools
 
-継続的な改善のため、新しいAIツールの評価方法も定めておきます。
+We also establish evaluation methods for new AI tools for continuous improvement.
 
-#### 評価プロセス
+#### Evaluation Process
 
-**情報収集フェーズ:**
-1. **常時チェック**: 新しいAIツールの情報を常にチェック
-2. **話題性の確認**: 一時的なブームではなく持続した関心があるか
-3. **コミュニティの反応**: 開発者コミュニティでの評価を確認
+**Information Gathering Phase:**
+1. **Continuous Monitoring**: Constantly check information on new AI tools
+2. **Trend Verification**: Check if there's sustained interest, not just temporary hype
+3. **Community Response**: Verify evaluation in developer community
 
-**トライアル判断基準:**
-- **持続性**: 数ヶ月にわたって話題が続いているか
-- **実用性**: AITDDワークフローに適用可能か
-- **コスト効率**: 現在のツール構成と比較して優位性があるか
+**Trial Decision Criteria:**
+- **Sustainability**: Has the topic continued for several months?
+- **Practicality**: Is it applicable to AITDD workflow?
+- **Cost Efficiency**: Are there advantages compared to current tool configuration?
 
-**慎重なアプローチ:**
-- すぐに飛びつかず、十分な情報収集を実施
-- 現在の安定したワークフローを維持しながら評価
-- 明確な優位性が確認できた場合のみ移行を検討
+**Cautious Approach:**
+- Don't jump immediately, conduct sufficient information gathering
+- Evaluate while maintaining current stable workflow
+- Consider migration only when clear advantages are confirmed
 
-## 推奨技術スタック
+## Recommended Technology Stack
 
-### プログラミング言語
+### Programming Languages
 
-#### 推奨言語
+#### Recommended Languages
 **JavaScript/TypeScript**
-- パッケージ管理: npm/yarn
-- 透明性: package.jsonによる依存関係の可視化
-- AI対応: 動的なライブラリ調査が可能
+- Package management: npm/yarn
+- Transparency: Dependency visualization through package.json
+- AI support: Dynamic library research possible
 
 **Python**
-- パッケージ管理: pip/poetry
-- 透明性: requirements.txtによる依存関係の可視化
-- AI対応: 豊富なライブラリ情報がAIに利用可能
+- Package management: pip/poetry
+- Transparency: Dependency visualization through requirements.txt
+- AI support: Rich library information available to AI
 
-#### 注意が必要な言語
-**Java/C#等のコンパイル型言語**
-- 理由: jarやddlのバイナリ配布により、AIが依存関係を動的調査困難
-- 対応: 使用可能だが、事前の準備と人間の補助が必要
+#### Languages Requiring Caution
+**Compiled Languages like Java/C#**
+- Reason: Binary distribution through jar/dll makes dynamic dependency research difficult for AI
+- Response: Usable but requires prior preparation and human assistance
 
-### プロジェクトタイプ
+### Project Types
 
-#### 最適なプロジェクト
-- **CRUD操作中心のアプリケーション**
-- **Web API開発**
-- **データベース連携アプリケーション**
-- **比較的大規模なプロジェクト**
+#### Optimal Projects
+- **CRUD-centered applications**
+- **Web API development**
+- **Database-integrated applications**
+- **Relatively large-scale projects**
 
-#### 効果的なコードパターン
-- 似たようなコードを大量に作成する場面
-- テンプレート化しやすい処理
-- 標準的なデザインパターンの実装
+#### Effective Code Patterns
+- Scenarios involving large-scale creation of similar code
+- Easily templatable processes
+- Standard design pattern implementations
 
-## コスト管理
+## Cost Management
 
-### 予想コスト
-- **Claude Pro**: $20/月
-- **GitHub**: 個人利用は無料、チーム利用は$4/ユーザー/月
-- **VS Code**: 無料
-- **その他**: プロジェクト固有の依存関係コスト
+### Expected Costs
+- **Claude Pro**: $20/month
+- **GitHub**: Free for personal use, $4/user/month for team use
+- **VS Code**: Free
+- **Others**: Project-specific dependency costs
 
-### コスト最適化のポイント
-1. **Claude Proの上限設定**: 最大$200で設定
-2. **効率的な使用**: 明確なゴール設定でAI使用量を最適化
-3. **Git履歴管理**: 無駄な試行錯誤を避けるための適切なコミット戦略
+### Cost Optimization Points
+1. **Claude Pro Limit Setting**: Set maximum at $200
+2. **Efficient Usage**: Optimize AI usage with clear goal setting
+3. **Git History Management**: Appropriate commit strategy to avoid wasteful trial and error
 
-## セットアップ完了の確認
+## Setup Completion Verification
 
-以下の項目をチェックして、セットアップが完了していることを確認してください：
+Check the following items to confirm setup is complete:
 
-- [ ] Claude Proプランが有効
-- [ ] Claude Codeにアクセス可能
-- [ ] VS Codeがインストール済み
-- [ ] 基本的なVS Code拡張機能が導入済み
-- [ ] Gitが設定済み
-- [ ] GitHubアカウント準備完了
-- [ ] プロジェクト用ディレクトリが作成済み
-- [ ] 選択した技術スタックの基本環境が準備済み
+- [ ] Claude Pro plan is active
+- [ ] Claude Code is accessible
+- [ ] VS Code is installed
+- [ ] Basic VS Code extensions are installed
+- [ ] Git is configured
+- [ ] GitHub account is prepared
+- [ ] Project directory is created
+- [ ] Basic environment for selected technology stack is prepared
 
-## トラブルシューティング
+## Troubleshooting
 
-### よくある問題と解決策
+### Common Problems and Solutions
 
-**Claude Codeへのアクセスができない**
-- Proプランの有効性を確認
-- ブラウザキャッシュのクリア
-- ネットワーク接続の確認
+**Cannot access Claude Code**
+- Verify Pro plan validity
+- Clear browser cache
+- Check network connection
 
-**VS Codeとの統合に問題がある**
-- Claude Codeプラグインの再インストール
-- VS Codeの再起動
-- 設定ファイルの確認
+**Issues with VS Code integration**
+- Reinstall Claude Code plugin
+- Restart VS Code
+- Check configuration files
 
-**Git操作でエラーが発生**
-- 認証情報の再設定
-- リモートリポジトリのURL確認
-- アクセス権限の確認
+**Git operation errors**
+- Reset authentication information
+- Check remote repository URL
+- Verify access permissions
 
-## 次のステップ
+## Next Steps
 
-ツールのセットアップが完了したら、次の章「2.2 Claude Sonnet 4の活用方法」でAIツールの具体的な使用方法を学びましょう。効果的なプロンプト設計とAIとの協調作業のテクニックを身につけることで、AITDDの真価を発揮できるようになります。
+Once tool setup is complete, proceed to the next chapter "2.2 Claude Sonnet 4 Usage Methods" to learn specific AI tool usage methods. By mastering effective prompt design and AI collaboration techniques, you'll be able to realize the true value of AITDD.

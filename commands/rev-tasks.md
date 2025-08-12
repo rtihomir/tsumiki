@@ -1,270 +1,270 @@
 # rev-tasks
 
-## 目的
+## Purpose
 
-既存のコードベースを分析し、実装されている機能を特定してタスク一覧として整理する。実装済みの機能から逆算してタスクの構造、依存関係、実装詳細を抽出し、文書化する。
+Analyze existing codebase to identify implemented features and organize them as a task list. Reverse-engineer task structure, dependencies, and implementation details from completed features and document them.
 
-## 前提条件
+## Prerequisites
 
-- 分析対象のコードベースが存在する
-- `docs/reverse/` ディレクトリが存在する（なければ作成）
-- TypeScript/JavaScript、Python、その他のコードを分析可能
+- Target codebase for analysis exists
+- `docs/reverse/` directory exists (create if not present)
+- Can analyze TypeScript/JavaScript, Python, and other code
 
-## 実行内容
+## Execution Instructions
 
-1. **コードベースの構造分析**
-   - ディレクトリ構造の把握
-   - 設定ファイルの確認（package.json、tsconfig.json、requirements.txt等）
-   - 依存関係の分析
+1. **Codebase Structure Analysis**
+   - Understand directory structure
+   - Verify configuration files (package.json, tsconfig.json, requirements.txt, etc.)
+   - Analyze dependencies
 
-2. **機能コンポーネントの特定**
-   - フロントエンドコンポーネント
-   - バックエンドサービス/コントローラー
-   - データベース関連（モデル、マイグレーション）
-   - ユーティリティ関数
-   - ミドルウェア
+2. **Functional Component Identification**
+   - Frontend components
+   - Backend services/controllers
+   - Database related (models, migrations)
+   - Utility functions
+   - Middleware
 
-3. **API エンドポイントの抽出**
-   - REST API エンドポイント
-   - GraphQL リゾルバー
-   - WebSocket ハンドラー
-   - ルーティング定義
+3. **API Endpoint Extraction**
+   - REST API endpoints
+   - GraphQL resolvers
+   - WebSocket handlers
+   - Routing definitions
 
-4. **データベース構造の分析**
-   - テーブル定義
-   - リレーションシップ
-   - マイグレーションファイル
-   - インデックス設定
+4. **Database Structure Analysis**
+   - Table definitions
+   - Relationships
+   - Migration files
+   - Index configurations
 
-5. **UI/UX実装の分析**
-   - 画面コンポーネント
-   - 状態管理の実装
-   - ルーティング
-   - スタイリング手法
+5. **UI/UX Implementation Analysis**
+   - Screen components
+   - State management implementation
+   - Routing
+   - Styling approaches
 
-6. **テスト実装の確認**
-   - 単体テストの存在
-   - 統合テストの存在
-   - E2Eテストの存在
-   - テストカバレッジ
+6. **Test Implementation Verification**
+   - Unit test existence
+   - Integration test existence
+   - E2E test existence
+   - Test coverage
 
-7. **タスクの逆算と整理**
-   - 実装された機能をタスクとして分解
-   - タスクIDの自動割り当て
-   - 依存関係の推定
-   - 実装工数の推定
+7. **Task Reverse Engineering and Organization**
+   - Decompose implemented features into tasks
+   - Automatic task ID assignment
+   - Estimate dependencies
+   - Estimate implementation effort
 
-8. **ファイルの作成**
-   - `docs/reverse/{プロジェクト名}-discovered-tasks.md` として保存
-   - 発見されたタスクを構造化して文書化
+8. **File Creation**
+   - Save as `docs/reverse/{project-name}-discovered-tasks.md`
+   - Document discovered tasks in structured format
 
-## 出力フォーマット例
+## Output Format Example
 
 ````markdown
-# {プロジェクト名} 発見タスク一覧
+# {Project Name} Discovered Task List
 
-## 概要
+## Overview
 
-**分析日時**: {分析実行日時}
-**対象コードベース**: {パス}
-**発見タスク数**: {数}
-**推定総工数**: {時間}
+**Analysis Date**: {analysis-execution-date}
+**Target Codebase**: {path}
+**Discovered Tasks**: {count}
+**Estimated Total Effort**: {hours}
 
-## コードベース構造
+## Codebase Structure
 
-### プロジェクト情報
-- **フレームワーク**: {使用フレームワーク}
-- **言語**: {使用言語}
-- **データベース**: {使用DB}
-- **主要ライブラリ**: {主要な依存関係}
+### Project Information
+- **Framework**: {used-framework}
+- **Language**: {used-language}
+- **Database**: {used-db}
+- **Major Libraries**: {major-dependencies}
 
-### ディレクトリ構造
+### Directory Structure
 ```
-{ディレクトリツリー}
+{directory-tree}
 ```
 
-## 発見されたタスク
+## Discovered Tasks
 
-### 基盤・設定タスク
+### Foundation・Configuration Tasks
 
-#### DISCOVERED-001: プロジェクト初期設定
+#### DISCOVERED-001: Project Initial Setup
 
-- [x] **タスク完了** (実装済み)
-- **タスクタイプ**: DIRECT
-- **実装ファイル**: 
+- [x] **Task Complete** (Implemented)
+- **Task Type**: DIRECT
+- **Implementation Files**: 
   - `package.json`
   - `tsconfig.json`
   - `.env.example`
-- **実装詳細**:
-  - {発見された設定内容}
-- **推定工数**: {時間}
+- **Implementation Details**:
+  - {discovered-configuration-content}
+- **Estimated Effort**: {hours}
 
-#### DISCOVERED-002: データベース設定
+#### DISCOVERED-002: Database Configuration
 
-- [x] **タスク完了** (実装済み)
-- **タスクタイプ**: DIRECT
-- **実装ファイル**: 
+- [x] **Task Complete** (Implemented)
+- **Task Type**: DIRECT
+- **Implementation Files**: 
   - `src/database/connection.ts`
   - `migrations/001_initial.sql`
-- **実装詳細**:
-  - {発見されたDB設定内容}
-- **推定工数**: {時間}
+- **Implementation Details**:
+  - {discovered-db-configuration-content}
+- **Estimated Effort**: {hours}
 
-### API実装タスク
+### API Implementation Tasks
 
-#### DISCOVERED-101: ユーザー認証API
+#### DISCOVERED-101: User Authentication API
 
-- [x] **タスク完了** (実装済み)
-- **タスクタイプ**: TDD
-- **実装ファイル**: 
+- [x] **Task Complete** (Implemented)
+- **Task Type**: TDD
+- **Implementation Files**: 
   - `src/auth/auth.controller.ts`
   - `src/auth/auth.service.ts`
   - `src/auth/jwt.strategy.ts`
-- **実装詳細**:
-  - ログイン/ログアウト機能
-  - JWT トークン発行
-  - 認証ミドルウェア
-- **APIエンドポイント**:
+- **Implementation Details**:
+  - Login/logout functionality
+  - JWT token generation
+  - Authentication middleware
+- **API Endpoints**:
   - `POST /auth/login`
   - `POST /auth/logout`
   - `POST /auth/refresh`
-- **テスト実装状況**:
-  - [x] 単体テスト: `auth.service.spec.ts`
-  - [x] 統合テスト: `auth.controller.spec.ts`
-  - [ ] E2Eテスト: 未実装
-- **推定工数**: {時間}
+- **Test Implementation Status**:
+  - [x] Unit Tests: `auth.service.spec.ts`
+  - [x] Integration Tests: `auth.controller.spec.ts`
+  - [ ] E2E Tests: Not implemented
+- **Estimated Effort**: {hours}
 
-### UI実装タスク
+### UI Implementation Tasks
 
-#### DISCOVERED-201: ログイン画面
+#### DISCOVERED-201: Login Screen
 
-- [x] **タスク完了** (実装済み)
-- **タスクタイプ**: TDD
-- **実装ファイル**: 
+- [x] **Task Complete** (Implemented)
+- **Task Type**: TDD
+- **Implementation Files**: 
   - `src/components/Login/LoginForm.tsx`
   - `src/components/Login/LoginForm.module.css`
   - `src/hooks/useAuth.ts`
-- **実装詳細**:
-  - ログインフォーム
-  - バリデーション機能
-  - エラーハンドリング
-- **UI/UX実装状況**:
-  - [x] レスポンシブデザイン
-  - [x] ローディング状態
-  - [x] エラー表示
-  - [ ] アクセシビリティ: 部分的実装
-- **テスト実装状況**:
-  - [x] コンポーネントテスト: `LoginForm.test.tsx`
-  - [ ] E2Eテスト: 未実装
-- **推定工数**: {時間}
+- **Implementation Details**:
+  - Login form
+  - Validation functionality
+  - Error handling
+- **UI/UX Implementation Status**:
+  - [x] Responsive design
+  - [x] Loading states
+  - [x] Error display
+  - [ ] Accessibility: Partially implemented
+- **Test Implementation Status**:
+  - [x] Component Tests: `LoginForm.test.tsx`
+  - [ ] E2E Tests: Not implemented
+- **Estimated Effort**: {hours}
 
-## 未実装・改善推奨事項
+## Unimplemented・Improvement Recommendations
 
-### 不足しているテスト
+### Missing Tests
 
-- [ ] **E2Eテストスイート**: 主要ユーザーフローのテスト
-- [ ] **パフォーマンステスト**: API応答時間テスト
-- [ ] **セキュリティテスト**: 認証・認可テスト
+- [ ] **E2E Test Suite**: Tests for major user flows
+- [ ] **Performance Tests**: API response time tests
+- [ ] **Security Tests**: Authentication・authorization tests
 
-### コード品質改善
+### Code Quality Improvements
 
-- [ ] **TypeScript型安全性**: 一部でany型の使用
-- [ ] **エラーハンドリング**: 統一的なエラー処理
-- [ ] **ログ出力**: 構造化ログの実装
+- [ ] **TypeScript Type Safety**: Use of any type in some places
+- [ ] **Error Handling**: Unified error processing
+- [ ] **Log Output**: Structured logging implementation
 
-### ドキュメント不足
+### Documentation Gaps
 
-- [ ] **API仕様書**: OpenAPI/Swagger未実装
-- [ ] **開発者ガイド**: セットアップ手順書
-- [ ] **デプロイ手順書**: 本番環境構築手順
+- [ ] **API Specifications**: OpenAPI/Swagger not implemented
+- [ ] **Developer Guide**: Setup procedure manual
+- [ ] **Deployment Manual**: Production environment setup procedures
 
-## 依存関係マップ
+## Dependency Map
 
 ```mermaid
 graph TD
-    A[DISCOVERED-001: プロジェクト初期設定] --> B[DISCOVERED-002: データベース設定]
-    B --> C[DISCOVERED-101: ユーザー認証API]
-    C --> D[DISCOVERED-201: ログイン画面]
-    D --> E[未実装: E2Eテスト]
+    A[DISCOVERED-001: Project Initial Setup] --> B[DISCOVERED-002: Database Configuration]
+    B --> C[DISCOVERED-101: User Authentication API]
+    C --> D[DISCOVERED-201: Login Screen]
+    D --> E[Unimplemented: E2E Tests]
     
-    F[未実装: API仕様書] --> G[未実装: 開発者ガイド]
+    F[Unimplemented: API Specifications] --> G[Unimplemented: Developer Guide]
 ```
 
-## 実装パターン分析
+## Implementation Pattern Analysis
 
-### アーキテクチャパターン
-- **実装パターン**: {発見されたパターン}
-- **状態管理**: {使用されている状態管理}
-- **認証方式**: {実装されている認証方式}
+### Architecture Patterns
+- **Implementation Pattern**: {discovered-pattern}
+- **State Management**: {used-state-management}
+- **Authentication Method**: {implemented-authentication-method}
 
-### コーディングスタイル
-- **命名規則**: {発見された命名規則}
-- **ファイル構成**: {ファイル構成パターン}
-- **エラーハンドリング**: {エラー処理パターン}
+### Coding Style
+- **Naming Conventions**: {discovered-naming-conventions}
+- **File Organization**: {file-organization-pattern}
+- **Error Handling**: {error-handling-pattern}
 
-## 技術的負債・改善点
+## Technical Debt・Improvement Points
 
-### パフォーマンス
-- {発見されたパフォーマンス課題}
+### Performance
+- {discovered-performance-issues}
 
-### セキュリティ
-- {発見されたセキュリティ課題}
+### Security
+- {discovered-security-issues}
 
-### 保守性
-- {発見された保守性課題}
+### Maintainability
+- {discovered-maintainability-issues}
 
-## 推奨次ステップ
+## Recommended Next Steps
 
-1. **不足テストの実装** - 特にE2Eテストスイート
-2. **ドキュメント整備** - API仕様書とセットアップガイド
-3. **コード品質改善** - TypeScript型安全性とエラーハンドリング
-4. **セキュリティ強化** - 認証・認可の詳細レビュー
+1. **Implement Missing Tests** - Especially E2E test suite
+2. **Documentation Organization** - API specifications and setup guide
+3. **Code Quality Improvement** - TypeScript type safety and error handling
+4. **Security Enhancement** - Detailed review of authentication・authorization
 
 ````
 
-## 分析対象ファイルの自動検出
+## Automatic Detection of Analysis Target Files
 
-### フロントエンド
+### Frontend
 - React: `*.tsx`, `*.jsx`, `*.ts`, `*.js`
 - Vue: `*.vue`, `*.ts`, `*.js`
 - Angular: `*.component.ts`, `*.service.ts`, `*.module.ts`
 
-### バックエンド
-- Node.js: `*.ts`, `*.js` (Express, NestJS等)
-- Python: `*.py` (Django, FastAPI等)
-- Java: `*.java` (Spring Boot等)
+### Backend
+- Node.js: `*.ts`, `*.js` (Express, NestJS, etc.)
+- Python: `*.py` (Django, FastAPI, etc.)
+- Java: `*.java` (Spring Boot, etc.)
 
-### データベース
+### Database
 - SQL: `*.sql`, `migrations/*`
-- ORM: モデルファイル、設定ファイル
+- ORM: Model files, configuration files
 
-### 設定ファイル
+### Configuration Files
 - `package.json`, `tsconfig.json`, `webpack.config.js`
 - `requirements.txt`, `Pipfile`, `pyproject.toml`
 - `pom.xml`, `build.gradle`
 
-## 実行コマンド例
+## Command Execution Examples
 
 ```bash
-# カレントディレクトリを分析
+# Analyze current directory
 claude code rev-tasks
 
-# 特定ディレクトリを分析
+# Analyze specific directory
 claude code rev-tasks --path ./backend
 
-# 特定の技術スタックに絞って分析
+# Analyze focusing on specific technology stack
 claude code rev-tasks --tech react,nodejs
 
-# 詳細分析（テストカバレッジ等も含む）
+# Detailed analysis (including test coverage)
 claude code rev-tasks --detailed
 
-# 出力形式指定
+# Specify output format
 claude code rev-tasks --format json
 ```
 
-## 実行後の確認
+## Post-Execution Verification
 
-- 発見されたタスク数と推定工数を表示
-- 実装済み/未実装の機能一覧を表示
-- 技術的負債・改善推奨事項をサマリー表示
-- 次のリバースエンジニアリングステップ（設計書生成等）を提案 
+- Display number of discovered tasks and estimated effort
+- Display list of implemented/unimplemented features
+- Display summary of technical debt・improvement recommendations
+- Suggest next reverse engineering steps (design document generation, etc.) 

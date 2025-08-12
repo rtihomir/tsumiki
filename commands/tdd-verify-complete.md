@@ -1,399 +1,399 @@
-# TDD テストケース完全性検証
+# TDD Test Case Completeness Verification
 
-TDD開発でテストケースの実装が完全に完了しているかを検証します。
+Verify that test case implementation is completely finished in TDD development.
 
-## 検証の目的
+## Purpose of Verification
 
-リファクタリング後に、予定していたテストケースがすべて実装されているかを確認し、実装漏れを防ぎます。
+After refactoring, confirm that all planned test cases have been implemented to prevent implementation gaps.
 
-## 重要な原則
+## Important Principles
 
-**⚠️ この工程では修正を行わない**
-- この検証フェーズではコードやテストの修正は一切行わない
-- 問題を発見した場合は内容をmemoファイルに記載する
-- 修正作業は後の工程（次のTDDサイクルや別のタスク）に委ねる
-- 検証・記録・報告に専念する
+**⚠️ Do not make any fixes in this process**
+- No code or test fixes should be made during this verification phase
+- If problems are discovered, record them in the memo file
+- Delegate fix work to later processes (next TDD cycle or separate tasks)
+- Focus on verification, recording, and reporting
 
-## 検証手順
+## Verification Procedure
 
-### 1. 既存テストのグリーン状態確認
+### 1. Confirm Green State of Existing Tests
 
-- **必須**: 全ての既存テストが成功していることを確認
-- `npm test` または `jest` を実行してテスト結果を確認
-- **テスト失敗がある場合**: memoファイルに記載し、後の工程で修正対応
-- **この工程では修正禁止**: テスト失敗を発見してもここでは修正しない
-- テスト状態を記録し、次のステップに進む
+- **Required**: Confirm all existing tests are successful
+- Run `npm test` or `jest` to check test results
+- **If test failures exist**: Record in memo file and address fixes in later process
+- **Fix prohibited in this process**: Do not fix test failures even if discovered
+- Record test state and proceed to next step
 
-### 2. 事前準備
+### 2. Preliminary Preparation
 
-検証コンテキストの準備を行います：
+Prepare verification context:
 
-1. **@agent-symbol-searcher で検証関連情報を検索し、見つかったファイルを読み込み**
-   - 完了予定のテストケースや機能を検索し、該当ファイルをReadツールで読み込み
-   - 既存のテストカバレッジや品質基準を確認し、関連ファイルをReadツールで読み込み
-   - 実装完了タスクのマーキングパターンを特定し、タスクファイルをReadツールで読み込み
+1. **Search for verification-related information with @agent-symbol-searcher and read found files**
+   - Search for planned test cases and features, read corresponding files with Read tool
+   - Check existing test coverage and quality standards, read related files with Read tool
+   - Identify implementation completion task marking patterns, read task files with Read tool
 
-2. **関連ファイルを直接読み込み**
-   - `docs/implements/{{task_id}}/{feature_name}-memo.md` - 既存の開発履歴を確認
-   - `docs/implements/{{task_id}}/{feature_name}-requirements.md` - 要件定義を確認
-   - `docs/implements/{{task_id}}/{feature_name}-testcases.md` - テストケース定義を確認
-   - `docs/implements/{{task_id}}/{feature_name}-refactor-phase.md` - Refactorフェーズの結果を確認
-   - 元タスクファイル (`docs/tasks/{taskfile}.md`) - タスクの完了状態を確認
+2. **Directly read related files**
+   - `docs/implements/{{task_id}}/{feature_name}-memo.md` - Check existing development history
+   - `docs/implements/{{task_id}}/{feature_name}-requirements.md` - Check requirements definition
+   - `docs/implements/{{task_id}}/{feature_name}-testcases.md` - Check test case definition
+   - `docs/implements/{{task_id}}/{feature_name}-refactor-phase.md` - Check Refactor phase results
+   - Original task file (`docs/tasks/{taskfile}.md`) - Check task completion status
 
-読み込み完了後、準備されたコンテキスト情報を基にテストケース完全性検証を開始します。
+After completing the reading, start test case completeness verification based on the prepared context information.
 
-### 2. 実装済みテストケースの確認
+### 2. Check Implemented Test Cases
 
-- 現在のテストファイルを確認
-- 実装済みテストケース数をカウント
-- 各テストケースの内容を予定と照合
+- Check current test files
+- Count number of implemented test cases
+- Compare content of each test case with plan
 
-### 3. 実装状況の分析とTODO.md更新判定
+### 3. Implementation Status Analysis and TODO.md Update Decision
 
-以下の形式で分析結果を提供してください：
+Provide analysis results in the following format:
 
 ```
-## テストケース実装状況
+## Test Case Implementation Status
 
-### 📋 TODO.md対象タスク確認
-- **対象タスク**: [現在のTDD開発対象タスク名]
-- **現在のステータス**: [未完了/部分完了/完了済み]
-- **完了マーク要否**: [要/不要]
+### 📋 TODO.md Target Task Confirmation
+- **Target Task**: [Current TDD development target task name]
+- **Current Status**: [Incomplete/Partially Complete/Completed]
+- **Completion Mark Required**: [Required/Not Required]
 
-### 📋 予定テストケース（要件定義より）
-- **総数**: [予定していた総テストケース数]
-- **分類**:
-  - 正常系: [数]個
-  - 異常系: [数]個
-  - エッジケース: [数]個
-  - その他: [数]個
+### 📋 Planned Test Cases (from requirements definition)
+- **Total**: [Total number of planned test cases]
+- **Classification**:
+  - Normal cases: [number] cases
+  - Error cases: [number] cases
+  - Edge cases: [number] cases
+  - Others: [number] cases
 
-### ✅ 実装済みテストケース
-- **総数**: [実装済み総テストケース数]
-- **成功率**: [通過テスト数]/[実装テスト数] ([成功率]%)
+### ✅ Implemented Test Cases
+- **Total**: [Total number of implemented test cases]
+- **Success Rate**: [Passing tests]/[Implemented tests] ([success rate]%)
 
-### ❌ 未実装テストケース（[数]個）
-1. **テストケース名**: [予定していたが未実装のテスト]
-   - **種類**: [正常系/異常系/エッジケース]
-   - **内容**: [テストの詳細内容]
-   - **重要度**: [高/中/低]
-   - **要件項目**: [対応する要件定義書の項目]
+### ❌ Unimplemented Test Cases ([number] cases)
+1. **Test Case Name**: [Planned but unimplemented test]
+   - **Type**: [Normal/Error/Edge case]
+   - **Content**: [Detailed test content]
+   - **Importance**: [High/Medium/Low]
+   - **Requirements Item**: [Corresponding requirements definition item]
 
-2. **テストケース名**: [2つ目の未実装テスト]
+2. **Test Case Name**: [Second unimplemented test]
    ...
 
-### 📋 要件定義書網羅性チェック
-- **要件項目総数**: [要件定義書の総項目数]
-- **実装済み項目**: [実装・テスト済みの項目数]
-- **要件網羅率**: [実装済み]/[総数] = [網羅率]%
+### 📋 Requirements Definition Coverage Check
+- **Total Requirements Items**: [Total items in requirements definition]
+- **Implemented Items**: [Number of implemented and tested items]
+- **Requirements Coverage**: [Implemented]/[Total] = [coverage rate]%
 
-#### 未網羅の要件項目（[数]個）
-1. **要件項目**: [未実装の要件項目名]
-   - **分類**: [入力パラメータ/出力仕様/制約条件/使用例/エラーケース等]
-   - **内容**: [要件の詳細内容]
-   - **実装不足の理由**: [なぜ未実装なのか]
-   - **対応の必要性**: [必須/推奨/任意]
+#### Uncovered Requirements Items ([number] items)
+1. **Requirements Item**: [Unimplemented requirements item name]
+   - **Classification**: [Input parameters/Output specification/Constraints/Usage examples/Error cases, etc.]
+   - **Content**: [Detailed requirements content]
+   - **Reason for Non-implementation**: [Why not implemented]
+   - **Need for Action**: [Required/Recommended/Optional]
 
-2. **要件項目**: [2つ目の未網羅項目]
+2. **Requirements Item**: [Second uncovered item]
    ...
 
-### 📊 実装率
-- **全体実装率**: [実装数]/[予定数] = [実装率]%
-- **正常系実装率**: [実装数]/[予定数] = [実装率]%
-- **異常系実装率**: [実装数]/[予定数] = [実装率]%
-- **エッジケース実装率**: [実装数]/[予定数] = [実装率]%
+### 📊 Implementation Rate
+- **Overall Implementation Rate**: [Implemented]/[Planned] = [implementation rate]%
+- **Normal Case Implementation Rate**: [Implemented]/[Planned] = [implementation rate]%
+- **Error Case Implementation Rate**: [Implemented]/[Planned] = [implementation rate]%
+- **Edge Case Implementation Rate**: [Implemented]/[Planned] = [implementation rate]%
 ```
 
-### 4. 判定基準
+### 4. Assessment Criteria
 
-#### ✅ 完全実装済み（自動で次ステップ）
-
-```
-- 既存テスト状態: すべてグリーン
-- 要件網羅率: 100%（全要件項目実装・テスト済み）
-- テスト成功率: 100%
-- 未実装重要要件: 0個
-- 品質基準: 要件定義に対する完全な充実度を達成
-```
-
-#### ⚠️ 実装不足あり（追加実装必要）
+#### ✅ Completely Implemented (Automatically proceed to next step)
 
 ```
-- 既存テスト状態: 失敗テストあり または
-- 要件網羅率: 100%未満（要件定義の項目に対する実装不足）
-- 重要な要件項目が未実装・未テスト
-- 要件充実度に品質リスクあり
+- Existing test state: All green
+- Requirements coverage: 100% (All requirements items implemented and tested)
+- Test success rate: 100%
+- Unimplemented important requirements: 0
+- Quality standard: Complete fulfillment of requirements definition achieved
 ```
 
-### 5. 検証結果のメモファイル記録とTODO.md更新
+#### ⚠️ Implementation Insufficient (Additional implementation needed)
 
-#### メモファイルの統合更新
+```
+- Existing test state: Failed tests present OR
+- Requirements coverage: Less than 100% (Implementation insufficient for requirements definition items)
+- Important requirements items unimplemented/untested
+- Quality risk in requirements fulfillment
+```
 
-検証完了後、`docs/implements/{{task_id}}/{feature_name}-memo.md` の既存内容を整理・統合し、以下の情報に更新：
+### 5. Record Verification Results in Memo File and Update TODO.md
+
+#### Integrated Memo File Update
+
+After verification completion, organize and integrate existing content in `docs/implements/{{task_id}}/{feature_name}-memo.md` and update to the following information:
 
 ```markdown
-# [機能名] TDD開発完了記録
+# [Feature Name] TDD Development Completion Record
 
-## 確認すべきドキュメント
+## Documents to Check
 
-- `docs/tasks/{taskファイルのパス}.md`
+- `docs/tasks/{task file path}.md`
 - `docs/implements/{{task_id}}/{feature_name}-requirements.md`
 - `docs/implements/{{task_id}}/{feature_name}-testcases.md`
 
-## 🎯 最終結果 ([日時])
-- **実装率**: [数]% ([実装数]/[予定数]テストケース)
-- **品質判定**: [合格/不合格] 
-- **TODO更新**: [✅完了マーク追加/要改善]
+## 🎯 Final Results ([Date/Time])
+- **Implementation Rate**: [number]% ([implemented]/[planned] test cases)
+- **Quality Assessment**: [Pass/Fail] 
+- **TODO Update**: [✅Completion mark added/Needs improvement]
 
-## 💡 重要な技術学習
-### 実装パターン
-[今後再利用できる重要な実装手法]
+## 💡 Important Technical Learning
+### Implementation Patterns
+[Important implementation techniques reusable in the future]
 
-### テスト設計
-[効果的だったテストアプローチ]
+### Test Design
+[Effective test approaches]
 
-### 品質保証
-[品質確保で重要だった観点]
+### Quality Assurance
+[Important perspectives for quality assurance]
 
-## ⚠️ 注意点・修正が必要な項目（該当時のみ）
-[実装時の重要な注意事項や未完了項目]
+## ⚠️ Cautions and Items Requiring Fixes (if applicable)
+[Important cautions during implementation or incomplete items]
 
-### 🔧 後工程での修正対象
-#### テスト失敗
-- [失敗しているテストケース名]
-- **失敗内容**: [具体的な失敗内容]
-- **修正方針**: [推奨される修正方法]
+### 🔧 Fix Targets for Later Processes
+#### Test Failures
+- [Failing test case name]
+- **Failure Content**: [Specific failure content]
+- **Fix Policy**: [Recommended fix method]
 
-#### 実装不足
-- [未実装の機能や要件]
-- **不足内容**: [具体的な不足内容]
-- **対応方針**: [推奨される対応方法]
+#### Implementation Insufficient
+- [Unimplemented features or requirements]
+- **Insufficient Content**: [Specific insufficient content]
+- **Response Policy**: [Recommended response method]
 
-#### 品質改善
-- [品質向上が必要な箇所]
-- **改善内容**: [具体的な改善内容]
-- **改善方針**: [推奨される改善方法]
+#### Quality Improvement
+- [Areas requiring quality improvement]
+- **Improvement Content**: [Specific improvement content]
+- **Improvement Policy**: [Recommended improvement method]
 
 ---
-*既存のメモ内容から重要な情報を統合し、重複・詳細な経過記録は削除*
+*Important information integrated from existing memo content, duplicate and detailed progress records removed*
 ```
 
-**統合更新ルール:**
-1. **重要情報保持**: 既存メモの技術的学習ポイント・再利用可能パターンを統合
-2. **重複削除**: 類似の記録・詳細な経過は最新情報に集約  
-3. **簡潔化**: 日付・数値などの詳細は最終結果のみ保持
-4. **再利用重視**: 今後の開発で参考になる情報を優先して残す
-5. **関連情報重視**: 仕様情報などの情報は優先して残す
+**Integrated Update Rules:**
+1. **Preserve Important Information**: Integrate technical learning points and reusable patterns from existing memos
+2. **Remove Duplicates**: Consolidate similar records and details into latest information  
+3. **Simplify**: Keep only final results for dates, numbers, and other details
+4. **Emphasize Reusability**: Prioritize information useful for future development
+5. **Emphasize Related Information**: Prioritize specification information and other related data
 
-#### 元タスクファイル完了マーク自動更新
+#### Automatic Update of Original Task File Completion Mark
 
-検証が完了した場合、以下の手順で元タスクファイルを自動更新：
+When verification is complete, automatically update the original task file with the following procedure:
 
-1. **完了タスクの特定**: 現在のTDD開発対象タスクを元タスクファイルから特定
-2. **完了マーク追加**: 該当タスクに `✅ **完了**` マークを追加
-3. **完了理由記載**: `(TDD開発完了 - [テスト数]テストケース全通過)` を追記
-4. **サブタスク更新**: 関連するサブタスクにも `[x]` チェックマークを追加
+1. **Identify Completed Task**: Identify current TDD development target task from original task file
+2. **Add Completion Mark**: Add `✅ **Complete**` mark to corresponding task
+3. **Record Completion Reason**: Add `(TDD development complete - [test count] test cases all passing)`
+4. **Update Subtasks**: Add `[x]` check marks to related subtasks
 
-例：
+Example:
 
 ```markdown
-### 1. JSONファイルパス引数処理機能 ✅ **完了** (TDD開発完了 - 15テストケース全通過)
+### 1. JSON File Path Argument Processing Feature ✅ **Complete** (TDD development complete - 15 test cases all passing)
 
-- [x] コマンドライン引数でJSONファイルパスを受け取る機能を追加
-- [x] 複数のJSONファイルパスに対応（sample/ディレクトリ全体の読み込み）
-- [x] 引数バリデーション機能
+- [x] Add feature to receive JSON file path as command line argument
+- [x] Support multiple JSON file paths (reading entire sample/ directory)
+- [x] Argument validation feature
 ```
 
-### 6. 対応アクション
+### 6. Response Actions
 
-#### 完全実装済みの場合
+#### When Completely Implemented
 
-以下のメッセージと共に次のお勧めコマンドを表示：
-
-```
-✅ テストケース完全性検証: 合格
-- 予定テストケース: [数]個すべて実装済み
-- テスト成功率: 100%
-- 品質基準: 達成
-
-次のお勧めステップ: `/tdd-cycle` で次のTDDサイクルを開始します。
-```
-
-**メモファイル記録**: 検証結果をメモファイルに自動追記する。
-**元タスクファイル更新**: 完了したタスクに✅完了マークを自動追加する。
-
-#### 実装不足がある場合
-
-以下のメッセージを提供し、状況を記録する：
+Display the following message with next recommended command:
 
 ```
-⚠️ テストケース実装不足を検出
+✅ Test Case Completeness Verification: Pass
+- Planned test cases: All [number] cases implemented
+- Test success rate: 100%
+- Quality standard: Achieved
 
-未実装テストケース（[数]個）があります。
-以下の内容をmemoファイルに記録しました：
-
-[未実装テストケースのリスト]
-
-【重要】この工程では修正を行いません。
-修正が必要な内容はmemoファイルに記載され、後の工程で対応されます。
-
-現状の記録を完了し、次のステップに進みます。
+Next recommended step: Start next TDD cycle with `/tdd-cycle`.
 ```
 
-**メモファイル記録**: 実装不足の検証結果と修正方針をメモファイルに詳細記録する。
-**元タスクファイル更新**: 実装不足の場合でも、部分完了したタスクがあれば適切にマークする。
-**修正作業禁止**: この工程では一切の修正作業を行わない。
+**Memo File Recording**: Automatically append verification results to memo file.
+**Original Task File Update**: Automatically add ✅ completion mark to completed tasks.
 
-## 検証対象ファイル
+#### When Implementation is Insufficient
 
-### 確認すべきドキュメント
+Provide the following message and record the situation:
 
-- **元タスクファイル**: `docs/tasks/{taskファイルのパス}.md` - プロジェクト全体のタスク完了状況（完了マーク更新対象）
+```
+⚠️ Test Case Implementation Insufficient Detected
+
+Unimplemented test cases ([number] cases) exist.
+The following content has been recorded in the memo file:
+
+[List of unimplemented test cases]
+
+【Important】No fixes are made in this process.
+Content requiring fixes is recorded in the memo file and will be addressed in later processes.
+
+Complete current status recording and proceed to next step.
+```
+
+**Memo File Recording**: Record detailed verification results and fix policies for implementation insufficiency in memo file.
+**Original Task File Update**: Even when implementation is insufficient, appropriately mark partially completed tasks.
+**Fix Work Prohibited**: No fix work is performed in this process.
+
+## Verification Target Files
+
+### Documents to Check
+
+- **Original Task File**: `docs/tasks/{task file path}.md` - Overall project task completion status (completion mark update target)
 - `docs/implements/{{task_id}}/{feature_name}-requirements.md`
 - `docs/implements/{{task_id}}/{feature_name}-testcases.md`
 
-### 確認すべきテストファイル
+### Test Files to Check
 
 - `src/__tests__/*.test.ts`
 - `src/__tests__/*.test.js`
 
-### 確認すべき実装ファイル
+### Implementation Files to Check
 
 - `src/*.ts`
 - `src/*.js`
 
-### Gitで変更されたファイル
+### Files Changed in Git
 
-- `git status` で変更されたファイル
-- `git diff --name-only` で変更されたファイル
+- Files changed by `git status`
+- Files changed by `git diff --name-only`
 
-## 品質基準
+## Quality Standards
 
-### 最低品質基準
+### Minimum Quality Standards
 
-- **実装率**: 80%以上
-- **成功率**: 100%
-- **重要テスト**: すべて実装
-- **要件網羅性**: 要件定義書の主要機能をすべて網羅
-- **コンパイルエラー**: なし
+- **Implementation Rate**: 80% or higher
+- **Success Rate**: 100%
+- **Important Tests**: All implemented
+- **Requirements Coverage**: Cover all major features in requirements definition
+- **Compilation Errors**: None
 
-### 理想品質基準
+### Ideal Quality Standards
 
-- **実装率**: 100%
-- **成功率**: 100%
-- **網羅性**: 全ケース対応
-- **要件完全網羅**: 要件定義書の全項目を網羅
+- **Implementation Rate**: 100%
+- **Success Rate**: 100%
+- **Coverage**: All cases covered
+- **Complete Requirements Coverage**: Cover all items in requirements definition
 
-### 要件定義書の網羅性チェック
+### Requirements Definition Coverage Check
 
-要件定義書（requirements.md）に記載された以下の項目が実装・テストされているかを確認：
+Check if the following items recorded in the requirements definition (requirements.md) are implemented and tested:
 
-#### 必須チェック項目
+#### Required Check Items
 
-- **入力パラメータ**: 全ての必須・オプション引数の処理
-- **出力仕様**: 期待される出力形式・構造の実装
-- **制約条件**: パフォーマンス・セキュリティ・互換性要件
-- **基本使用例**: 想定される基本的な使用パターン
-- **エッジケース**: 境界値・例外条件の処理
-- **エラーケース**: 異常系の適切な処理
-- **主要アルゴリズム**: 機能の核となる処理ロジック
+- **Input Parameters**: Processing of all required and optional arguments
+- **Output Specification**: Implementation of expected output format and structure
+- **Constraints**: Performance, security, compatibility requirements
+- **Basic Usage Examples**: Assumed basic usage patterns
+- **Edge Cases**: Boundary value and exception condition processing
+- **Error Cases**: Appropriate processing of abnormal cases
+- **Main Algorithms**: Core processing logic of functionality
 
-#### 網羅性判定基準
-
-```
-✅ 完全網羅 (100%):
-- 要件定義書の全項目が実装・テストされている
-- 入力パラメータの全パターンをテスト
-- 出力仕様の全形式を検証
-- エラーケース・エッジケースを全て網羅
-
-⚠️ 部分網羅 (80-99%):
-- 主要機能は実装されているが一部項目が未実装
-- 基本的な使用例は網羅されている
-- 重要でないエラーケースの一部が未実装
-
-❌ 不十分 (<80%):
-- 要件定義書の重要な項目が未実装
-- 基本的な使用例に漏れがある
-- エラーハンドリングが不十分
-```
-
-## 自動遷移判定
-
-### 品質判定基準
+#### Coverage Assessment Criteria
 
 ```
-✅ 高品質（要件充実度完全達成）:
-- 既存テスト状態: すべてグリーン
-- 要件網羅率: 100%（要件定義書の全項目に対する完全な実装・テスト）
-- テスト成功率: 100%
-- 未実装重要要件: 0個
-- 要件充実度: 要件定義に対する完全な充実度を達成
+✅ Complete Coverage (100%):
+- All items in requirements definition are implemented and tested
+- Test all patterns of input parameters
+- Verify all output specification formats
+- Cover all error cases and edge cases
 
-⚠️ 要改善（要件充実度不足）:
-- 既存テスト状態: 失敗テストあり または
-- 要件網羅率: 100%未満（要件定義書の項目に対する実装・テスト不足）
-- 重要な要件項目が未実装・未テスト
-- 要件充実度: 要件定義に対する充実度が不十分
-- 追加実装による要件充実度向上が必要
+⚠️ Partial Coverage (80-99%):
+- Main features implemented but some items unimplemented
+- Basic usage examples covered
+- Some non-critical error cases unimplemented
+
+❌ Insufficient (<80%):
+- Important items in requirements definition unimplemented
+- Gaps in basic usage examples
+- Insufficient error handling
 ```
 
-## 使用例
+## Automatic Transition Decision
+
+### Quality Assessment Criteria
+
+```
+✅ High Quality (Complete Requirements Fulfillment Achieved):
+- Existing test state: All green
+- Requirements coverage: 100% (Complete implementation and testing for all requirements definition items)
+- Test success rate: 100%
+- Unimplemented important requirements: 0
+- Requirements fulfillment: Complete fulfillment of requirements definition achieved
+
+⚠️ Needs Improvement (Requirements Fulfillment Insufficient):
+- Existing test state: Failed tests present OR
+- Requirements coverage: Less than 100% (Implementation and testing insufficient for requirements definition items)
+- Important requirements items unimplemented/untested
+- Requirements fulfillment: Fulfillment insufficient for requirements definition
+- Need to improve requirements fulfillment through additional implementation
+```
+
+## Usage Example
 
 ```bash
-# refactorフェーズ後に自動実行
+# Auto-execute after refactor phase
 /tdd-refactor
-# ↓ 自動実行
+# ↓ Auto-execute
 /tdd-verify-complete
-# ↓ 実装完全なら自動実行
+# ↓ Auto-execute if implementation complete
 /tdd-cycle
 ```
 
-## 出力形式
+## Output Format
 
-実装状況に応じて以下のいずれかの形式で出力：
+Output in one of the following formats depending on implementation status:
 
-### 完全実装の場合
-
-```
-✅ **テストケース完全性検証: 合格**
-
-📊 今回のタスク要件充実度:
-- 対象要件項目: [数]個
-- 実装・テスト済み: [数]個 / 未実装: [数]個
-- 要件網羅率: 100%
-- 要件充実度: 完全達成
-
-📊 全体のテスト状況:
-- 全テストケース総数: [数]個  
-- 成功: [数]個 / 失敗: [数]個
-- 全体テスト成功率: [数]%
-
-🚀 要件定義に対する完全な充実度を達成しました。
-自動で次のTDDサイクルに進みます。
-```
-
-### 実装不足の場合
+### When Complete Implementation
 
 ```
-⚠️ **テストケース実装不足を検出**
+✅ **Test Case Completeness Verification: Pass**
 
-📊 今回のタスク要件充実度:
-- 対象要件項目: [数]個
-- 実装・テスト済み: [数]個 / 未実装: [数]個  
-- 要件網羅率: [数]%
-- 要件充実度: [充実度レベル]
+📊 Current Task Requirements Fulfillment:
+- Target requirements items: [number] items
+- Implemented and tested: [number] items / Unimplemented: [number] items
+- Requirements coverage: 100%
+- Requirements fulfillment: Complete achievement
 
-📊 全体のテスト状況:
-- 全テストケース総数: [数]個
-- 成功: [数]個 / 失敗: [数]個
-- 全体テスト成功率: [数]%
+📊 Overall Test Status:
+- Total test cases: [number] cases  
+- Success: [number] cases / Failure: [number] cases
+- Overall test success rate: [number]%
 
-❌ 未実装テストケース:
-[未実装テストケースの詳細リスト]
-
-📝 **修正内容をmemoファイルに記録済み**
-後の工程で対応予定です。この工程では修正を行いません。
+🚀 Complete fulfillment of requirements definition achieved.
+Automatically proceed to next TDD cycle.
 ```
 
-この検証により、TDD開発の品質と完全性を確保します。
+### When Implementation Insufficient
+
+```
+⚠️ **Test Case Implementation Insufficient Detected**
+
+📊 Current Task Requirements Fulfillment:
+- Target requirements items: [number] items
+- Implemented and tested: [number] items / Unimplemented: [number] items  
+- Requirements coverage: [number]%
+- Requirements fulfillment: [fulfillment level]
+
+📊 Overall Test Status:
+- Total test cases: [number] cases
+- Success: [number] cases / Failure: [number] cases
+- Overall test success rate: [number]%
+
+❌ Unimplemented test cases:
+[Detailed list of unimplemented test cases]
+
+📝 **Fix content recorded in memo file**
+Will be addressed in later processes. No fixes made in this process.
+```
+
+This verification ensures the quality and completeness of TDD development.

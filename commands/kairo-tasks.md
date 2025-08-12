@@ -1,390 +1,390 @@
 # kairo-tasks
 
-## 目的
+## Purpose
 
-設計文書に基づいて実装タスクを1日単位の粒度で分割し、1ヶ月単位のフェーズに整理する。各フェーズ毎に個別のタスクファイルを作成し、依存関係を考慮した適切な順序で管理する。
+Divide implementation tasks into daily granularity based on design documents and organize them into monthly phases. Create individual task files for each phase and manage them in appropriate order considering dependencies.
 
-## 前提条件
+## Prerequisites
 
-- `docs/design/{要件名}/` に設計文書が存在する
-- 設計がユーザによって承認されている（または承認が省略されている）
-- `docs/tasks/` ディレクトリが存在する（なければ作成）
+- Design documents exist in `docs/design/{requirement-name}/`
+- Design has been approved by user (or approval is omitted)
+- `docs/tasks/` directory exists (create if not present)
 
-## 実行内容
+## Execution Instructions
 
-**【信頼性レベル指示】**:
-各項目について、元の資料（EARS要件定義書・設計文書含む）との照合状況を以下の信号でコメントしてください：
+**【Reliability Level Instructions】**:
+For each item, comment on the verification status against source materials (including EARS requirements and design documents) using these signals:
 
-- 🟢 **青信号**: EARS要件定義書・設計文書を参考にしてほぼ推測していない場合
-- 🟡 **黄信号**: EARS要件定義書・設計文書から妥当な推測の場合
-- 🔴 **赤信号**: EARS要件定義書・設計文書にない推測の場合
+- 🟢 **Green Light**: Almost no inference when referencing EARS requirements specification and design documents
+- 🟡 **Yellow Light**: Reasonable inference from EARS requirements specification and design documents
+- 🔴 **Red Light**: Inference not based on EARS requirements specification and design documents
 
-1. **設計文書の分析**
-   - @agent-symbol-searcher で設計文書を検索し、見つかったファイルをReadツールで読み込み
-   - `docs/design/{要件名}/architecture.md` をReadツールで読み込み
-   - `docs/design/{要件名}/database-schema.sql` をReadツールで読み込み
-   - `docs/design/{要件名}/api-endpoints.md` をReadツールで読み込み
-   - `docs/design/{要件名}/interfaces.ts` をReadツールで読み込み
-   - `docs/design/{要件名}/dataflow.md` をReadツールで読み込み
+1. **Design Document Analysis**
+   - Search for design documents using @agent-symbol-searcher and read found files with Read tool
+   - Read `docs/design/{requirement-name}/architecture.md` with Read tool
+   - Read `docs/design/{requirement-name}/database-schema.sql` with Read tool
+   - Read `docs/design/{requirement-name}/api-endpoints.md` with Read tool
+   - Read `docs/design/{requirement-name}/interfaces.ts` with Read tool
+   - Read `docs/design/{requirement-name}/dataflow.md` with Read tool
 
-2. **既存タスクファイルの確認**
-   - @agent-symbol-searcher で既存タスクIDを検索し、見つかったタスクファイルをReadツールで読み込み
-   - 既存の`docs/tasks/{要件名}-*.md`ファイルをReadツールで読み込み
-   - 使用済みタスク番号（TASK-0001形式）を抽出
-   - 新規タスクで重複しない番号を割り当て
+2. **Existing Task File Verification**
+   - Search for existing task IDs using @agent-symbol-searcher and read found task files with Read tool
+   - Read existing `docs/tasks/{requirement-name}-*.md` files with Read tool
+   - Extract used task numbers (TASK-0001 format)
+   - Assign non-duplicate numbers for new tasks
 
-3. **タスクの洗い出し**
-   - 基盤タスク（DB設定、環境構築など）
-   - バックエンドタスク（API実装）
-   - フロントエンドタスク（UI実装）
-   - 統合タスク（E2Eテストなど）
+3. **Task Identification**
+   - Foundation tasks (DB setup, environment setup, etc.)
+   - Backend tasks (API implementation)
+   - Frontend tasks (UI implementation)
+   - Integration tasks (E2E testing, etc.)
 
-4. **依存関係の分析**
-   - タスク間の依存関係を明確化
-   - 並行実行可能なタスクを識別
-   - クリティカルパスを特定
+4. **Dependency Analysis**
+   - Clarify dependencies between tasks
+   - Identify tasks that can be executed in parallel
+   - Identify critical path
 
-5. **タスクの詳細化**
-   各タスクに以下を含める：
-   - タスクID（TASK-0001形式の4桁番号）
-   - タスク名
-   - タスクタイプ（TDD/DIRECT）
-     - **TDD**: コーディング、ビジネスロジック実装、UI実装、テスト実装など開発作業
-     - **DIRECT**: 環境構築、設定ファイル作成、ドキュメント作成、ビルド設定など準備作業
-   - 要件へのリンク
-   - 依存タスク
-   - 実装詳細
-   - 単体テスト要件
-   - 統合テスト要件
-   - UI/UX要件（該当する場合）
-     - ローディング状態
-     - エラー表示
-     - モバイル対応
-     - アクセシビリティ要件
+5. **Task Detailing**
+   Include the following for each task:
+   - Task ID (4-digit number in TASK-0001 format)
+   - Task name
+   - Task type (TDD/DIRECT)
+     - **TDD**: Development work such as coding, business logic implementation, UI implementation, test implementation
+     - **DIRECT**: Preparation work such as environment setup, configuration file creation, documentation creation, build configuration
+   - Link to requirements
+   - Dependent tasks
+   - Implementation details
+   - Unit test requirements
+   - Integration test requirements
+   - UI/UX requirements (when applicable)
+     - Loading states
+     - Error display
+     - Mobile responsiveness
+     - Accessibility requirements
 
-6. **タスクの順序付け**
-   - 依存関係に基づいて実行順序を決定
-   - マイルストーンを設定
-   - 並行実行可能なタスクをグループ化
+6. **Task Ordering**
+   - Determine execution order based on dependencies
+   - Set milestones
+   - Group tasks that can be executed in parallel
 
-7. **フェーズ分割とファイル作成**
-   - タスクを1ヶ月程度の期間でフェーズに分割
-   - 各フェーズ毎に個別のタスクファイルを作成
-   - `docs/tasks/{要件名}-overview.md`: 全体概要とフェーズ一覧
-   - `docs/tasks/{要件名}-phase1.md`: フェーズ1の詳細タスク
-   - `docs/tasks/{要件名}-phase2.md`: フェーズ2の詳細タスク
-   - （以下、フェーズ数に応じて継続）
-   - 各タスクを1日単位の粒度で設計
-   - 各タスクにチェックボックスを追加してタスクの完了状況を追跡可能にする
+7. **Phase Division and File Creation**
+   - Divide tasks into phases of approximately 1-month duration
+   - Create individual task files for each phase
+   - `docs/tasks/{requirement-name}-overview.md`: Overall overview and phase list
+   - `docs/tasks/{requirement-name}-phase1.md`: Phase 1 detailed tasks
+   - `docs/tasks/{requirement-name}-phase2.md`: Phase 2 detailed tasks
+   - (Continue according to number of phases)
+   - Design each task with daily granularity
+   - Add checkboxes to each task to track completion status
 
-## 出力フォーマット例
+## Output Format Examples
 
-### 1. overview.md（全体概要）
+### 1. overview.md (Overall Overview)
 
 ````markdown
-# {要件名} 実装タスク全体概要
+# {Requirement Name} Implementation Task Overall Overview
 
-## プロジェクト概要
+## Project Overview
 
-- **要件名**: {要件名}
-- **総期間**: {開始日} 〜 {終了予定日}
-- **総工数**: {工数}
-- **総タスク数**: {数}
+- **Requirement Name**: {requirement-name}
+- **Total Duration**: {start-date} ~ {estimated-end-date}
+- **Total Effort**: {effort}
+- **Total Tasks**: {number}
 
-## フェーズ構成
+## Phase Structure
 
-| フェーズ | 期間 | 主要成果物 | タスク数 | 工数 | ファイル |
-|---------|------|-----------|---------|------|---------|
-| Phase 1: 基盤構築 | 1ヶ月 | 開発環境・DB設定 | 20タスク | 160h | [phase1.md](phase1.md) |
-| Phase 2: コア機能 | 1ヶ月 | 基本API・認証 | 22タスク | 176h | [phase2.md](phase2.md) |
-| Phase 3: UI実装 | 1ヶ月 | 画面・コンポーネント | 25タスク | 200h | [phase3.md](phase3.md) |
-| Phase 4: 統合・最適化 | 2週間 | テスト・性能調整 | 10タスク | 80h | [phase4.md](phase4.md) |
+| Phase | Duration | Main Deliverables | Task Count | Effort | File |
+|-------|----------|-------------------|------------|--------|------|
+| Phase 1: Foundation | 1 month | Dev environment・DB setup | 20 tasks | 160h | [phase1.md](phase1.md) |
+| Phase 2: Core Features | 1 month | Basic API・Authentication | 22 tasks | 176h | [phase2.md](phase2.md) |
+| Phase 3: UI Implementation | 1 month | Screens・Components | 25 tasks | 200h | [phase3.md](phase3.md) |
+| Phase 4: Integration・Optimization | 2 weeks | Testing・Performance tuning | 10 tasks | 80h | [phase4.md](phase4.md) |
 
-## 既存タスク番号の管理
+## Existing Task Number Management
 
-**既存ファイル確認結果**:
-- 確認したファイル: `docs/tasks/{要件名}-*.md`
-- 使用済みタスク番号: TASK-0001 〜 TASK-0077 (例)
-- 次回開始番号: TASK-0078
+**Existing File Verification Results**:
+- Verified files: `docs/tasks/{requirement-name}-*.md`
+- Used task numbers: TASK-0001 ~ TASK-0077 (example)
+- Next starting number: TASK-0078
 
-## 依存関係
+## Dependencies
 
 ```mermaid
 gantt
-    title プロジェクト全体スケジュール
+    title Overall Project Schedule
     dateFormat  YYYY-MM-DD
     section Phase 1
-    基盤構築           :phase1, 2024-01-01, 30d
+    Foundation           :phase1, 2024-01-01, 30d
     section Phase 2
-    コア機能           :phase2, after phase1, 30d
+    Core Features        :phase2, after phase1, 30d
     section Phase 3
-    UI実装            :phase3, after phase2, 30d
+    UI Implementation    :phase3, after phase2, 30d
     section Phase 4
-    統合・最適化       :phase4, after phase3, 14d
+    Integration・Optimization :phase4, after phase3, 14d
 ```
 
-## 進捗管理
+## Progress Management
 
-### 全体進捗
-- [ ] Phase 1: 基盤構築 (0/20)
-- [ ] Phase 2: コア機能 (0/22)
-- [ ] Phase 3: UI実装 (0/25)
-- [ ] Phase 4: 統合・最適化 (0/10)
+### Overall Progress
+- [ ] Phase 1: Foundation (0/20)
+- [ ] Phase 2: Core Features (0/22)
+- [ ] Phase 3: UI Implementation (0/25)
+- [ ] Phase 4: Integration・Optimization (0/10)
 
-### マイルストーン
-- [ ] M1: 開発環境完成 (Phase 1完了時)
-- [ ] M2: MVP機能完成 (Phase 2完了時)
-- [ ] M3: UI完成 (Phase 3完了時)
-- [ ] M4: リリース準備完了 (Phase 4完了時)
+### Milestones
+- [ ] M1: Development environment complete (Phase 1 completion)
+- [ ] M2: MVP features complete (Phase 2 completion)
+- [ ] M3: UI complete (Phase 3 completion)
+- [ ] M4: Release preparation complete (Phase 4 completion)
 
-## リスク管理
+## Risk Management
 
-| リスク | 影響度 | 発生確率 | 対策 |
-|--------|--------|----------|------|
-| {リスク項目} | 高/中/低 | 高/中/低 | {対策内容} |
+| Risk | Impact | Probability | Countermeasure |
+|------|--------|-------------|----------------|
+| {Risk item} | High/Medium/Low | High/Medium/Low | {Countermeasure details} |
 
-## 品質基準
+## Quality Standards
 
-- テストカバレッジ: 90%以上
-- パフォーマンス: 応答時間3秒以内
-- セキュリティ: OWASP Top 10対応
-- アクセシビリティ: WCAG 2.1 AA準拠
+- Test coverage: 90% or higher
+- Performance: Response time within 3 seconds
+- Security: OWASP Top 10 compliance
+- Accessibility: WCAG 2.1 AA compliance
 ````
 
-### 2. phase*.md（各フェーズ詳細）
+### 2. phase*.md (Each Phase Details)
 
 ````markdown
-# {要件名} Phase 1: 基盤構築
+# {Requirement Name} Phase 1: Foundation
 
-## フェーズ概要
+## Phase Overview
 
-- **期間**: 1ヶ月 (20営業日)
-- **目標**: 開発環境とデータベース基盤の構築
-- **成果物**: 動作する開発環境、データベーススキーマ、CI/CD基盤
-- **担当**: {担当者名}
+- **Duration**: 1 month (20 business days)
+- **Goal**: Build development environment and database foundation
+- **Deliverables**: Working development environment, database schema, CI/CD foundation
+- **Assignee**: {assignee-name}
 
-## 週次計画
+## Weekly Plan
 
-### Week 1: 環境構築
-- **目標**: 基本的な開発環境の構築
-- **成果物**: Docker環境、基本設定
+### Week 1: Environment Setup
+- **Goal**: Build basic development environment
+- **Deliverables**: Docker environment, basic configuration
 
-### Week 2: データベース設計
-- **目標**: データベーススキーマの実装
-- **成果物**: DB設計、マイグレーション
+### Week 2: Database Design
+- **Goal**: Implement database schema
+- **Deliverables**: DB design, migrations
 
-### Week 3: CI/CD構築
-- **目標**: 自動化パイプラインの構築
-- **成果物**: テスト・デプロイ自動化
+### Week 3: CI/CD Setup
+- **Goal**: Build automation pipeline
+- **Deliverables**: Test・deploy automation
 
-### Week 4: 基盤テスト・調整
-- **目標**: 基盤の安定化
-- **成果物**: 動作確認済み基盤
+### Week 4: Foundation Testing・Adjustment
+- **Goal**: Foundation stabilization
+- **Deliverables**: Verified working foundation
 
-## 日次タスク
+## Daily Tasks
 
-### Week 1: 環境構築
+### Week 1: Environment Setup
 
-#### Day 1 (TASK-0001): プロジェクト初期化
+#### Day 1 (TASK-0001): Project Initialization
 
-- [ ] **タスク完了**
-- **推定工数**: 8時間
-- **タスクタイプ**: DIRECT
-- **要件リンク**: REQ-001
-- **依存タスク**: なし
-- **実装詳細**:
-  - Node.js/TypeScript環境設定
-  - package.json設定
-  - ESLint/Prettier設定
-  - Git初期化・.gitignore設定
-- **完了条件**:
-  - [ ] npm run dev で開発サーバーが起動する
-  - [ ] npm run lint でエラーが出ない
-  - [ ] TypeScript設定が正しく動作する
-- **注意事項**: Node.js LTS版を使用すること
+- [ ] **Task Complete**
+- **Estimated Effort**: 8 hours
+- **Task Type**: DIRECT
+- **Requirements Link**: REQ-001
+- **Dependencies**: None
+- **Implementation Details**:
+  - Node.js/TypeScript environment setup
+  - package.json configuration
+  - ESLint/Prettier configuration
+  - Git initialization・.gitignore setup
+- **Completion Criteria**:
+  - [ ] Development server starts with npm run dev
+  - [ ] No errors from npm run lint
+  - [ ] TypeScript configuration works correctly
+- **Notes**: Use Node.js LTS version
 
-#### Day 2 (TASK-0002): Docker環境構築
+#### Day 2 (TASK-0002): Docker Environment Setup
 
-- [ ] **タスク完了**
-- **推定工数**: 8時間
-- **タスクタイプ**: DIRECT
-- **要件リンク**: REQ-002
-- **依存タスク**: TASK-0001
-- **実装詳細**:
-  - Dockerfile作成
-  - docker-compose.yml設定
-  - PostgreSQL・Redis設定
-  - 環境変数管理設定
-- **完了条件**:
-  - [ ] docker-compose up で全サービスが起動する
-  - [ ] アプリケーションからDB接続できる
-  - [ ] ホットリロードが動作する
-- **注意事項**: ポート競合に注意すること
+- [ ] **Task Complete**
+- **Estimated Effort**: 8 hours
+- **Task Type**: DIRECT
+- **Requirements Link**: REQ-002
+- **Dependencies**: TASK-0001
+- **Implementation Details**:
+  - Create Dockerfile
+  - Configure docker-compose.yml
+  - PostgreSQL・Redis configuration
+  - Environment variable management setup
+- **Completion Criteria**:
+  - [ ] All services start with docker-compose up
+  - [ ] Application can connect to DB
+  - [ ] Hot reload works
+- **Notes**: Watch for port conflicts
 
-#### Day 3 (TASK-0003): 基本ディレクトリ構造
+#### Day 3 (TASK-0003): Basic Directory Structure
 
-- [ ] **タスク完了**
-- **推定工数**: 6時間
-- **タスクタイプ**: DIRECT
-- **要件リンク**: REQ-003
-- **依存タスク**: TASK-0002
-- **実装詳細**:
-  - src/ディレクトリ構造作成
-  - テストディレクトリ構造
-  - 設定ファイル配置
-  - README.md作成
-- **完了条件**:
-  - [ ] Clean Architectureに沿った構造
-  - [ ] テストファイルの配置が正しい
-  - [ ] README.mdが充実している
-- **注意事項**: 後から変更しにくい構造のため慎重に設計
+- [ ] **Task Complete**
+- **Estimated Effort**: 6 hours
+- **Task Type**: DIRECT
+- **Requirements Link**: REQ-003
+- **Dependencies**: TASK-0002
+- **Implementation Details**:
+  - Create src/ directory structure
+  - Test directory structure
+  - Configuration file placement
+  - Create README.md
+- **Completion Criteria**:
+  - [ ] Structure follows Clean Architecture
+  - [ ] Test file placement is correct
+  - [ ] README.md is comprehensive
+- **Notes**: Design carefully as structure is hard to change later
 
-#### Day 4 (TASK-0004): ログ・エラーハンドリング基盤
+#### Day 4 (TASK-0004): Logging・Error Handling Foundation
 
-- [ ] **タスク完了**
-- **推定工数**: 8時間
-- **タスクタイプ**: TDD
-- **要件リンク**: REQ-004
-- **依存タスク**: TASK-0003
-- **実装詳細**:
-  - Winston/Pinoログライブラリ設定
-  - エラーハンドリングミドルウェア
-  - 構造化ログ設定
-  - ログローテーション設定
-- **テスト要件**:
-  - [ ] ログ出力テスト
-  - [ ] エラーハンドリングテスト
-  - [ ] ログレベル制御テスト
-- **完了条件**:
-  - [ ] 各レベルのログが正しく出力される
-  - [ ] エラーが適切にキャッチされる
-  - [ ] 本番環境でセンシティブ情報が出力されない
+- [ ] **Task Complete**
+- **Estimated Effort**: 8 hours
+- **Task Type**: TDD
+- **Requirements Link**: REQ-004
+- **Dependencies**: TASK-0003
+- **Implementation Details**:
+  - Winston/Pino logging library setup
+  - Error handling middleware
+  - Structured logging configuration
+  - Log rotation setup
+- **Test Requirements**:
+  - [ ] Log output tests
+  - [ ] Error handling tests
+  - [ ] Log level control tests
+- **Completion Criteria**:
+  - [ ] Logs output correctly at each level
+  - [ ] Errors are properly caught
+  - [ ] Sensitive information not output in production
 
-#### Day 5 (TASK-0005): 設定管理システム
+#### Day 5 (TASK-0005): Configuration Management System
 
-- [ ] **タスク完了**
-- **推定工数**: 6時間
-- **タスクタイプ**: TDD
-- **要件リンク**: REQ-005
-- **依存タスク**: TASK-0004
-- **実装詳細**:
-  - 環境別設定ファイル
-  - 設定バリデーション
-  - 機密情報管理
-  - 設定読み込みモジュール
-- **テスト要件**:
-  - [ ] 設定読み込みテスト
-  - [ ] 環境別設定テスト
-  - [ ] 設定バリデーションテスト
-- **完了条件**:
-  - [ ] 環境変数が正しく読み込まれる
-  - [ ] 不正な設定でエラーになる
-  - [ ] 機密情報が適切に管理される
+- [ ] **Task Complete**
+- **Estimated Effort**: 6 hours
+- **Task Type**: TDD
+- **Requirements Link**: REQ-005
+- **Dependencies**: TASK-0004
+- **Implementation Details**:
+  - Environment-specific configuration files
+  - Configuration validation
+  - Secret information management
+  - Configuration loading module
+- **Test Requirements**:
+  - [ ] Configuration loading tests
+  - [ ] Environment-specific configuration tests
+  - [ ] Configuration validation tests
+- **Completion Criteria**:
+  - [ ] Environment variables load correctly
+  - [ ] Invalid configuration throws errors
+  - [ ] Secret information properly managed
 
-### Week 2: データベース設計
+### Week 2: Database Design
 
-#### Day 6 (TASK-0006): データベース接続基盤
+#### Day 6 (TASK-0006): Database Connection Foundation
 
-- [ ] **タスク完了**
-- **推定工数**: 8時間
-- **タスクタイプ**: TDD
-- **要件リンク**: REQ-401
-- **依存タスク**: TASK-0005
-- **実装詳細**:
-  - TypeORM/Prisma設定
-  - 接続プール設定
-  - マイグレーション基盤
-  - データベースモニタリング
-- **テスト要件**:
-  - [ ] 接続プールテスト
-  - [ ] 接続障害処理テスト
-  - [ ] トランザクション管理テスト
-- **完了条件**:
-  - [ ] データベース接続が安定している
-  - [ ] 接続プールが適切に動作する
-  - [ ] マイグレーションコマンドが動作する
+- [ ] **Task Complete**
+- **Estimated Effort**: 8 hours
+- **Task Type**: TDD
+- **Requirements Link**: REQ-401
+- **Dependencies**: TASK-0005
+- **Implementation Details**:
+  - TypeORM/Prisma configuration
+  - Connection pool configuration
+  - Migration foundation
+  - Database monitoring
+- **Test Requirements**:
+  - [ ] Connection pool tests
+  - [ ] Connection failure handling tests
+  - [ ] Transaction management tests
+- **Completion Criteria**:
+  - [ ] Database connection is stable
+  - [ ] Connection pool works properly
+  - [ ] Migration commands work
 
-{...続き、Day 7-20まで同様の形式で記載...}
+{...continue Day 7-20 in similar format...}
 
-## フェーズ完了基準
+## Phase Completion Criteria
 
-- [ ] 全タスクが完了している (20/20)
-- [ ] 開発環境が安定して動作する
-- [ ] データベーススキーマが完成している
-- [ ] CI/CDパイプラインが動作する
-- [ ] 基盤コードのテストカバレッジが90%以上
-- [ ] セキュリティチェックが完了している
-- [ ] ドキュメントが整備されている
+- [ ] All tasks completed (20/20)
+- [ ] Development environment runs stably
+- [ ] Database schema completed
+- [ ] CI/CD pipeline operational
+- [ ] Foundation code test coverage 90% or higher
+- [ ] Security checks completed
+- [ ] Documentation organized
 
-## 次フェーズへの引き継ぎ事項
+## Handover to Next Phase
 
-- 開発環境の利用方法
-- データベーススキーマの詳細
-- CI/CDの運用方法
-- 設定項目の一覧
-- トラブルシューティング情報
+- How to use development environment
+- Database schema details
+- CI/CD operation methods
+- Configuration item list
+- Troubleshooting information
 
-## 振り返り
+## Retrospective
 
-### 計画との差異
-- {計画と実際の差異を記録}
+### Variance from Plan
+- {Record differences between plan and actual}
 
-### 学習事項
-- {技術的な学習事項を記録}
+### Learning Items
+- {Record technical learning items}
 
-### 改善点
-- {次フェーズで改善すべき点を記録}
+### Improvement Points
+- {Record points to improve in next phase}
 ````
 
-## サブタスクテンプレート
+## Subtask Templates
 
-### TDDタスクの場合
+### For TDD Tasks
 
-各タスクは以下のTDDプロセスで実装:
+Each task is implemented using the following TDD process:
 
-1. `tdd-requirements.md` - 詳細要件定義
-2. `tdd-testcases.md` - テストケース作成
-3. `tdd-red.md` - テスト実装（失敗）
-4. `tdd-green.md` - 最小実装
-5. `tdd-refactor.md` - リファクタリング
-6. `tdd-verify-complete.md` - 品質確認
+1. `tdd-requirements.md` - Detailed requirements definition
+2. `tdd-testcases.md` - Test case creation
+3. `tdd-red.md` - Test implementation (failure)
+4. `tdd-green.md` - Minimal implementation
+5. `tdd-refactor.md` - Refactoring
+6. `tdd-verify-complete.md` - Quality verification
 
-### DIRECTタスクの場合
+### For DIRECT Tasks
 
-各タスクは以下のDIRECTプロセスで実装:
+Each task is implemented using the following DIRECT process:
 
-1. `direct-setup.md` - 直接実装・設定
-2. `direct-verify.md` - 動作確認・品質確認
+1. `direct-setup.md` - Direct implementation・configuration
+2. `direct-verify.md` - Operation verification・quality verification
 
 ```
 
-## 実行後の確認
+## Post-Execution Verification
 
-- @agent-symbol-searcher で作成したタスクと既存システムとの整合性を確認
-- 作成したファイルの一覧を表示
-  - `docs/tasks/{要件名}-overview.md`: 全体概要とフェーズ一覧
-  - `docs/tasks/{要件名}-phase1.md`: フェーズ1詳細
-  - `docs/tasks/{要件名}-phase2.md`: フェーズ2詳細
-  - （以下、フェーズ数に応じて継続）
-- 各フェーズの概要とタスク数を表示
-- 全体スケジュールと依存関係を表示
-- プロジェクト期間と総工数を報告
-- **既存タスク番号の確認結果を表示**
-  - 既存ファイルから抽出した使用済み番号
-  - 新規タスクで使用開始する番号
-  - 重複なく連続した番号の割り当て確認
-- ユーザに実装開始の確認を促すメッセージを表示
+- Verify consistency between created tasks and existing system using @agent-symbol-searcher
+- Display list of created files
+  - `docs/tasks/{requirement-name}-overview.md`: Overall overview and phase list
+  - `docs/tasks/{requirement-name}-phase1.md`: Phase 1 details
+  - `docs/tasks/{requirement-name}-phase2.md`: Phase 2 details
+  - (Continue according to number of phases)
+- Display overview and task count for each phase
+- Display overall schedule and dependencies
+- Report project duration and total effort
+- **Display existing task number verification results**
+  - Used numbers extracted from existing files
+  - Starting number for new tasks
+  - Confirm consecutive number assignment without duplicates
+- Display message prompting user to confirm implementation start
 
-## ファイル間リンクの確認
+## File Link Verification
 
-- overview.mdから各phase*.mdへのリンクが正しく設定されていることを確認
-- 各フェーズファイル内のタスク依存関係が正しく記載されていることを確認
-- **全タスクIDがTASK-0001形式の4桁で統一されていることを確認**
-- マイルストーンとフェーズ完了基準が明確に定義されていることを確認
+- Verify that links from overview.md to each phase*.md are correctly set
+- Verify that task dependencies within each phase file are correctly documented
+- **Verify that all task IDs are unified in TASK-0001 format with 4 digits**
+- Verify that milestones and phase completion criteria are clearly defined
 
-## タスク番号管理の注意事項
+## Task Number Management Notes
 
-- 既存ファイルがある場合は必ずGrepツールで使用済み番号を確認
-- TASK-0001からTASK-9999まで最大9999タスクをサポート
-- 番号の重複や欠番が発生しないよう注意深く管理
-- 複数のフェーズファイルにまたがってもタスク番号は連続で割り当て
+- Always verify used numbers with Grep tool when existing files are present
+- Support maximum 9999 tasks from TASK-0001 to TASK-9999
+- Carefully manage to avoid duplicate or missing numbers
+- Assign task numbers consecutively even across multiple phase files

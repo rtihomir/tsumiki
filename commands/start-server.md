@@ -1,79 +1,79 @@
-# 開発サーバ起動・管理
+# Development Server Startup and Management
 
-開発環境のサーバを起動・管理するコマンドです。
+Command for starting and managing development environment servers.
 
-## サーバ起動確認・管理
+## Server Startup Verification and Management
 
-開発開始前にサーバの状態を確認し、必要に応じて起動します：
+Check server status before starting development and start if necessary:
 
 ```bash
-# 既存のViteサーバ確認
+# Check existing Vite server
 ps aux | grep -E "vite.*--port 3000" | grep -v grep
 
-# サーバが起動していない場合は新規起動
+# Start new server if not running
 if ! ps aux | grep -E "vite.*--port 3000" | grep -v grep > /dev/null; then
-  echo "サーバが起動していません。開発サーバを起動します..."
+  echo "Server is not running. Starting development server..."
   npm run dev &
-  echo "サーバ起動中... 5秒待機します"
+  echo "Server starting... waiting 5 seconds"
   sleep 5
 else
-  echo "既存のサーバが見つかりました。そのまま利用します。"
-  ps aux | grep -E "vite.*--port 3000" | grep -v grep | awk '{print "PID: " $2 " - Viteサーバが既に起動中"}'
+  echo "Existing server found. Using it as is."
+  ps aux | grep -E "vite.*--port 3000" | grep -v grep | awk '{print "PID: " $2 " - Vite server already running"}'
 fi
 
-# サーバ動作確認
-echo "サーバ動作確認中..."
-curl -s http://localhost:3000 > /dev/null && echo "✅ サーバは正常に動作しています" || echo "⚠️ サーバに接続できません"
+# Server operation verification
+echo "Verifying server operation..."
+curl -s http://localhost:3000 > /dev/null && echo "✅ Server is operating normally" || echo "⚠️ Cannot connect to server"
 ```
 
-## サーバ管理コマンド
+## Server Management Commands
 
-### サーバ状態確認
+### Server Status Verification
 
 ```bash
-# 現在動作中のサーバプロセス確認
+# Check currently running server processes
 ps aux | grep -E "vite.*--port 3000" | grep -v grep
 
-# ポート使用状況確認
+# Check port usage
 lsof -i :3000
 ```
 
-### サーバ停止
+### Server Stop
 
 ```bash
-# Viteサーバの停止
+# Stop Vite server
 pkill -f "vite.*--port 3000"
 
-# 強制停止（上記で停止しない場合）
+# Force stop (if above doesn't work)
 ps aux | grep -E "vite.*--port 3000" | grep -v grep | awk '{print $2}' | xargs kill -9
 ```
 
-### サーバ再起動
+### Server Restart
 
 ```bash
-# サーバ停止
+# Stop server
 pkill -f "vite.*--port 3000"
 
-# 少し待機
+# Wait a bit
 sleep 2
 
-# サーバ再起動
+# Restart server
 npm run dev &
 
-# 起動確認
+# Verify startup
 sleep 5
-curl -s http://localhost:3000 > /dev/null && echo "✅ サーバは正常に動作しています" || echo "⚠️ サーバに接続できません"
+curl -s http://localhost:3000 > /dev/null && echo "✅ Server is operating normally" || echo "⚠️ Cannot connect to server"
 ```
 
-## 使用場面
+## Usage Scenarios
 
-- TDD開発開始前の環境準備
-- サーバが停止している場合の復旧
-- サーバの状態確認が必要な場合
-- 開発環境のセットアップ時
+- Environment preparation before starting TDD development
+- Recovery when server is stopped
+- When server status verification is needed
+- During development environment setup
 
-## 注意事項
+## Notes
 
-- ポート3000が他のプロセスに使用されている場合は、該当プロセスを終了してください
-- サーバ起動後は、ブラウザで http://localhost:3000 にアクセスして動作確認できます
-- バックグラウンドで起動したサーバは、作業終了時に適切に停止することを推奨します
+- If port 3000 is used by other processes, terminate the relevant process
+- After server startup, you can verify operation by accessing http://localhost:3000 in browser
+- It is recommended to properly stop background servers when work is finished

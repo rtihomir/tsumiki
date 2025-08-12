@@ -1,165 +1,165 @@
-# 6.1 過度な依存を避けるバランス戦略
+# 6.1 Balance Strategy to Avoid Over-dependency
 
-AITDDを効果的に活用するには、AIの力を最大限活用しながらも、開発者自身の創造性と判断力を維持することが重要です。このセクションでは、AIと人間の適切な役割分担と、過度な依存を避けるための実践的な戦略について解説します。
+To effectively utilize AITDD, it's important to maximize AI capabilities while maintaining developers' creativity and judgment. This section explains practical strategies for appropriate role division between AI and humans and avoiding over-dependency.
 
-## AIへの過度な依存による問題
+## Problems from Over-dependency on AI
 
-### 主要な課題
+### Major Challenges
 
-AITDDにおける最大の課題の一つは、**AIに任せすぎることで開発者自身の意思や考えが入りにくくなる**ことです。この問題はClaude Sonnet 4に限らず、他のAIツールでも共通して発生し、以下のような影響を与えます：
+One of the biggest challenges in AITDD is that **leaving too much to AI makes it difficult for developers' own intentions and thoughts to enter**. This problem occurs not only with Claude Sonnet 4 but with other AI tools as well, causing the following impacts:
 
-- **設計判断**: AIの提案に流されやすくなり、独自の判断が制限される
-- **創造性**: 独自のアイデアや解決策が生まれにくくなる
-- **学習機会**: 自分で考える機会が減少し、スキル向上に影響する
+- **Design Decisions**: Becoming easily influenced by AI suggestions, limiting independent judgment
+- **Creativity**: Difficulty generating unique ideas and solutions
+- **Learning Opportunities**: Reduced opportunities for independent thinking, affecting skill improvement
 
-### バイブコーディングからの教訓
+### Lessons from Vibe Coding
 
-AITDD手法の発展過程では、「バイブコーディング」と呼ばれる初期段階を経験することが多くあります。これは**ノリと勢いでAIを使って作るコーディング**手法ですが、以下のような制限があることが分かっています：
+During the development of AITDD methodology, we often experienced an initial stage called "vibe coding." This is **coding with momentum and enthusiasm using AI**, but we found it has the following limitations:
 
-- 一つの実装は非常に高速だが、**3機能程度の統合で限界**に到達
-- AIが**指示していない大量のコード**を勝手に生成してしまう
-- **同じ要求で全く違う実装**が生まれやすく、一貫性がない
-- 結果として**手作業の方が早い**状況になってしまう
+- Single implementations are very fast, but **reach limits around 3 feature integrations**
+- AI generates **large amounts of uninstructed code** on its own
+- **Same requirements produce completely different implementations**, lacking consistency
+- Results in situations where **manual work becomes faster**
 
-## 適切な役割分担の確立
+## Establishing Appropriate Role Division
 
-### 人間が担うべき領域
+### Areas Humans Should Handle
 
-AITDDにおいて、人間が最も創造性を発揮すべき領域は**要件定義と設計**です：
+In AITDD, the area where humans should exercise the most creativity is **requirements definition and design**:
 
-#### 最重要領域: 要件定義と設計
-- **「何をしたいか」のイメージング**が最大の創造性発揮ポイント
-- 問題解決の方向性決定
-- 価値創造の源泉
-- ビジネス要件をシステム要件に変換する過程
+#### Most Important Area: Requirements Definition and Design
+- **"What do we want to do" imaging** is the greatest creativity exercise point
+- Determining problem-solving direction
+- Source of value creation
+- Process of converting business requirements to system requirements
 
-#### 人間の専門領域
-- **目標設定**: プロジェクトの目的と成功指標の定義
-- **価値判断**: 機能の優先順位や品質要件の決定
-- **創造的発想**: 新しいアプローチや解決策の提案
-- **システム全体の整合性**: アーキテクチャレベルでの一貫性確保
+#### Human Specialty Areas
+- **Goal Setting**: Defining project objectives and success metrics
+- **Value Judgment**: Determining feature priorities and quality requirements
+- **Creative Thinking**: Proposing new approaches and solutions
+- **System-wide Consistency**: Ensuring consistency at the architecture level
 
-### AIが得意とする領域
+### Areas Where AI Excels
 
-一方、AIは以下の領域で人間を効果的に支援できます：
+On the other hand, AI can effectively support humans in the following areas:
 
-- **実装支援**: コードの生成と詳細な実装
-- **品質向上**: テストケース生成とバグ検出
-- **効率化**: 定型的な作業の自動化
-- **ドキュメント生成**: コメントや設計文書の作成
+- **Implementation Support**: Code generation and detailed implementation
+- **Quality Improvement**: Test case generation and bug detection
+- **Efficiency**: Automation of routine tasks
+- **Documentation Generation**: Creating comments and design documents
 
-## 実践的なバランス戦略
+## Practical Balance Strategies
 
-### 1. AIの推測内容の可視化
+### 1. Visualizing AI Inference Content
 
-AIの判断プロセスを透明化することで、適切な監督と修正を可能にします：
+Making AI's decision process transparent enables appropriate supervision and correction:
 
-#### 現在の取り組み
-- プロンプト設計での工夫により、AIの推測・補完部分をマーキング
-- AIが推測した内容にマークを付ける仕組みの導入
-- 不確実な判断の可視化
+#### Current Efforts
+- Marking AI's inference and completion parts through prompt design improvements
+- Introducing mechanisms to mark content inferred by AI
+- Visualizing uncertain judgments
 
-#### 将来の発展方向
-- AIの推測内容完全可視化システムの構築
-- ブラックボックス問題の軽減
-- より精密な人間による監督の実現
+#### Future Development Direction
+- Building complete AI inference content visualization systems
+- Reducing black box problems
+- Achieving more precise human supervision
 
-### 2. チェックポイントの明確化
+### 2. Clarifying Checkpoints
 
-人間がチェックすべき内容を明確にし、効率的なレビューを実現します：
+Clarifying what humans should check to achieve efficient reviews:
 
-#### チェックポイントの設定
-- **目的**: 人間がチェックすべき内容の把握
-- **効果**: 効率的なレビューの実現
-- **品質**: 重要な判断の見落とし防止
+#### Setting Checkpoints
+- **Purpose**: Understanding what humans should check
+- **Effect**: Achieving efficient reviews
+- **Quality**: Preventing oversight of important decisions
 
-#### 具体的なチェック項目
-- AIが指示していない機能を実装していないか
-- 実装方法が要件に適合しているか
-- 既存システムとの整合性が保たれているか
-- 将来の拡張性が考慮されているか
+#### Specific Check Items
+- Whether AI implemented features not instructed
+- Whether implementation methods match requirements
+- Whether consistency with existing systems is maintained
+- Whether future extensibility is considered
 
-### 3. 段階的改善アプローチ
+### 3. Gradual Improvement Approach
 
-AIとの協調は段階的に改善していくことが重要です：
+Collaboration with AI should be improved gradually:
 
-#### 改善ステップ
-1. **現在**: 課題の認識と解決方向の検討
-2. **次期**: プロンプト設計でのマーキング仕組み導入
-3. **将来**: AIの推測内容完全可視化システム
+#### Improvement Steps
+1. **Current**: Recognizing issues and considering solution directions
+2. **Next**: Introducing marking mechanisms in prompt design
+3. **Future**: Complete AI inference content visualization system
 
-#### 継続的な調整
-- 実践を通じた手法の改良
-- チーム内でのベストプラクティス共有
-- 新しいAIツールへの対応
+#### Continuous Adjustment
+- Improving methods through practice
+- Sharing best practices within teams
+- Adapting to new AI tools
 
-## バランス戦略の実装
+## Implementing Balance Strategies
 
-### TDDプロセスでの役割分担
+### Role Division in TDD Process
 
-Red-Green-Refactor-Validationサイクルにおいて、各ステップで人間とAIの役割を明確にします：
+In the Red-Green-Refactor-Validation cycle, clarify human and AI roles for each step:
 
-#### Redステップ（人間主導）
-- テスト要件の定義と設計方針の決定
-- テストケースの構造と期待値の設計
-- AIにはテストコードの実装を依頼
+#### Red Step (Human-led)
+- Defining test requirements and determining design policy
+- Designing test case structure and expected values
+- Requesting test code implementation from AI
 
-#### Greenステップ（AI主導・人間監督）
-- AIによる実装コードの生成
-- 人間による実装方針の確認
-- 必要に応じた実装内容の調整
+#### Green Step (AI-led, Human-supervised)
+- AI generates implementation code
+- Humans confirm implementation policy
+- Adjusting implementation content as needed
 
-#### Refactorステップ（協調）
-- リファクタリング方針は人間が決定
-- 具体的な実装はAIが担当
-- 品質基準は人間が判断
+#### Refactor Step (Collaborative)
+- Humans decide refactoring policy
+- AI handles specific implementation
+- Humans judge quality standards
 
-#### Validationステップ（人間主導）
-- 品質評価基準の設定
-- AIの検証結果の解釈
-- 受け入れ可否の最終判断
+#### Validation Step (Human-led)
+- Setting quality evaluation criteria
+- Interpreting AI verification results
+- Final acceptance/rejection decision
 
-### プロンプト設計の工夫
+### Prompt Design Considerations
 
-効果的なバランスを実現するためのプロンプト設計のポイント：
+Key points for prompt design to achieve effective balance:
 
 ```markdown
-# プロンプト例（バランス重視）
-あなたは以下の仕様に基づいてコードを実装してください。
+# Prompt Example (Balance-focused)
+Please implement code based on the following specifications.
 
-## 実装要件
-- [具体的な要件]
+## Implementation Requirements
+- [Specific requirements]
 
-## 重要な制約
-- 既存のコードスタイルに合わせること
-- 推測で追加機能を実装しないこと
+## Important Constraints
+- Match existing code style
+- Do not implement additional features based on assumptions
 
-## 出力形式
-実装コードに加えて、以下を明記してください：
-- [推測] 仕様から推測した部分
-- [確認] 確認が必要な判断ポイント
-- [代替案] 他の実装方法があれば提示
+## Output Format
+In addition to implementation code, please clearly indicate:
+- [Inference] Parts inferred from specifications
+- [Confirmation] Decision points that need confirmation
+- [Alternatives] Present other implementation methods if available
 ```
 
-## 期待される効果
+## Expected Effects
 
-適切なバランス戦略の実装により、以下の効果が期待できます：
+Implementing appropriate balance strategies can achieve the following effects:
 
-### 開発者のスキル維持・向上
-- AIと人間の適切な役割分担によるスキル保持
-- 開発者の創造性発揮機会の確保
-- AI支援の透明性向上による学習効果
+### Maintaining and Improving Developer Skills
+- Skill retention through appropriate role division between AI and humans
+- Ensuring opportunities for developers to exercise creativity
+- Learning effects through improved AI support transparency
 
-### 品質管理の効率化
-- 重要な判断ポイントの明確化
-- 効率的なレビューの実現
-- 継続的な品質保証プロセスの確立
+### Efficient Quality Management
+- Clarifying important decision points
+- Achieving efficient reviews
+- Establishing continuous quality assurance processes
 
-### 長期的な開発力の向上
-- 組織としてのAI活用能力の蓄積
-- 人間とAIの協調モデルの確立
-- 持続可能な開発プロセスの構築
+### Long-term Development Capability Improvement
+- Accumulating organizational AI utilization capabilities
+- Establishing human-AI collaboration models
+- Building sustainable development processes
 
-## まとめ
+## Summary
 
-AITDDにおけるバランス戦略は、AIの効率性と人間の創造性を両立させる重要な要素です。過度な依存を避けながらAIの力を最大限活用するためには、明確な役割分担と継続的な改善が必要です。次のセクションでは、このバランスの中で人間が創造性を発揮するための具体的なポイントについて詳しく解説します。
+Balance strategy in AITDD is an important element that balances AI efficiency with human creativity. To avoid over-dependency while maximizing AI capabilities, clear role division and continuous improvement are necessary. The next section will explain specific points for humans to exercise creativity within this balance.

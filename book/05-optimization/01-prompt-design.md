@@ -1,299 +1,299 @@
-# 5.1 効果的なプロンプト設計の原則
+# 5.1 Principles of Effective Prompt Design
 
-## はじめに
+## Introduction
 
-AITDDにおいて、AIの出力品質はプロンプト設計に大きく依存します。適切なプロンプト設計により、AI生成コードの品質向上と開発効率の最大化を実現できます。本章では、実践的なプロンプト設計の原則と具体的な手法を学びます。
+In AITDD, the quality of AI output heavily depends on prompt design. Proper prompt design enables improved AI-generated code quality and maximized development efficiency. This chapter covers practical prompt design principles and specific techniques.
 
-## プロンプト設計の基本原則
+## Basic Principles of Prompt Design
 
-### 1. 反復改善方式の採用
+### 1. Adopting Iterative Improvement Approach
 
-AITDDでは、一度のプロンプト作成で完璧な結果を求めるのではなく、継続的な改善を前提とした設計を行います。
+In AITDD, we design for continuous improvement rather than seeking perfect results from a single prompt creation.
 
-**基本サイクル：**
+**Basic Cycle:**
 ```
-プロンプト作成 → 実行 → 結果評価 → 修正 → 再実行
+Prompt Creation → Execution → Result Evaluation → Modification → Re-execution
 ```
 
-**実践のポイント：**
-- 初回は80%の品質を目標とし、完璧を求めない
-- 各実行結果を詳細に分析し、改善点を特定
-- 小さな修正を積み重ねて最適化を図る
-- 改善ログを記録し、パターンを把握
+**Practical Points:**
+- Target 80% quality initially, don't seek perfection
+- Analyze each execution result in detail and identify improvement points
+- Optimize through accumulating small modifications
+- Record improvement logs and understand patterns
 
-### 2. 確信度評価の組み込み
+### 2. Incorporating Confidence Assessment
 
-AIに自身の出力に対する確信度を評価させることで、レビューすべき箇所を効率的に特定できます。
+By having AI evaluate its confidence in its own output, we can efficiently identify areas that need review.
 
-**確信度の指標：**
-- **🟢 高確信度**: 参照ファイルから明確に導出可能
-- **🟡 中確信度**: 合理的推測に基づくが確認が必要
-- **🔴 要判断**: 独自判断による生成で重点確認が必要
+**Confidence Indicators:**
+- **🟢 High Confidence**: Clearly derivable from reference files
+- **🟡 Medium Confidence**: Based on reasonable speculation but requires confirmation
+- **🔴 Requires Judgment**: Generated through independent judgment, needs focused verification
 
-### 3. ステップ別カスタマイズ
+### 3. Step-by-Step Customization
 
-TDDの各ステップ（Red、Green、Refactor、Validation）ごとに、プロンプトを最適化します。
+We optimize prompts for each TDD step (Red, Green, Refactor, Validation).
 
-**ステップ別の特徴：**
-- **Red**: テスト作成の明確性と網羅性を重視
-- **Green**: 最小実装と意図しない変更の防止
-- **Refactor**: 品質向上と機能保持のバランス
-- **Validation**: 総合的な品質チェックと課題発見
+**Step-by-Step Characteristics:**
+- **Red**: Emphasize test creation clarity and comprehensiveness
+- **Green**: Focus on minimal implementation and preventing unintended changes
+- **Refactor**: Balance quality improvement and functionality preservation
+- **Validation**: Comprehensive quality checking and issue discovery
 
-## AITDDにおけるプロンプトパターン
+## Prompt Patterns in AITDD
 
-### パターン1: TODO記録指示
+### Pattern 1: TODO Recording Instructions
 
-AI生成結果の確認すべき項目をTODO形式で記録させるパターンです。
+A pattern that records items to be verified from AI-generated results in TODO format.
 
-**基本テンプレート：**
+**Basic Template:**
 ```markdown
-## プロンプトでの指示例
+## Prompt Instruction Example
 
-以下の処理を実行し、結果をTODOリストとして記録してください：
+Please execute the following process and record the results as a TODO list:
 
-**実行内容：**
-[具体的な指示内容]
+**Execution Content:**
+[Specific instruction content]
 
-**TODO記録フォーマット：**
+**TODO Recording Format:**
 ```markdown
-## [ステップ名]結果TODO
+## [Step Name] Results TODO
 
-### 🟢 高確信度項目
-- [ ] [ファイル名](相対パス) の具体的確認内容
+### 🟢 High Confidence Items
+- [ ] [File name](relative path) specific verification content
 
-### 🟡 中確信度項目  
-- [ ] [ファイル名](相対パス) の推定内容の妥当性確認
+### 🟡 Medium Confidence Items  
+- [ ] [File name](relative path) validity confirmation of estimated content
 
-### 🔴 要判断項目
-- [ ] 詳細確認: [ファイル名](相対パス) の組織固有内容
+### 🔴 Requires Judgment Items
+- [ ] Detailed verification: [File name](relative path) organization-specific content
 ```
 
-**参照ファイル：** [指定するファイルのリスト]
-**出力ファイル：** `./todos/[ステップ名]-check.md`
+**Reference Files:** [List of files to specify]
+**Output File:** `./todos/[step-name]-check.md`
 ```
 
-### パターン2: 確信度評価指示
+### Pattern 2: Confidence Assessment Instructions
 
-AI生成内容の根拠と確信度を明示させるパターンです。
+A pattern that makes AI specify the basis and confidence level of generated content.
 
-**基本テンプレート：**
+**Basic Template:**
 ```markdown
-## 確信度評価指示
+## Confidence Assessment Instructions
 
-各生成内容について、以下の基準で確信度を評価してください：
+Please evaluate confidence for each generated content based on the following criteria:
 
-**評価基準：**
-- 🟢 青信号：参照ファイルから明確に推測可能
-- 🟡 黄信号：合理的推測だが要確認
-- 🔴 赤信号：独自判断による生成
+**Assessment Criteria:**
+- 🟢 Green Light: Clearly inferrable from reference files
+- 🟡 Yellow Light: Reasonable speculation but requires verification
+- 🔴 Red Light: Generated through independent judgment
 
-**評価対象：**
-1. 生成したコードの各機能
-2. テストケースの選択理由
-3. 実装方針の決定根拠
+**Assessment Targets:**
+1. Each function of generated code
+2. Reasoning for test case selection
+3. Basis for implementation approach decisions
 
-**出力形式：**
-- 各項目に信号機マークを付与
-- 根拠となる参照ファイルの箇所を明記
-- 推測理由を簡潔に説明
+**Output Format:**
+- Add traffic light marks to each item
+- Clearly specify reference file locations that serve as basis
+- Briefly explain reasoning for speculation
 ```
 
-### パターン3: 段階的詳細化指示
+### Pattern 3: Gradual Refinement Instructions
 
-複雑な実装を段階的に進めるためのパターンです。
+A pattern for progressing complex implementations step by step.
 
-**基本テンプレート：**
+**Basic Template:**
 ```markdown
-## 段階的実装指示
+## Gradual Implementation Instructions
 
-以下の順序で段階的に実装を進めてください：
+Please proceed with implementation step by step in the following order:
 
-**Phase 1: 基本構造**
-- 最小限の動作確認
-- 主要な関数・クラスの骨格
-- 基本的なテストケース
+**Phase 1: Basic Structure**
+- Minimal operation verification
+- Framework of main functions/classes
+- Basic test cases
 
-**Phase 2: 機能拡張**
-- 具体的な機能実装
-- エラーハンドリング
-- 追加テストケース
+**Phase 2: Feature Extension**
+- Specific feature implementation
+- Error handling
+- Additional test cases
 
-**Phase 3: 最適化**
-- パフォーマンス改善
-- コード品質向上
-- 総合テスト
+**Phase 3: Optimization**
+- Performance improvement
+- Code quality enhancement
+- Comprehensive testing
 
-**各フェーズ後の確認：**
-- テスト実行結果の報告
-- 確信度評価の実施
-- 次フェーズへの課題整理
+**Verification After Each Phase:**
+- Report test execution results
+- Perform confidence assessment
+- Organize challenges for next phase
 ```
 
-## 実践的なプロンプト構成要素
+## Practical Prompt Components
 
-### 必須要素チェックリスト
+### Essential Elements Checklist
 
-プロンプト作成時に必ず含めるべき要素：
+Elements that must be included when creating prompts:
 
-- [ ] **明確な目的の定義**
-  - 何を実現したいかの明確な説明
-  - 期待する出力の具体的な形式
+- [ ] **Clear Purpose Definition**
+  - Clear explanation of what to achieve
+  - Specific format of expected output
 
-- [ ] **参照ファイルの指定**
-  - 根拠とすべきファイルの明記
-  - ファイル間の関係性の説明
+- [ ] **Reference File Specification**
+  - Clear documentation of files to use as basis
+  - Explanation of relationships between files
 
-- [ ] **確信度評価の指示**
-  - 信号機システムの適用指示
-  - 評価基準の明確な定義
+- [ ] **Confidence Assessment Instructions**
+  - Application instructions for traffic light system
+  - Clear definition of assessment criteria
 
-- [ ] **出力形式の指定**
-  - ファイル名と保存場所の指定
-  - マークダウン形式等の詳細指定
+- [ ] **Output Format Specification**
+  - File name and save location specification
+  - Detailed specification of markdown format etc.
 
-- [ ] **制約・注意事項の明記**
-  - 変更してはいけない箇所
-  - 特別な考慮事項
+- [ ] **Constraints and Notes Documentation**
+  - Areas that must not be changed
+  - Special considerations
 
-### テンプレート化可能な部分
+### Templatable Parts
 
-**標準ヘッダー例：**
+**Standard Header Example:**
 ```markdown
-## [ステップ名] 実行指示
+## [Step Name] Execution Instructions
 
-**目的：** [具体的な目的]
-**参照ファイル：** [ファイルリスト]
-**出力ファイル：** [保存先パス]
+**Purpose:** [Specific purpose]
+**Reference Files:** [File list]
+**Output File:** [Save destination path]
 
-**確信度評価：**
-各生成内容について🟢🟡🔴で確信度を表示
+**Confidence Assessment:**
+Display confidence level with 🟢🟡🔴 for each generated content
 
-**制約事項：**
-- [重要な制約事項]
+**Constraints:**
+- [Important constraints]
 ```
 
-### カスタマイズが必要な部分
+### Parts Requiring Customization
 
-プロジェクト固有でカスタマイズすべき要素：
+Elements that should be customized specifically for projects:
 
-1. **ドメイン固有の用語・概念**
-   - 業界特有の用語の定義
-   - プロジェクト内での命名規則
+1. **Domain-Specific Terms and Concepts**
+   - Industry-specific term definitions
+   - Project-internal naming conventions
 
-2. **技術スタック固有の制約**
-   - 使用フレームワークの制約
-   - パフォーマンス要件
+2. **Technology Stack-Specific Constraints**
+   - Framework constraints in use
+   - Performance requirements
 
-3. **組織固有のルール**
-   - コーディング規約
-   - セキュリティガイドライン
+3. **Organization-Specific Rules**
+   - Coding conventions
+   - Security guidelines
 
-## 品質確保のためのプロンプト技法
+## Prompt Techniques for Quality Assurance
 
-### 1. 想定外実装の防止
+### 1. Preventing Unexpected Implementation
 
-**対策技法：**
+**Countermeasure Techniques:**
 ```markdown
-## 実装制約の明確化
+## Implementation Constraint Clarification
 
-**変更許可範囲：**
-- 変更可能：[具体的なファイル・関数名]
-- 変更禁止：[既存の動作している部分]
+**Modification Permission Scope:**
+- Modifiable: [Specific file/function names]
+- Modification Prohibited: [Existing working parts]
 
-**実装方針：**
-- 最小限の変更で目的を達成
-- 既存機能への影響を最小化
-- 新規追加を基本とし、既存修正は最小限
+**Implementation Policy:**
+- Achieve objectives with minimal changes
+- Minimize impact on existing functionality
+- Base on new additions, minimize existing modifications
 
-**確認チェック：**
-- [ ] 指定範囲外の変更が含まれていないか
-- [ ] 既存テストが引き続き成功するか
-- [ ] 意図しない副作用が発生していないか
+**Verification Check:**
+- [ ] Are there changes outside the specified scope?
+- [ ] Do existing tests continue to succeed?
+- [ ] Are there unintended side effects?
 ```
 
-### 2. 参照元ファイルとの関係性明示
+### 2. Clarifying Relationships with Reference Source Files
 
-**関係性明示の例：**
+**Relationship Clarification Example:**
 ```markdown
-## 参照ファイル関係図
+## Reference File Relationship Diagram
 
-**主要参照：**
-- `spec.md` → 要件定義の根拠
-- `existing_test.js` → 既存仕様の確認
-- `config.json` → 設定仕様の参照
+**Primary References:**
+- `spec.md` → Basis for requirements definition
+- `existing_test.js` → Existing specification verification
+- `config.json` → Configuration specification reference
 
-**派生参照：**
-- `utils.js` → 既存ユーティリティの活用
-- `types.ts` → 型定義の整合性確保
+**Derived References:**
+- `utils.js` → Utilization of existing utilities
+- `types.ts` → Type definition consistency assurance
 
-**生成時の参照優先度：**
-1. 主要参照を最優先
-2. 矛盾する内容は主要参照を採用
-3. 不明な点は明確に質問として記録
+**Reference Priority During Generation:**
+1. Primary references take highest priority
+2. For conflicting content, adopt primary references
+3. Clearly record unclear points as questions
 ```
 
-### 3. 段階的詳細化の実装
+### 3. Implementing Gradual Refinement
 
-**詳細化戦略：**
+**Refinement Strategy:**
 ```markdown
-## 段階的詳細化プロセス
+## Gradual Refinement Process
 
-**Level 1: 骨格作成**
-- インターフェース定義
-- 主要関数のシグネチャ
-- 基本的なエラーハンドリング
+**Level 1: Framework Creation**
+- Interface definition
+- Main function signatures
+- Basic error handling
 
-**Level 2: 機能実装**
-- ビジネスロジックの実装
-- 詳細なエラーハンドリング
-- 入力値検証
+**Level 2: Feature Implementation**
+- Business logic implementation
+- Detailed error handling
+- Input value validation
 
-**Level 3: 最適化・完成**
-- パフォーマンス最適化
-- エッジケース対応
-- ドキュメント整備
+**Level 3: Optimization and Completion**
+- Performance optimization
+- Edge case handling
+- Documentation preparation
 
-**各レベルでの確認項目：**
-- テスト実行結果
-- 確信度評価
-- 次レベルでの課題
+**Verification Items at Each Level:**
+- Test execution results
+- Confidence assessment
+- Challenges for next level
 ```
 
-## 実践演習
+## Practical Exercises
 
-### 演習1: 基本プロンプトの作成
+### Exercise 1: Creating Basic Prompts
 
-以下のシナリオでプロンプトを作成してください：
+Please create prompts for the following scenario:
 
-**シナリオ：** ユーザー認証機能のテストケース作成
-**参照ファイル：** `auth_spec.md`, `user_model.js`
-**期待する出力：** Jest形式のテストファイル
+**Scenario:** Creating test cases for user authentication functionality
+**Reference Files:** `auth_spec.md`, `user_model.js`
+**Expected Output:** Jest format test file
 
-**作成すべき要素：**
-1. 明確な目的定義
-2. 参照ファイルの指定
-3. 確信度評価の指示
-4. 出力形式の指定
+**Elements to Create:**
+1. Clear purpose definition
+2. Reference file specification
+3. Confidence assessment instructions
+4. Output format specification
 
-### 演習2: 段階的実装プロンプトの設計
+### Exercise 2: Designing Step-by-Step Implementation Prompts
 
-**シナリオ：** REST API エンドポイントの実装
-**要件：** 複雑なデータ処理を含む
-**制約：** 既存のミドルウェアを活用
+**Scenario:** REST API endpoint implementation
+**Requirements:** Includes complex data processing
+**Constraints:** Utilize existing middleware
 
-**設計すべき要素：**
-1. 3段階の実装フェーズ
-2. 各フェーズの成果物
-3. フェーズ間の確認項目
+**Elements to Design:**
+1. 3-phase implementation phases
+2. Deliverables for each phase
+3. Verification items between phases
 
-## まとめ
+## Summary
 
-効果的なプロンプト設計の核心は以下の通りです：
+The core of effective prompt design is as follows:
 
-1. **反復改善**: 一度で完璧を求めず、継続的な改善を前提とする
-2. **確信度評価**: AIの推測部分を可視化し、効率的なレビューを実現
-3. **ステップ別最適化**: TDDの各段階に応じたプロンプト設計
-4. **品質制御**: 想定外実装の防止と参照元の明確化
+1. **Iterative Improvement**: Don't seek perfection at once, assume continuous improvement
+2. **Confidence Assessment**: Visualize AI speculation parts and achieve efficient reviews
+3. **Step-by-Step Optimization**: Prompt design according to each TDD stage
+4. **Quality Control**: Prevention of unexpected implementation and clarification of reference sources
 
-次のセクションでは、これらの原則を具体的に活用するAI推論の可視化技術について詳しく学習します。
+The next section will cover AI inference visualization techniques that specifically utilize these principles.

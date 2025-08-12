@@ -1,191 +1,191 @@
-# TDDテストケースの洗い出し
+# TDD Test Case Identification
 
-先ほど整理した要件に基づいて、テストケースを洗い出します。
+Based on the requirements organized earlier, we'll identify test cases.
 
-## 事前準備
+## Preparation
 
-開発コンテキストの準備を行います：
+Prepare the development context:
 
-1. **@agent-symbol-searcher でテスト関連情報を検索し、見つかったファイルを読み込み**
-   - 既存のテストパターンやテストケースを検索し、該当テストファイルをReadツールで読み込み
-   - 類似機能のテスト方法やモック戦略を特定し、関連ファイルをReadツールで読み込み
-   - テストフレームワークの使用方法を確認し、設定ファイルをReadツールで読み込み
+1. **Search for test-related information with @agent-symbol-searcher and read found files**
+   - Search for existing test patterns or test cases and read relevant test files with Read tool
+   - Identify similar feature testing methods or mock strategies and read related files with Read tool
+   - Check test framework usage and read configuration files with Read tool
 
-2. **関連ファイルを直接読み込み**
-   - `docs/implements/{{task_id}}/{feature_name}-memo.md` - 既存の開発履歴を確認
-   - `docs/implements/{{task_id}}/{feature_name}-requirements.md` - 要件定義を確認
-   - `docs/implements/{{task_id}}/{feature_name}-testcases.md` - 既存のテストケースを確認
-   - 関連する設計文書やタスクファイルも必要に応じて読み込み
+2. **Directly read related files**
+   - `docs/implements/{{task_id}}/{feature_name}-memo.md` - Check existing development history
+   - `docs/implements/{{task_id}}/{feature_name}-requirements.md` - Check requirements definition
+   - `docs/implements/{{task_id}}/{feature_name}-testcases.md` - Check existing test cases
+   - Read related design documents or task files as needed
 
-読み込み完了後、準備されたコンテキスト情報を基にテストケースの洗い出しを行います。
+After completing the reading, begin test case identification based on the prepared context information.
 
-## 信頼性レベル指示
+## Reliability Level Instructions
 
-各テストケースの作成時には、元の資料（要件定義、既存実装、ライブラリドキュメント等）との照合状況を以下の信号で必ずコメントしてください：
+When creating each test case, always comment on the verification status against source materials (requirements definition, existing implementation, library documentation, etc.) using the following signals:
 
-- 🟢 **青信号**: 元の資料を参考にしてほぼ推測していない場合
-- 🟡 **黄信号**: 元の資料から妥当な推測の場合
-- 🔴 **赤信号**: 元の資料にない推測の場合
+- 🟢 **Green Signal**: When referencing source materials with minimal speculation
+- 🟡 **Yellow Signal**: When making reasonable speculation based on source materials
+- 🔴 **Red Signal**: When making speculation not found in source materials
 
-## テストケースの分類
+## Test Case Classification
 
-### 1. 正常系テストケース（基本的な動作）
+### 1. Normal Case Test Cases (Basic Operations)
 
-以下の形式で記載してください：
+Please describe in the following format:
 
-- **テスト名**: [わかりやすい日本語名]
-  - **何をテストするか**: [このテストで確認したい具体的な動作や機能]
-  - **期待される動作**: [どのような処理が正常に実行されるべきか]
-- **入力値**: [具体的な値]
-  - **入力データの意味**: [なぜこの入力値を選んだか、何を代表しているか]
-- **期待される結果**: [具体的な期待値]
-  - **期待結果の理由**: [なぜこの結果が正しいとされるか]
-- **テストの目的**: [何を確認するか]
-  - **確認ポイント**: [特に注意して検証すべき点]
-- 🟢🟡🔴 このテストケースの信頼性レベルを記載
+- **Test Name**: [Clear descriptive name]
+  - **What to Test**: [Specific behavior or functionality to verify in this test]
+  - **Expected Behavior**: [What processing should execute normally]
+- **Input Values**: [Specific values]
+  - **Input Data Meaning**: [Why these input values were chosen, what they represent]
+- **Expected Results**: [Specific expected values]
+  - **Reason for Expected Results**: [Why these results are considered correct]
+- **Test Purpose**: [What to verify]
+  - **Verification Points**: [Points that require special attention during verification]
+- 🟢🟡🔴 Record reliability level for this test case
 
-### 2. 異常系テストケース（エラーハンドリング）
+### 2. Abnormal Case Test Cases (Error Handling)
 
-- **テスト名**: [わかりやすい日本語名]
-  - **エラーケースの概要**: [どのような異常状況を想定しているか]
-  - **エラー処理の重要性**: [なぜこのエラーハンドリングが必要か]
-- **入力値**: [不正な値や境界を超えた値]
-  - **不正な理由**: [なぜこの入力値が不正とされるか]
-  - **実際の発生シナリオ**: [実運用でどのような場面で発生するか]
-- **期待される結果**: [適切なエラーメッセージや例外]
-  - **エラーメッセージの内容**: [ユーザーにとって分かりやすいメッセージか]
-  - **システムの安全性**: [エラー時にシステムが安全な状態を保てるか]
-- **テストの目的**: [エラーハンドリングの確認]
-  - **品質保証の観点**: [このテストがシステム品質にどう貢献するか]
-- 🟢🟡🔴 このテストケースの信頼性レベルを記載
+- **Test Name**: [Clear descriptive name]
+  - **Error Case Overview**: [What abnormal situation is being assumed]
+  - **Importance of Error Handling**: [Why this error handling is necessary]
+- **Input Values**: [Invalid values or values exceeding boundaries]
+  - **Reason for Invalidity**: [Why these input values are considered invalid]
+  - **Actual Occurrence Scenarios**: [In what situations this might occur in actual operation]
+- **Expected Results**: [Appropriate error messages or exceptions]
+  - **Error Message Content**: [Is the message user-friendly]
+  - **System Safety**: [Can the system maintain a safe state during errors]
+- **Test Purpose**: [Error handling verification]
+  - **Quality Assurance Perspective**: [How this test contributes to system quality]
+- 🟢🟡🔴 Record reliability level for this test case
 
-### 3. 境界値テストケース（最小値、最大値、null等）
+### 3. Boundary Value Test Cases (Minimum, Maximum, null, etc.)
 
-- **テスト名**: [わかりやすい日本語名]
-  - **境界値の意味**: [なぜこの値が境界として重要か]
-  - **境界値での動作保証**: [境界付近での動作の一貫性確認]
-- **入力値**: [境界値]
-  - **境界値選択の根拠**: [なぜこの値を境界値として選んだか]
-  - **実際の使用場面**: [実運用でこの境界値がどう影響するか]
-- **期待される結果**: [境界での動作]
-  - **境界での正確性**: [境界値での計算や処理が正確に行われるか]
-  - **一貫した動作**: [境界の内側と外側で動作が一貫しているか]
-- **テストの目的**: [境界条件の確認]
-  - **堅牢性の確認**: [システムが極端な条件下でも安定動作するか]
-- 🟢🟡🔴 このテストケースの信頼性レベルを記載
+- **Test Name**: [Clear descriptive name]
+  - **Boundary Value Meaning**: [Why this value is important as a boundary]
+  - **Behavior Guarantee at Boundaries**: [Consistency verification of behavior near boundaries]
+- **Input Values**: [Boundary values]
+  - **Rationale for Boundary Value Selection**: [Why this value was chosen as a boundary]
+  - **Actual Usage Scenarios**: [How this boundary value affects actual operation]
+- **Expected Results**: [Behavior at boundaries]
+  - **Accuracy at Boundaries**: [Are calculations and processing performed accurately at boundary values]
+  - **Consistent Behavior**: [Is behavior consistent inside and outside the boundary]
+- **Test Purpose**: [Boundary condition verification]
+  - **Robustness Verification**: [Does the system operate stably under extreme conditions]
+- 🟢🟡🔴 Record reliability level for this test case
 
-## 開発言語・フレームワーク
+## Development Language and Framework
 
-実装に使用する言語・テストフレームワークも併せて指定してください：
+Please also specify the language and test framework to be used for implementation:
 
-- **プログラミング言語**: {{language}}
-  - **言語選択の理由**: [なぜこの言語を選んだか]
-  - **テストに適した機能**: [この言語のテストに有利な特徴]
-- **テストフレームワーク**: {{test_framework}}
-  - **フレームワーク選択の理由**: [なぜこのテストフレームワークを選んだか]
-  - **テスト実行環境**: [どのような環境でテストを実行するか]
-- 🟢🟡🔴 この内容の信頼性レベルを記載
+- **Programming Language**: {{language}}
+  - **Reason for Language Selection**: [Why this language was chosen]
+  - **Features Suitable for Testing**: [Characteristics of this language that are advantageous for testing]
+- **Test Framework**: {{test_framework}}
+  - **Reason for Framework Selection**: [Why this test framework was chosen]
+  - **Test Execution Environment**: [In what environment will tests be executed]
+- 🟢🟡🔴 Record reliability level for this content
 
-## テストケース実装時の日本語コメント指針
+## Guidelines for English Comments in Test Case Implementation
 
-各テストケースの実装時には以下の日本語コメントを必ず含めてください：
+When implementing each test case, always include the following English comments:
 
-### テストケース開始時のコメント
-
-```javascript
-// 【テスト目的】: [このテストで何を確認するかを日本語で明記]
-// 【テスト内容】: [具体的にどのような処理をテストするかを説明]
-// 【期待される動作】: [正常に動作した場合の結果を説明]
-// 🟢🟡🔴 この内容の信頼性レベルを記載
-```
-
-### Given（準備フェーズ）のコメント
+### Comments at Test Case Start
 
 ```javascript
-// 【テストデータ準備】: [なぜこのデータを用意するかの理由]
-// 【初期条件設定】: [テスト実行前の状態を説明]
-// 【前提条件確認】: [テスト実行に必要な前提条件を明記]
+// 【Test Purpose】: [Clearly state in English what this test verifies]
+// 【Test Content】: [Explain what specific processing is being tested]
+// 【Expected Behavior】: [Explain the results when operating normally]
+// 🟢🟡🔴 Record reliability level for this content
 ```
 
-### When（実行フェーズ）のコメント
+### Given (Preparation Phase) Comments
 
 ```javascript
-// 【実際の処理実行】: [どの機能/メソッドを呼び出すかを説明]
-// 【処理内容】: [実行される処理の内容を日本語で説明]
-// 【実行タイミング】: [なぜこのタイミングで実行するかを説明]
+// 【Test Data Preparation】: [Reason for preparing this data]
+// 【Initial Condition Setup】: [Explain the state before test execution]
+// 【Prerequisite Verification】: [Specify prerequisites needed for test execution]
 ```
 
-### Then（検証フェーズ）のコメント
+### When (Execution Phase) Comments
 
 ```javascript
-// 【結果検証】: [何を検証するかを具体的に説明]
-// 【期待値確認】: [期待される結果とその理由を説明]
-// 【品質保証】: [この検証がシステム品質にどう貢献するかを説明]
+// 【Actual Processing Execution】: [Explain which feature/method is being called]
+// 【Processing Content】: [Explain the content of executed processing in English]
+// 【Execution Timing】: [Explain why execution happens at this timing]
 ```
 
-### 各expectステートメントのコメント
+### Then (Verification Phase) Comments
 
 ```javascript
-// 【検証項目】: [この検証で確認している具体的な項目]
-// 🟢🟡🔴 この内容の信頼性レベルを記載
-expect(result.validPaths).toHaveLength(2); // 【確認内容】: 有効なパスが正確に2つ検出されることを確認
-expect(result.invalidPaths).toContain('nonexistent.json'); // 【確認内容】: 存在しないファイルが無効パスとして適切に分類されることを確認
+// 【Result Verification】: [Specifically explain what is being verified]
+// 【Expected Value Confirmation】: [Explain expected results and their rationale]
+// 【Quality Assurance】: [Explain how this verification contributes to system quality]
 ```
 
-### セットアップ・クリーンアップのコメント
+### Comments for Each expect Statement
+
+```javascript
+// 【Verification Item】: [Specific item being verified in this verification]
+// 🟢🟡🔴 Record reliability level for this content
+expect(result.validPaths).toHaveLength(2); // 【Verification Content】: Confirm that exactly 2 valid paths are detected
+expect(result.invalidPaths).toContain('nonexistent.json'); // 【Verification Content】: Confirm that non-existent files are properly classified as invalid paths
+```
+
+### Setup and Cleanup Comments
 
 ```javascript
 beforeEach(() => {
-  // 【テスト前準備】: [各テスト実行前に行う準備作業の説明]
-  // 【環境初期化】: [テスト環境をクリーンな状態にする理由と方法]
+  // 【Pre-test Preparation】: [Explain preparation work done before each test execution]
+  // 【Environment Initialization】: [Reason and method for making test environment clean]
 });
 
 afterEach(() => {
-  // 【テスト後処理】: [各テスト実行後に行うクリーンアップ作業の説明]
-  // 【状態復元】: [次のテストに影響しないよう状態を復元する理由]
+  // 【Post-test Processing】: [Explain cleanup work done after each test execution]
+  // 【State Restoration】: [Reason for restoring state to not affect next test]
 });
 ```
 
-すべて洗い出したら以下を実行してください：
+After identifying all test cases, please execute the following:
 
-1. テストケース一覧をdocs/implements/{{task_id}}/{feature_name}-testcases.mdに保存（既存ファイルがある場合は追記）
-2. TODOステータスを更新（テストケース洗い出し完了をマーク）
-3. **品質判定**: テストケースの品質を以下の基準で判定
-   - テストケース分類: 正常系・異常系・境界値が網羅されている
-   - 期待値定義: 各テストケースの期待値が明確
-   - 技術選択: プログラミング言語・テストフレームワークが確定
-   - 実装可能性: 現在の技術スタックで実現可能
-4. **次のステップ表示**: 判定結果に関わらず、次のお勧めコマンドを表示
-   - 「次のお勧めステップ: `/tdd-red` でRedフェーズ（失敗テスト作成）を開始します。」
+1. Save test case list to docs/implements/{{task_id}}/{feature_name}-testcases.md (append if existing file is present)
+2. Update TODO status (mark test case identification as complete)
+3. **Quality Assessment**: Assess test case quality based on the following criteria
+   - Test case classification: Normal cases, abnormal cases, and boundary values are covered
+   - Expected value definition: Expected values for each test case are clear
+   - Technology selection: Programming language and test framework are determined
+   - Implementation feasibility: Achievable with current technology stack
+4. **Show Next Steps**: Regardless of assessment results, display recommended next command
+   - "Recommended next step: `/tdd-red` to start the Red phase (failing test creation)."
 
-## 品質判定基準
+## Quality Assessment Criteria
 
-以下の基準でテストケースの品質を判定します：
-
-```
-✅ 高品質:
-- テストケース分類: 正常系・異常系・境界値が網羅されている
-- 期待値定義: 各テストケースの期待値が明確
-- 技術選択: プログラミング言語・テストフレームワークが確定
-- 実装可能性: 現在の技術スタックで実現可能
-
-⚠️ 要改善:
-- テストケースに漏れや重複がある
-- 期待値が曖昧または不十分
-- 技術選択に迷いがある
-- 複雑すぎて実装困難
-
-❌ 不適切:
-- 要件との整合性が取れていない
-- テストケースが不足している
-- 技術的実現性に問題がある
-```
-
-## TODO更新パターン
+Assess test case quality based on the following criteria:
 
 ```
-- 現在のTODO「テストケース洗い出し」を「completed」にマーク
-- テストケース定義フェーズの完了をTODO内容に反映
-- 品質判定結果をTODO内容に記録
-- 次のフェーズ「Redフェーズ（失敗テスト作成）」をTODOに追加
+✅ High Quality:
+- Test case classification: Normal cases, abnormal cases, and boundary values are covered
+- Expected value definition: Expected values for each test case are clear
+- Technology selection: Programming language and test framework are determined
+- Implementation feasibility: Achievable with current technology stack
+
+⚠️ Needs Improvement:
+- Test cases have gaps or duplications
+- Expected values are ambiguous or insufficient
+- Technology selection is uncertain
+- Too complex to implement
+
+❌ Inappropriate:
+- Not consistent with requirements
+- Test cases are insufficient
+- Technical feasibility issues
+```
+
+## TODO Update Pattern
+
+```
+- Mark current TODO "Test case identification" as "completed"
+- Reflect completion of test case definition phase in TODO content
+- Record quality assessment results in TODO content
+- Add next phase "Red phase (failing test creation)" to TODO
 ```

@@ -1,51 +1,51 @@
-# 3.5 Validationステップの詳細
+# 3.5 Validation Step Details
 
-## Validationステップの位置づけ
+## Position of the Validation Step
 
-ValidationステップはAITDDにおける最も重要な革新の一つです。従来のTDDのRed-Green-Refactorサイクルに追加されたこのステップにより、AI生成コードの品質保証と完了判定を自動化し、より確実な開発プロセスを実現します。
+The Validation step is one of the most important innovations in AITDD. This step, added to the traditional TDD Red-Green-Refactor cycle, automates quality assurance and completion determination for AI-generated code, realizing a more reliable development process.
 
-## Validationステップの目的
+## Purpose of the Validation Step
 
-### 1. 品質保証の多層化
-- **機能要件の充足**: 計画された機能が正しく実装されている
-- **回帰防止**: 既存機能への悪影響がない
-- **コード品質**: 保守可能で高品質なコードが生成されている
+### 1. Multi-layered Quality Assurance
+- **Functional requirement fulfillment**: Planned features are correctly implemented
+- **Regression prevention**: No adverse effects on existing functionality
+- **Code quality**: Maintainable, high-quality code is generated
 
-### 2. 完了判定の自動化
-- 客観的な基準による完了判定
-- 人間のレビュー前の事前フィルタリング
-- 継続的な品質監視
+### 2. Automated Completion Determination
+- Objective criteria-based completion determination
+- Pre-filtering before human review
+- Continuous quality monitoring
 
-### 3. プロセス改善のフィードバック
-- AI生成コードの品質傾向の把握
-- プロンプト改善のための情報収集
-- 開発効率の測定と最適化
+### 3. Process Improvement Feedback
+- Understanding AI-generated code quality trends
+- Information gathering for prompt improvements
+- Development efficiency measurement and optimization
 
-## Validationステップの実行タイミング
+## Validation Step Execution Timing
 
 ```mermaid
 graph LR
     A[Red] --> B[Green]
     B --> C[Refactor]
     C --> D[Validation]
-    D --> E{判定}
-    E -->|完了| F[次の機能]
-    E -->|継続| A
-    E -->|問題あり| G[人間レビュー]
+    D --> E{Decision}
+    E -->|Complete| F[Next Feature]
+    E -->|Continue| A
+    E -->|Issues| G[Human Review]
 ```
 
-## 具体的な作業手順
+## Specific Work Procedures
 
-### 1. 既存テストのグリーン状態確認
+### 1. Existing Test Green State Verification
 
-#### 必須条件
-すべての既存テストが成功していることが前提条件です。
+#### Prerequisites
+All existing tests must be passing as a prerequisite.
 
 ```bash
-# テスト実行
+# Test execution
 $ npm test
 
-# 期待する結果
+# Expected results
 ✅ User Authentication › should login with valid credentials
 ✅ User Authentication › should reject invalid password  
 ✅ User Registration › should create user with valid data
@@ -58,579 +58,579 @@ Time: 2.341s
 Coverage: 94%
 ```
 
-#### 失敗時の対応
+#### Response to Failures
 ```markdown
-❌ テスト失敗がある場合の対応
+❌ Response when test failures exist
 
-1. 失敗原因の特定
-   - 新規実装による既存機能への影響
-   - テストデータの競合
-   - 環境依存の問題
+1. Identify failure causes
+   - Impact of new implementation on existing functionality
+   - Test data conflicts
+   - Environment-dependent issues
 
-2. 修正の実施
-   - 問題のあるコードの修正
-   - テストデータの調整
-   - 環境設定の見直し
+2. Implement fixes
+   - Fix problematic code
+   - Adjust test data
+   - Review environment settings
 
-3. 再実行による確認
-   - 全テストの再実行
-   - 成功確認後にValidation継続
+3. Verify through re-execution
+   - Re-run all tests
+   - Continue Validation after confirming success
 ```
 
-### 2. TDDメモファイルと要件定義文書の確認
+### 2. TDD Memo Files and Requirements Document Verification
 
-#### 確認対象ファイル
+#### Target Files for Verification
 ```markdown
-## ドキュメント確認リスト
+## Document Verification List
 
-### 必須ファイル
+### Required Files
 - doc/implementation/{feature_name}-requirements.md
 - doc/implementation/{feature_name}-testcases.md  
 - doc/todo.md
 
-### オプションファイル（存在する場合）
+### Optional Files (if they exist)
 - doc/implementation/{test_case_name}-memo.md
 - doc/implementation/{feature_name}-architecture.md
 ```
 
-#### 確認内容例
+#### Verification Content Example
 ```markdown
-# ユーザー登録機能 要件確認
+# User Registration Feature Requirements Verification
 
-## requirements.md からの抽出
-### 予定機能
-- [x] email/password による新規ユーザー登録
-- [x] 重複email の検証  
-- [x] パスワード強度チェック
-- [x] パスワードハッシュ化（bcrypt）
-- [ ] レート制限（100件/秒） ← 未実装
+## Extraction from requirements.md
+### Planned Features
+- [x] New user registration with email/password
+- [x] Duplicate email validation  
+- [x] Password strength check
+- [x] Password hashing (bcrypt)
+- [ ] Rate limiting (100 requests/sec) ← Not implemented
 
-### testcases.md からの抽出  
-### 予定テストケース数：10件
-- TC001: 正常なユーザー登録
-- TC002: メールアドレス重複エラー
-- TC003: パスワード不一致エラー
-- TC004: 無効なメールアドレス形式
-- TC005: パスワード強度不足
-- TC006: 必須項目未入力
-- TC007: 境界値テスト - メールアドレス長
-- TC008: レート制限テスト
-- TC009: データベース接続エラー
-- TC010: CSRFトークン検証
+### Extraction from testcases.md  
+### Planned Test Cases: 10 cases
+- TC001: Normal user registration
+- TC002: Duplicate email error
+- TC003: Password mismatch error
+- TC004: Invalid email format
+- TC005: Insufficient password strength
+- TC006: Missing required fields
+- TC007: Boundary value test - Email length
+- TC008: Rate limiting test
+- TC009: Database connection error
+- TC010: CSRF token verification
 ```
 
-### 3. 実装済みテストケースの確認
+### 3. Implemented Test Cases Verification
 
-#### テストファイルの分析
+#### Test File Analysis
 ```javascript
-// __tests__/user-registration.test.js の分析例
+// Analysis example of __tests__/user-registration.test.js
 
 describe('User Registration', () => {
-  // 実装済みテストケースの確認
+  // Verification of implemented test cases
   test('TC001: should create user with valid data', async () => {
-    // 実装済み ✅
+    // Implemented ✅
   });
   
   test('TC002: should reject duplicate email', async () => {
-    // 実装済み ✅
+    // Implemented ✅
   });
   
   test('TC003: should reject password mismatch', async () => {
-    // 実装済み ✅
+    // Implemented ✅
   });
   
   test('TC004: should validate email format', async () => {
-    // 実装済み ✅
+    // Implemented ✅
   });
   
   test('TC005: should validate password strength', async () => {
-    // 実装済み ✅
+    // Implemented ✅
   });
   
   test('TC006: should require all fields', async () => {
-    // 実装済み ✅
+    // Implemented ✅
   });
   
   test('TC007: should handle email length limits', async () => {
-    // 実装済み ✅
+    // Implemented ✅
   });
   
   test('TC010: should verify CSRF token', async () => {
-    // 実装済み ✅
+    // Implemented ✅
   });
   
-  // TC008, TC009 は未実装
+  // TC008, TC009 are not implemented
 });
 ```
 
-#### 実装状況の集計
+#### Implementation Status Summary
 ```markdown
-## テストケース実装状況
+## Test Case Implementation Status
 
-### 実装済み：8件
-- TC001: 正常なユーザー登録 ✅
-- TC002: メールアドレス重複エラー ✅
-- TC003: パスワード不一致エラー ✅
-- TC004: 無効なメールアドレス形式 ✅
-- TC005: パスワード強度不足 ✅
-- TC006: 必須項目未入力 ✅
-- TC007: 境界値テスト ✅
-- TC010: CSRFトークン検証 ✅
+### Implemented: 8 cases
+- TC001: Normal user registration ✅
+- TC002: Duplicate email error ✅
+- TC003: Password mismatch error ✅
+- TC004: Invalid email format ✅
+- TC005: Insufficient password strength ✅
+- TC006: Missing required fields ✅
+- TC007: Boundary value test ✅
+- TC010: CSRF token verification ✅
 
-### 未実装：2件
-- TC008: レート制限テスト ❌
-- TC009: データベース接続エラー ❌
+### Not implemented: 2 cases
+- TC008: Rate limiting test ❌
+- TC009: Database connection error ❌
 
-### 実装率：80% (8/10)
+### Implementation rate: 80% (8/10)
 ```
 
-### 4. 実装状況の分析とTODO.md更新判定
+### 4. Implementation Status Analysis and TODO.md Update Decision
 
-#### AI による品質リスク評価
+#### AI Quality Risk Assessment
 
 ```markdown
-## AI分析レポート例
+## AI Analysis Report Example
 
-### 実装完了度評価
-- 基本機能実装率: 100%
-- テストケース実装率: 80% 
-- 要件充足率: 90%
+### Implementation Completion Assessment
+- Basic function implementation rate: 100%
+- Test case implementation rate: 80% 
+- Requirements fulfillment rate: 90%
 
-### 未実装項目の重要度分析
-#### TC008: レート制限テスト
-- 重要度: 中（セキュリティ関連）
-- 影響範囲: プロダクション環境での悪用リスク
-- 実装優先度: 中程度
+### Importance Analysis of Unimplemented Items
+#### TC008: Rate Limiting Test
+- Importance: Medium (Security-related)
+- Impact scope: Production environment abuse risk
+- Implementation priority: Medium
 
-#### TC009: データベース接続エラー
-- 重要度: 高（可用性関連）
-- 影響範囲: システム全体の安定性
-- 実装優先度: 高
+#### TC009: Database Connection Error
+- Importance: High (Availability-related)
+- Impact scope: Overall system stability
+- Implementation priority: High
 
-### 品質リスク評価
-- セキュリティリスク: 中（レート制限未実装）
-- 可用性リスク: 高（DB障害時の挙動不明）
-- 保守性リスク: 低（コード品質良好）
+### Quality Risk Assessment
+- Security risk: Medium (Rate limiting not implemented)
+- Availability risk: High (Unknown behavior during DB failures)
+- Maintainability risk: Low (Good code quality)
 
-### 推奨アクション
-1. TC009（DB接続エラー）の優先実装
-2. TC008（レート制限）の次期実装検討
-3. 現状での次ステップ進行は可能だが注意要
+### Recommended Actions
+1. Priority implementation of TC009 (DB connection error)
+2. Consider next-phase implementation of TC008 (Rate limiting)
+3. Can proceed to next step but requires caution
 ```
 
-## Validationの判定基準
+## Validation Decision Criteria
 
-### ✅ 完全実装済み（自動で次ステップ）
+### ✅ Fully Implemented (Automatic progression to next step)
 
 ```markdown
-### 完了条件
-- 既存テスト状態: すべてグリーン ✅
-- テストケース実装率: 100% ✅
-- 重要機能完成率: 100% ✅
-- 品質リスク: なし ✅
-- セキュリティチェック: 合格 ✅
+### Completion Conditions
+- Existing test status: All green ✅
+- Test case implementation rate: 100% ✅
+- Critical function completion rate: 100% ✅
+- Quality risk: None ✅
+- Security check: Pass ✅
 
-### 自動判定結果
-🎉 実装完了 - 次の要件定義ステップに自動進行
+### Automatic Decision Result
+🎉 Implementation complete - Automatic progression to next requirements definition step
 ```
 
-### ⚠️ 実装不足あり（追加実装必要）
+### ⚠️ Implementation Insufficient (Additional implementation required)
 
 ```markdown
-### 継続条件（例1: 重大な未実装あり）
-- 既存テスト状態: すべてグリーン ✅
-- テストケース実装率: 70% ❌
-- 重要機能完成率: 80% ❌
-- 品質リスク: 高リスク項目あり ❌
+### Continuation Conditions (Example 1: Major unimplemented items)
+- Existing test status: All green ✅
+- Test case implementation rate: 70% ❌
+- Critical function completion rate: 80% ❌
+- Quality risk: High-risk items present ❌
 
-### 判定結果
-⚠️ 追加実装が必要 - Redステップに戻って未実装項目を追加
+### Decision Result
+⚠️ Additional implementation required - Return to Red step to add unimplemented items
 
-### 継続条件（例2: 既存テスト失敗）
-- 既存テスト状態: 失敗あり ❌
-- テストケース実装率: 90% ✅
-- 重要機能完成率: 95% ✅
+### Continuation Conditions (Example 2: Existing test failures)
+- Existing test status: Failures present ❌
+- Test case implementation rate: 90% ✅
+- Critical function completion rate: 95% ✅
 
-### 判定結果  
-❌ 回帰テスト失敗 - Green/Refactorステップに戻って修正
+### Decision Result  
+❌ Regression test failure - Return to Green/Refactor step for fixes
 ```
 
-### 🔍 要判断（人間レビュー必要）
+### 🔍 Requires Judgment (Human review required)
 
 ```markdown
-### 判断が困難なケース
-- テストケース実装率: 85%（境界値）
-- 未実装項目: 重要度の判断が困難
-- 品質リスク: 組織固有の判断が必要
-- ビジネス要件: 仕様の解釈に曖昧さ
+### Cases Difficult to Judge
+- Test case implementation rate: 85% (Boundary value)
+- Unimplemented items: Difficult to judge importance
+- Quality risk: Organization-specific judgment required
+- Business requirements: Ambiguity in specification interpretation
 
-### 判定結果
-🔍 人間レビュー要請 - 専門知識による判断が必要
+### Decision Result
+🔍 Human review requested - Expert knowledge judgment required
 ```
 
-## AIによる判定プロセス
+## AI Decision Process
 
-### 1. 情報収集と分析
+### 1. Information Gathering and Analysis
 
-#### 入力情報
+#### Input Information
 ```markdown
-## Validation実行時の入力データ
+## Input Data for Validation Execution
 
-### 技術情報
-- テスト実行結果（成功/失敗の詳細）
-- コードカバレッジレポート
-- 静的解析結果（ESLint、TypeScript等）
-- パフォーマンステスト結果
+### Technical Information
+- Test execution results (success/failure details)
+- Code coverage reports
+- Static analysis results (ESLint, TypeScript, etc.)
+- Performance test results
 
-### 仕様情報  
-- requirements.md（機能要件・非機能要件）
-- testcases.md（テストケース一覧）
-- architecture.md（アーキテクチャ設計）
+### Specification Information  
+- requirements.md (functional and non-functional requirements)
+- testcases.md (test case list)
+- architecture.md (architecture design)
 
-### プロジェクト情報
-- 既存コードベース
-- 依存関係情報
-- 環境設定
+### Project Information
+- Existing codebase
+- Dependency information
+- Environment configuration
 ```
 
-#### 分析手法
+#### Analysis Methods
 ```markdown
-## AI分析のアプローチ
+## AI Analysis Approach
 
-### 1. 定量的分析
-- テストケース実装率の計算
-- コードカバレッジの評価
-- 複雑度メトリクスの測定
-- パフォーマンス指標の確認
+### 1. Quantitative Analysis
+- Test case implementation rate calculation
+- Code coverage evaluation
+- Complexity metrics measurement
+- Performance indicator verification
 
-### 2. 定性的分析  
-- 要件と実装の整合性確認
-- コード品質の主観的評価
-- セキュリティ要件のチェック
-- 保守性の評価
+### 2. Qualitative Analysis  
+- Requirements and implementation consistency verification
+- Subjective code quality evaluation
+- Security requirement checks
+- Maintainability evaluation
 
-### 3. リスク評価
-- 未実装機能の影響度分析
-- セキュリティリスクの評価
-- 運用リスクの評価
-- 技術負債の評価
+### 3. Risk Assessment
+- Impact analysis of unimplemented features
+- Security risk evaluation
+- Operational risk evaluation
+- Technical debt evaluation
 ```
 
-### 2. 判定ロジック
+### 2. Decision Logic
 
-#### 階層的判定システム
+#### Hierarchical Decision System
 ```markdown
-## 判定の優先順位
+## Decision Priority Order
 
-### Level 1: 致命的問題（即座に継続判定）
-1. 既存テストの失敗
-2. セキュリティ重大問題
-3. データ破損リスク
+### Level 1: Critical Issues (Immediate continuation decision)
+1. Existing test failures
+2. Critical security issues
+3. Data corruption risks
 
-### Level 2: 重要機能の欠如（継続推奨）
-1. 基本機能の未実装
-2. 重要なエラーハンドリング不足
-3. 必須のバリデーション欠如
+### Level 2: Important Feature Deficiencies (Continuation recommended)
+1. Basic function not implemented
+2. Important error handling insufficient
+3. Required validation missing
 
-### Level 3: 品質基準（閾値による判定）
-1. テストカバレッジ < 80%
-2. テストケース実装率 < 90%
-3. 複雑度 > 許容値
+### Level 3: Quality Standards (Threshold-based decision)
+1. Test coverage < 80%
+2. Test case implementation rate < 90%
+3. Complexity > Tolerance level
 
-### Level 4: 総合判定（完了/継続/要判断）
-- 上記すべてを総合した最終判定
-- 組織の品質基準との照合
-- プロジェクトの状況考慮
+### Level 4: Comprehensive Decision (Complete/Continue/Requires judgment)
+- Final decision integrating all above
+- Comparison with organizational quality standards
+- Project situation consideration
 ```
 
-#### 判定プロンプトの例
+#### Decision Prompt Example
 ```markdown
-## Validation判定プロンプト
+## Validation Decision Prompt
 
-あなたはAITDD Validationステップの品質判定AIです。以下の情報を基に実装完了判定を行ってください。
+You are the quality decision AI for the AITDD Validation step. Please make implementation completion decisions based on the following information.
 
-### 判定対象
-- 機能: ユーザー登録API
-- 実装結果: [コード、テスト結果、品質メトリクス]
-- 要件: [requirements.md の内容]
-- テストケース: [testcases.md の内容]
+### Decision Target
+- Feature: User Registration API
+- Implementation results: [Code, test results, quality metrics]
+- Requirements: [contents of requirements.md]
+- Test cases: [contents of testcases.md]
 
-### 判定基準
-1. 既存テスト: 全て成功必須
-2. テストケース実装率: 90%以上で完了
-3. 重要機能: 100%実装必須
-4. セキュリティ: 重大問題なし必須
+### Decision Criteria
+1. Existing tests: All must pass
+2. Test case implementation rate: 90% or higher for completion
+3. Critical features: 100% implementation required
+4. Security: No critical issues required
 
-### 出力形式
+### Output Format
 ```json
 {
-  "判定結果": "完了|継続|要判断",
-  "実装率": {
-    "テストケース": "80%",
-    "重要機能": "100%"
+  "decision_result": "complete|continue|requires_judgment",
+  "implementation_rate": {
+    "test_cases": "80%",
+    "critical_features": "100%"
   },
-  "品質評価": {
-    "セキュリティ": "合格|注意|不合格",
-    "パフォーマンス": "良好|普通|要改善",
-    "保守性": "高|中|低"
+  "quality_evaluation": {
+    "security": "pass|caution|fail",
+    "performance": "good|average|needs_improvement",
+    "maintainability": "high|medium|low"
   },
-  "未実装項目": [
+  "unimplemented_items": [
     {
-      "項目": "TC008",
-      "重要度": "中|高|低", 
-      "推奨アクション": "即時実装|次期実装|実装不要"
+      "item": "TC008",
+      "importance": "medium|high|low", 
+      "recommended_action": "immediate_implementation|next_phase_implementation|implementation_unnecessary"
     }
   ],
-  "継続理由": "判定が継続の場合の理由",
-  "次のアクション": "具体的な次のステップ"
+  "continuation_reason": "reason if decision is continuation",
+  "next_action": "specific next steps"
 }
 ```
 ```
 
-## 信号機システムによる推測可視化
+## Traffic Light System for Inference Visualization
 
-### 信号機システムの活用
+### Utilizing the Traffic Light System
 
-ValidationステップではAIの推測部分を可視化し、人間のレビュー効率を向上させます。
+The Validation step visualizes AI inference parts to improve human review efficiency.
 
-#### 🟢 青信号（高確信度）
+#### 🟢 Green Light (High Confidence)
 ```markdown
-## 元ファイルから明確に推測できる内容
+## Content clearly inferable from source files
 
-### 例：テストケース実装状況
-- 🟢 TC001実装済み（testファイルに該当テストあり）
-- 🟢 基本機能動作確認済み（テスト成功結果あり）
-- 🟢 エラーハンドリング実装済み（要件書に明記済み）
+### Example: Test Case Implementation Status
+- 🟢 TC001 implemented (corresponding test exists in test file)
+- 🟢 Basic functionality verified (test success results available)
+- 🟢 Error handling implemented (specified in requirements document)
 ```
 
-#### 🟡 黄信号（注意・要確認）
+#### 🟡 Yellow Light (Caution - Requires Verification)
 ```markdown  
-## 推測による補完だが妥当と思われる内容
+## Content supplemented by inference but seems reasonable
 
-### 例：品質判定
-- 🟡 コードカバレッジ80%は十分（一般的基準による判断）
-- 🟡 パフォーマンス要件未測定だが問題なし（実装内容から推測）
-- 🟡 セキュリティリスク中程度（レート制限未実装による推定）
+### Example: Quality Assessment
+- 🟡 80% code coverage is sufficient (judgment based on general standards)
+- 🟡 Performance requirements not measured but no issues (inferred from implementation content)
+- 🟡 Medium security risk (estimated from unimplemented rate limiting)
 ```
 
-#### 🔴 赤信号（要検証）
+#### 🔴 Red Light (Requires Verification)
 ```markdown
-## 元ファイルになく独自判断による内容
+## Content based on independent judgment not in source files
 
-### 例：ビジネス判断
-- 🔴 レート制限の実装優先度「中」（組織方針不明）
-- 🔴 DB接続エラーハンドリング必須（運用要件未確認）
-- 🔴 次期実装で十分（プロジェクトスケジュール不明）
+### Example: Business Decisions
+- 🔴 Rate limiting implementation priority "Medium" (organizational policy unknown)
+- 🔴 DB connection error handling essential (operational requirements unconfirmed)
+- 🔴 Next phase implementation sufficient (project schedule unknown)
 ```
 
-### TODO形式による管理
+### TODO Format Management
 
 ```markdown
-## Validation結果TODO
+## Validation Results TODO
 
-### 🟢 高確信度項目（確認推奨）
-- [ ] [testcases.md](./testcases.md) のTC001-007実装完了を確認
-- [ ] [要件書](./requirements.md) の基本機能100%実装を確認
+### 🟢 High Confidence Items (Verification recommended)
+- [ ] Confirm TC001-007 implementation completion from [testcases.md](./testcases.md)
+- [ ] Confirm 100% basic functionality implementation from [requirements document](./requirements.md)
 
-### 🟡 中確信度項目（要確認）
-- [ ] [実装コード](./src/users.js) のパフォーマンス特性を確認
-- [ ] [セキュリティ要件](./requirements.md) の適合性を確認
+### 🟡 Medium Confidence Items (Requires verification)
+- [ ] Verify performance characteristics of [implementation code](./src/users.js)
+- [ ] Verify [security requirements](./requirements.md) compliance
 
-### 🔴 要判断項目（重要）
-- [ ] 詳細確認: [未実装項目](./testcases.md) の実装優先度を組織基準で判定
-- [ ] 詳細確認: [運用要件](./requirements.md) のDB障害時要件を確認
-- [ ] 詳細確認: プロジェクトスケジュールに基づく実装計画の調整
+### 🔴 Requires Judgment Items (Important)
+- [ ] Detailed verification: Judge implementation priority of [unimplemented items](./testcases.md) by organizational standards
+- [ ] Detailed verification: Confirm [operational requirements](./requirements.md) for DB failure scenarios
+- [ ] Detailed verification: Adjust implementation plan based on project schedule
 ```
 
-## Validationステップの最適化
+## Validation Step Optimization
 
-### 1. プロンプト改善による精度向上
+### 1. Accuracy Improvement through Prompt Enhancement
 
-#### 改善ポイント
+#### Improvement Points
 ```markdown
-## プロンプト品質向上のポイント
+## Points for Prompt Quality Improvement
 
-### 1. 判定基準の明確化
-- 数値基準の具体化（カバレッジ80%以上等）
-- 優先度判定ルールの詳細化
-- 組織固有基準の反映
+### 1. Clarification of Decision Criteria
+- Specification of numerical standards (80% coverage or higher, etc.)
+- Detailed priority decision rules
+- Reflection of organization-specific standards
 
-### 2. コンテキスト情報の充実
-- プロジェクト背景の提供
-- 既存システムとの関係性
-- 運用環境の制約事項
+### 2. Enrichment of Context Information
+- Provision of project background
+- Relationship with existing systems
+- Operational environment constraints
 
-### 3. 出力形式の標準化
-- JSON形式での構造化出力
-- 信号機システムの活用
-- TODO形式での課題整理
+### 3. Standardization of Output Format
+- Structured output in JSON format
+- Utilization of traffic light system
+- Issue organization in TODO format
 ```
 
-#### プロンプトテンプレートの進化
+#### Prompt Template Evolution
 ```markdown
-## 段階的プロンプト改善
+## Gradual Prompt Improvement
 
-### v1.0: 基本版
-- 基本的な判定機能
-- 単純な完了/継続判定
+### v1.0: Basic Version
+- Basic decision functionality
+- Simple complete/continue decision
 
-### v2.0: 詳細化版
-- 品質メトリクス評価追加
-- リスク評価機能強化
-- 信号機システム導入
+### v2.0: Detailed Version
+- Added quality metrics evaluation
+- Enhanced risk evaluation functionality
+- Introduced traffic light system
 
-### v3.0: 組織最適化版  
-- 組織固有基準の組み込み
-- プロジェクト特性の考慮
-- 学習データによる改善
+### v3.0: Organization-Optimized Version  
+- Incorporation of organization-specific standards
+- Consideration of project characteristics
+- Improvement through learning data
 ```
 
-### 2. 自動化範囲の拡大
+### 2. Automation Scope Expansion
 
-#### 現在の自動化レベル
+#### Current Automation Level
 ```markdown
-## 自動化の現状
+## Current State of Automation
 
-### 完全自動化済み
-- テスト実行と結果収集
-- 基本的な品質メトリクス測定
-- 定型的な判定（明確な基準あり）
+### Fully Automated
+- Test execution and result collection
+- Basic quality metrics measurement
+- Standard decisions (with clear criteria)
 
-### 半自動化（人間確認要）
-- 重要度の判定（ビジネス観点）
-- セキュリティリスク評価
-- アーキテクチャ影響の評価
+### Semi-automated (Human confirmation required)
+- Importance decisions (business perspective)
+- Security risk evaluation
+- Architecture impact evaluation
 
-### 手動対応必須
-- 組織方針との整合性確認
-- プロジェクト固有事情の考慮
-- ステークホルダー調整
+### Manual Response Required
+- Organizational policy consistency verification
+- Project-specific situation consideration
+- Stakeholder coordination
 ```
 
-#### 自動化拡大の方向性
+#### Automation Expansion Direction
 ```markdown
-## 将来の自動化計画
+## Future Automation Plans
 
-### 短期（1-3ヶ月）
-- 品質基準のカスタマイズ機能
-- 過去実績に基づく学習機能
-- レポート自動生成機能
+### Short-term (1-3 months)
+- Quality standard customization functionality
+- Learning functionality based on past performance
+- Automatic report generation functionality
 
-### 中期（3-6ヶ月）
-- 組織固有ルールの学習
-- プロジェクト特性の自動考慮
-- ステークホルダー通知自動化
+### Medium-term (3-6 months)
+- Learning organization-specific rules
+- Automatic consideration of project characteristics
+- Stakeholder notification automation
 
-### 長期（6ヶ月以上）
-- 予測的品質管理
-- 自動的なプロセス最適化
-- チーム学習の組み込み
+### Long-term (6+ months)
+- Predictive quality management
+- Automatic process optimization
+- Team learning integration
 ```
 
-## よくある問題と解決策
+## Common Issues and Solutions
 
-### 問題1: 判定基準が曖昧
+### Issue 1: Decision Criteria Are Ambiguous
 
-**症状**: 
-- 完了/継続の判定が一貫しない
-- 人間とAIの判定に乖離がある
+**Symptoms**: 
+- Completion/continuation decisions are inconsistent
+- Discrepancy between human and AI decisions
 
-**原因**:
-- 組織固有の品質基準が未定義
-- 判定ルールの曖昧さ
+**Causes**:
+- Organization-specific quality standards undefined
+- Ambiguity in decision rules
 
-**解決策**:
+**Solutions**:
 ```markdown
-### 判定基準の明確化
-1. 数値基準の設定
-   - テストカバレッジ: 80%以上
-   - テストケース実装率: 90%以上
-   - 重要機能完成率: 100%
+### Clarification of Decision Criteria
+1. Setting numerical standards
+   - Test coverage: 80% or higher
+   - Test case implementation rate: 90% or higher
+   - Critical function completion rate: 100%
 
-2. 品質基準の文書化
-   - セキュリティ要件チェックリスト
-   - パフォーマンス許容値
-   - コード品質基準
+2. Documentation of quality standards
+   - Security requirement checklist
+   - Performance tolerance values
+   - Code quality standards
 
-3. 例外処理ルールの定義
-   - プロジェクト固有の事情考慮
-   - 緊急リリース時の基準緩和
-   - 技術負債の許容レベル
+3. Definition of exception handling rules
+   - Consideration of project-specific circumstances
+   - Standard relaxation during emergency releases
+   - Technical debt tolerance levels
 ```
 
-### 問題2: 人間レビューのボトルネック
+### Issue 2: Human Review Bottleneck
 
-**症状**:
-- Validationで要判断が頻発
-- 人間レビューの待ち時間増加
+**Symptoms**:
+- Frequent "requires judgment" in Validation
+- Increased human review wait time
 
-**原因**:
-- AI判定の精度不足
-- 組織ルールの学習不足
+**Causes**:
+- Insufficient AI decision accuracy
+- Insufficient organizational rule learning
 
-**解決策**:
+**Solutions**:
 ```markdown
-### AI判定精度の向上
-1. 学習データの蓄積
-   - 過去の判定結果をフィードバック
-   - 成功/失敗パターンの学習
-   - 組織固有ルールの反映
+### AI Decision Accuracy Improvement
+1. Learning data accumulation
+   - Feedback from past decision results
+   - Learning success/failure patterns
+   - Reflection of organization-specific rules
 
-2. プロンプト改善
-   - より具体的な判定基準
-   - コンテキスト情報の充実
-   - 段階的判定システム
+2. Prompt improvement
+   - More specific decision criteria
+   - Enriched context information
+   - Staged decision system
 
-3. 閾値の調整
-   - 自動完了の基準厳格化
-   - 要判断の基準明確化
-   - 継続判定の精度向上
+3. Threshold adjustment
+   - Stricter automatic completion criteria
+   - Clarified requires-judgment criteria
+   - Improved continuation decision accuracy
 ```
 
-### 問題3: 過度な品質要求
+### Issue 3: Excessive Quality Requirements
 
-**症状**:
-- 完了判定されない項目が多い
-- 開発効率の低下
+**Symptoms**:
+- Many items not reaching completion decision
+- Decreased development efficiency
 
-**原因**:
-- 品質基準が厳しすぎる
-- 完璧主義的な設定
+**Causes**:
+- Quality standards too strict
+- Perfectionist settings
 
-**解決策**:
+**Solutions**:
 ```markdown
-### バランスの取れた品質管理
-1. 段階的品質基準
-   - MVP（最小実装）基準
-   - プロダクション基準
-   - エンタープライズ基準
+### Balanced Quality Management
+1. Staged quality standards
+   - MVP (minimum implementation) standards
+   - Production standards
+   - Enterprise standards
 
-2. リスクベース判定
-   - 影響度に応じた基準調整
-   - 重要機能の優先実装
-   - 非重要機能の後回し許可
+2. Risk-based decisions
+   - Standard adjustment according to impact level
+   - Priority implementation of critical features
+   - Permission to defer non-critical features
 
-3. 継続的改善
-   - 定期的な基準見直し
-   - チームフィードバックの反映
-   - 実績に基づく最適化
+3. Continuous improvement
+   - Regular standard reviews
+   - Team feedback reflection
+   - Performance-based optimization
 ```
 
-## まとめと次のステップ
+## Summary and Next Steps
 
-Validationステップは、AITDDプロセスの品質保証の要であり、適切に運用することで：
+The Validation step is the cornerstone of quality assurance in the AITDD process. When operated properly, it provides:
 
-### 得られる効果
-- **品質の安定化**: 一貫した品質基準の適用
-- **効率の向上**: 人間レビューの最適化
-- **継続的改善**: プロセス改善のフィードバック循環
+### Benefits Achieved
+- **Quality stabilization**: Consistent application of quality standards
+- **Efficiency improvement**: Human review optimization
+- **Continuous improvement**: Process improvement feedback loop
 
-### 成功のポイント
-- **明確な基準設定**: 数値化された判定基準
-- **段階的導入**: 組織に合わせた段階的適用
-- **継続的最適化**: 実績に基づくプロセス改善
+### Success Points
+- **Clear standard setting**: Numerically quantified decision criteria
+- **Staged introduction**: Staged application adapted to organization
+- **Continuous optimization**: Performance-based process improvement
 
-### 次の学習
-第3章でAITDDプロセスの全体像を理解した後は、[第4章 実践ハンズオン](../04-hands-on/01-first-project.md)で実際にAITDDを体験してみましょう。
+### Next Learning
+After understanding the overall picture of the AITDD process in Chapter 3, experience AITDD hands-on in [Chapter 4 Practical Hands-On](../04-hands-on/01-first-project.md).
 
-実際の開発を通じて、このValidationステップがどのように機能し、品質向上に寄与するかを体感できます。
+Through actual development, you can experience how this Validation step functions and contributes to quality improvement.

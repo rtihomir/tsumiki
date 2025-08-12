@@ -1,158 +1,158 @@
-あなたは実装可能なTODOリストを作成する専門家です。kairo-tasksコマンドで作成されたタスクファイルと関連する設計文書を分析し、以下の形式で構造化されたTODOリストを作成してください。
+You are an expert in creating implementable TODO lists. Analyze task files created with the kairo-tasks command and related design documents, then create structured TODO lists in the following format.
 
-## 入力
+## Input
 
-- `docs/tasks/{要件名}-tasks.md` ファイル
-- 各タスクのタスクID（TASK-001, TASK-101など）
-- 要件定義文書：
-  - `docs/spec/{要件名}-requirements.md`
-- 設計文書群：
-  - `docs/design/{要件名}/architecture.md`
-  - `docs/design/{要件名}/database-schema.sql`
-  - `docs/design/{要件名}/api-endpoints.md`
-  - `docs/design/{要件名}/interfaces.ts`
-  - `docs/design/{要件名}/dataflow.md`
+- `docs/tasks/{requirement name}-tasks.md` file
+- Task IDs for each task (TASK-001, TASK-101, etc.)
+- Requirements definition documents:
+  - `docs/spec/{requirement name}-requirements.md`
+- Design document group:
+  - `docs/design/{requirement name}/architecture.md`
+  - `docs/design/{requirement name}/database-schema.sql`
+  - `docs/design/{requirement name}/api-endpoints.md`
+  - `docs/design/{requirement name}/interfaces.ts`
+  - `docs/design/{requirement name}/dataflow.md`
 
-## 作成手順
+## Creation Procedure
 
-1. **要件定義文書の分析**
-   - @agent-symbol-searcher で関連要件・設計文書を検索
-   - EARS記法による要件の理解
-   - ユーザストーリーと価値の把握
-   - 機能要件と非機能要件の確認
-   - Edgeケースと受け入れ基準の理解
+1. **Requirements Definition Document Analysis**
+   - Search for related requirements and design documents with @agent-symbol-searcher
+   - Understand requirements using EARS notation
+   - Grasp user stories and value
+   - Check functional and non-functional requirements
+   - Understand edge cases and acceptance criteria
 
-2. **設計文書の分析**
-   - @agent-symbol-searcher で既存アーキテクチャパターンを検索
-   - アーキテクチャ設計の全体像を把握
-   - データベーススキーマの構造を理解
-   - APIエンドポイントの仕様を確認
-   - インターフェース定義を分析
-   - データフローの設計を理解
+2. **Design Document Analysis**
+   - Search for existing architecture patterns with @agent-symbol-searcher
+   - Understand overall picture of architecture design
+   - Understand database schema structure
+   - Check API endpoint specifications
+   - Analyze interface definitions
+   - Understand data flow design
 
-3. **タスクファイルの分析**
-   - @agent-symbol-searcher で関連タスクIDや完了状態を検索
-   - 全体のフェーズ構造を把握
-   - タスクID別の実装内容を確認
-   - 依存関係と実行順序を理解
-   - 要件定義と設計文書との整合性を確認
+3. **Task File Analysis**
+   - Search for related task IDs and completion status with @agent-symbol-searcher
+   - Understand overall phase structure
+   - Check implementation content by task ID
+   - Understand dependencies and execution order
+   - Check consistency with requirements definition and design documents
 
-4. **TODO作成時の注意点**
-   - タスクIDを保持してトレーサビリティを確保
-   - 依存関係を考慮した順序付け
-   - 各タスクの完了条件を明確化
-   - テスト要件とUI/UX要件を含める
-   - 要件定義のREQとの対応関係を明記
-   - 受け入れ基準をTODOに反映
-   - Edgeケースの考慮事項を含める
-   - 設計文書の詳細を実装TODOに反映
-   - データベーススキーマとの整合性を確保
-   - API仕様との一貫性を保つ
-   - 実装方法の区別：
-     - **DIRECT**: 設定作業のみ（環境構築、設定ファイル、依存関係など）
-     - **TDD**: 仕様に合わせた実装を伴う作業（ビジネスロジック、API実装、UI実装など）
+4. **TODO Creation Considerations**
+   - Maintain task IDs to ensure traceability
+   - Order considering dependencies
+   - Clarify completion conditions for each task
+   - Include test requirements and UI/UX requirements
+   - Specify correspondence with requirements definition REQ
+   - Reflect acceptance criteria in TODO
+   - Include edge case considerations
+   - Reflect design document details in implementation TODO
+   - Ensure consistency with database schema
+   - Maintain consistency with API specifications
+   - Distinguish implementation methods:
+     - **DIRECT**: Configuration work only (environment setup, configuration files, dependencies, etc.)
+     - **TDD**: Work involving implementation according to specifications (business logic, API implementation, UI implementation, etc.)
 
-5. **出力形式**
+5. **Output Format**
 
 ```markdown
-# {要件名} 実装TODO
+# {Requirement Name} Implementation TODO
 
-## 概要
+## Overview
 
-- 全タスク数: {数}
-- 推定作業時間: {時間}
-- クリティカルパス: {タスクID列}
-- 参照要件: {REQ-001, REQ-002...}
-- 設計文書: {参照した設計文書の概要}
+- Total tasks: {number}
+- Estimated work time: {hours}
+- Critical path: {task ID sequence}
+- Referenced requirements: {REQ-001, REQ-002...}
+- Design documents: {overview of referenced design documents}
 
 ## todo
 
-### フェーズ1: 基盤構築
+### Phase 1: Foundation Construction
 
-- [ ] **TASK-001 [DIRECT]**: {タスク名} (REQ-{XXX}対応)
-  - [ ] {実装詳細1（architecture.mdから抽出）}
-  - [ ] {データベース設定（database-schema.sqlから抽出）}
-  - [ ] {テスト要件1}
-  - [ ] {受け入れ基準（requirements.mdから抽出）}
-  - [ ] {完了条件1}
+- [ ] **TASK-001 [DIRECT]**: {task name} (REQ-{XXX} support)
+  - [ ] {implementation detail 1 (extracted from architecture.md)}
+  - [ ] {database setup (extracted from database-schema.sql)}
+  - [ ] {test requirement 1}
+  - [ ] {acceptance criteria (extracted from requirements.md)}
+  - [ ] {completion condition 1}
 
-- [ ] **TASK-002 [DIRECT]**: {タスク名} (REQ-{XXX}対応)
-  - [ ] {実装詳細1（architecture.mdから抽出）}
-  - [ ] {環境設定（dataflow.mdから抽出）}
-  - [ ] {テスト要件1}
-  - [ ] {受け入れ基準（requirements.mdから抽出）}
-  - [ ] {完了条件1}
+- [ ] **TASK-002 [DIRECT]**: {task name} (REQ-{XXX} support)
+  - [ ] {implementation detail 1 (extracted from architecture.md)}
+  - [ ] {environment setup (extracted from dataflow.md)}
+  - [ ] {test requirement 1}
+  - [ ] {acceptance criteria (extracted from requirements.md)}
+  - [ ] {completion condition 1}
 
-### フェーズ2: API実装
+### Phase 2: API Implementation
 
-- [ ] **TASK-101 [TDD]**: {タスク名} (REQ-{XXX}対応)
-  - [ ] {実装詳細1（api-endpoints.mdから抽出）}
-  - [ ] {インターフェース実装（interfaces.tsから抽出）}
-  - [ ] {テスト要件1}
-  - [ ] {エラーハンドリング1（Edgeケースから抽出）}
-  - [ ] {受け入れ基準（requirements.mdから抽出）}
+- [ ] **TASK-101 [TDD]**: {task name} (REQ-{XXX} support)
+  - [ ] {implementation detail 1 (extracted from api-endpoints.md)}
+  - [ ] {interface implementation (extracted from interfaces.ts)}
+  - [ ] {test requirement 1}
+  - [ ] {error handling 1 (extracted from edge cases)}
+  - [ ] {acceptance criteria (extracted from requirements.md)}
 
-### フェーズ3: フロントエンド実装
+### Phase 3: Frontend Implementation
 
-- [ ] **TASK-201 [TDD]**: {タスク名} (REQ-{XXX}対応)
-  - [ ] {実装詳細1（interfaces.tsから抽出）}
-  - [ ] {データフロー実装（dataflow.mdから抽出）}
-  - [ ] {UI/UX要件1}
-  - [ ] {ユーザビリティ要件（NFR-201から抽出）}
-  - [ ] {テスト要件1}
-  - [ ] {受け入れ基準（requirements.mdから抽出）}
+- [ ] **TASK-201 [TDD]**: {task name} (REQ-{XXX} support)
+  - [ ] {implementation detail 1 (extracted from interfaces.ts)}
+  - [ ] {data flow implementation (extracted from dataflow.md)}
+  - [ ] {UI/UX requirement 1}
+  - [ ] {usability requirement (extracted from NFR-201)}
+  - [ ] {test requirement 1}
+  - [ ] {acceptance criteria (extracted from requirements.md)}
 
-### フェーズ4: 統合・最適化
+### Phase 4: Integration and Optimization
 
-- [ ] **TASK-301 [TDD]**: {タスク名} (REQ-{XXX}対応)
-  - [ ] {実装詳細1（全設計文書から抽出）}
-  - [ ] {E2Eテスト（dataflow.mdから抽出）}
-  - [ ] {パフォーマンス要件（NFR-001から抽出）}
-  - [ ] {セキュリティ要件（NFR-101から抽出）}
-  - [ ] {テスト要件1}
-  - [ ] {受け入れ基準（requirements.mdから抽出）}
+- [ ] **TASK-301 [TDD]**: {task name} (REQ-{XXX} support)
+  - [ ] {implementation detail 1 (extracted from all design documents)}
+  - [ ] {E2E testing (extracted from dataflow.md)}
+  - [ ] {performance requirements (extracted from NFR-001)}
+  - [ ] {security requirements (extracted from NFR-101)}
+  - [ ] {test requirement 1}
+  - [ ] {acceptance criteria (extracted from requirements.md)}
 
-## 実行順序
+## Execution Order
 
-1. **基盤構築** ({タスクID列}) - 理由：他のタスクの前提条件
-2. **API実装** ({タスクID列}) - 理由：フロントエンドの依存関係
-3. **フロントエンド実装** ({タスクID列}) - 理由：ユーザーインターフェース
-4. **統合・最適化** ({タスクID列}) - 理由：最終的な品質確保
+1. **Foundation Construction** ({task ID sequence}) - Reason: Prerequisites for other tasks
+2. **API Implementation** ({task ID sequence}) - Reason: Frontend dependencies
+3. **Frontend Implementation** ({task ID sequence}) - Reason: User interface
+4. **Integration and Optimization** ({task ID sequence}) - Reason: Final quality assurance
 
-## 実装プロセス
+## Implementation Process
 
-### TDDタスクの実装プロセス
+### TDD Task Implementation Process
 
-[TDD]タスクは以下の順序で実装:
+[TDD] tasks are implemented in the following order:
 
-1. `/{taskID}/tdd-requirements.md` - 詳細要件定義（要件定義文書から抽出）
-2. `/{taskID}/tdd-testcases.md` - テストケース作成（受け入れ基準とEdgeケースから導出）
-3. `/{taskID}/tdd-red.md` - テスト実装（失敗）
-4. `/{taskID}/tdd-green.md` - 最小実装（アーキテクチャ設計に準拠）
-5. `/{taskID}/tdd-refactor.md` - リファクタリング（設計文書との整合性確認）
-6. `/{taskID}/tdd-verify-complete.md` - 品質確認（要件定義の受け入れ基準で検証）
+1. `/{taskID}/tdd-requirements.md` - Detailed requirements definition (extracted from requirements definition document)
+2. `/{taskID}/tdd-testcases.md` - Test case creation (derived from acceptance criteria and edge cases)
+3. `/{taskID}/tdd-red.md` - Test implementation (failure)
+4. `/{taskID}/tdd-green.md` - Minimal implementation (compliant with architecture design)
+5. `/{taskID}/tdd-refactor.md` - Refactoring (consistency check with design documents)
+6. `/{taskID}/tdd-verify-complete.md` - Quality verification (validated by requirements definition acceptance criteria)
 
-### DIRECTタスクの実装プロセス
+### DIRECT Task Implementation Process
 
-[DIRECT]タスクは以下の順序で実装:
+[DIRECT] tasks are implemented in the following order:
 
-1. `/{taskID}/direct-setup.md` - 設定作業の実行（設計文書に基づく）
-2. `/{taskID}/direct-verify.md` - 設定確認（動作確認とテスト）
+1. `/{taskID}/direct-setup.md` - Execute configuration work (based on design documents)
+2. `/{taskID}/direct-verify.md` - Configuration verification (operation verification and testing)
 
-## 文書との連携
+## Document Integration
 
-- **{要件名}-requirements.md**: 機能要件（REQ-XXX）、非機能要件（NFR-XXX）、受け入れ基準
-- **architecture.md**: 全体的な実装方針とアーキテクチャパターン
-- **database-schema.sql**: データベース関連タスクの実装詳細
-- **api-endpoints.md**: API実装タスクの仕様と検証条件
-- **interfaces.ts**: フロントエンド・バックエンド間の契約
-- **dataflow.md**: データ処理フローと統合テストシナリオ
+- **{requirement name}-requirements.md**: Functional requirements (REQ-XXX), non-functional requirements (NFR-XXX), acceptance criteria
+- **architecture.md**: Overall implementation policy and architecture patterns
+- **database-schema.sql**: Implementation details for database-related tasks
+- **api-endpoints.md**: Specifications and verification conditions for API implementation tasks
+- **interfaces.ts**: Contracts between frontend and backend
+- **dataflow.md**: Data processing flow and integration test scenarios
 ```
 
-1. **フィードバック対応** TODOリスト提示後、ユーザーからのフィードバックに基づいて以下を調整：
+1. **Feedback Response** After presenting the TODO list, adjust the following based on user feedback:
 
-- タスクの粒度（より細かく/大きく）
-- 優先順位の変更
-- 不足しているタスクの追加
-- 不要なタスクの削除
-- 実装方針の変更
+- Task granularity (finer/larger)
+- Priority changes
+- Adding missing tasks
+- Removing unnecessary tasks
+- Implementation policy changes

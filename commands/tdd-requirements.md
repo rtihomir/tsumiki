@@ -1,128 +1,128 @@
-# TDD要件定義・機能仕様の整理
+# TDD Requirements Definition and Functional Specifications
 
-TDD開発を始めます。以下の機能について要件を整理してください：
+We'll begin TDD development. Please organize the requirements for the following feature:
 
-**【機能名】**: {{feature_name}}
+**【Feature Name】**: {{feature_name}}
 
-## 事前準備
+## Preparation
 
-開発コンテキストの準備を行います：
+Prepare the development context:
 
-1. **@agent-symbol-searcher で機能関連情報を検索し、見つかったファイルを読み込み**
-   - 関連する既存機能・コンポーネントを検索し、該当ファイルをReadツールで読み込み
-   - 類似した実装パターンやアーキテクチャを特定し、設計文書をReadツールで読み込み
-   - 既存のインターフェースやAPI仕様を確認し、関連ファイルをReadツールで読み込み
+1. **Search for feature-related information with @agent-symbol-searcher and read found files**
+   - Search for related existing features/components and read relevant files with Read tool
+   - Identify similar implementation patterns or architectures and read design documents with Read tool
+   - Check existing interfaces or API specifications and read related files with Read tool
 
-2. **関連ファイルを直接読み込み**
-   - `docs/implements/{{task_id}}/{feature_name}-memo.md` - 既存の開発履歴を確認
-   - `docs/implements/{{task_id}}/{feature_name}-requirements.md` - 既存の要件定義を確認
-   - `docs/implements/{{task_id}}/{feature_name}-testcases.md` - 既存のテストケースを確認
-   - 関連する設計文書やタスクファイルも必要に応じて読み込み
+2. **Directly read related files**
+   - `docs/implements/{{task_id}}/{feature_name}-memo.md` - Check existing development history
+   - `docs/implements/{{task_id}}/{feature_name}-requirements.md` - Check existing requirements definition
+   - `docs/implements/{{task_id}}/{feature_name}-testcases.md` - Check existing test cases
+   - Read related design documents or task files as needed
 
-読み込み完了後、準備されたコンテキスト情報を基にTDD要件定義の作業を開始します。
+After completing the reading, begin TDD requirements definition work based on the prepared context information.
 
-## TDD用要件整理フォーマット
+## TDD Requirements Organization Format
 
-**【信頼性レベル指示】**:
-各項目について、元の資料（EARS要件定義書・設計文書含む）との照合状況を以下の信号でコメントしてください：
+**【Reliability Level Instructions】**:
+For each item, please comment on the verification status against source materials (including EARS requirements documents and design documents) using the following signals:
 
-- 🟢 **青信号**: EARS要件定義書・設計文書を参考にしてほぼ推測していない場合
-- 🟡 **黄信号**: EARS要件定義書・設計文書から妥当な推測の場合
-- 🔴 **赤信号**: EARS要件定義書・設計文書にない推測の場合
+- 🟢 **Green Signal**: When referencing EARS requirements documents and design documents with minimal speculation
+- 🟡 **Yellow Signal**: When making reasonable speculation based on EARS requirements documents and design documents
+- 🔴 **Red Signal**: When making speculation not found in EARS requirements documents and design documents
 
-## 1. 機能の概要（EARS要件定義書・設計文書ベース）
+## 1. Feature Overview (Based on EARS Requirements Documents and Design Documents)
 
-- 🟢🟡🔴 各項目の信頼性レベルを記載
-- 何をする機能か（ユーザストーリーから抽出）
-- どのような問題を解決するか（As a / So that から抽出）
-- 想定されるユーザー（As a から抽出）
-- システム内での位置づけ（アーキテクチャ設計から抽出）
-- **参照したEARS要件**: [具体的な要件ID]
-- **参照した設計文書**: [architecture.md の該当セクション]
+- 🟢🟡🔴 Record reliability level for each item
+- What the feature does (extracted from user stories)
+- What problems it solves (extracted from As a / So that)
+- Expected users (extracted from As a)
+- Position within the system (extracted from architecture design)
+- **Referenced EARS Requirements**: [specific requirement IDs]
+- **Referenced Design Documents**: [relevant sections of architecture.md]
 
-## 2. 入力・出力の仕様（EARS機能要件・TypeScript型定義ベース）
+## 2. Input/Output Specifications (Based on EARS Functional Requirements and TypeScript Type Definitions)
 
-- 🟢🟡🔴 各項目の信頼性レベルを記載
-- 入力パラメータ（型、範囲、制約）- interfaces.tsから抽出
-- 出力値（型、形式、例）- interfaces.tsから抽出
-- 入出力の関係性
-- データフロー（dataflow.mdから抽出）
-- **参照したEARS要件**: [具体的なREQ-XXX]
-- **参照した設計文書**: [interfaces.ts の該当インターフェース]
+- 🟢🟡🔴 Record reliability level for each item
+- Input parameters (types, ranges, constraints) - extracted from interfaces.ts
+- Output values (types, formats, examples) - extracted from interfaces.ts
+- Input/output relationships
+- Data flow (extracted from dataflow.md)
+- **Referenced EARS Requirements**: [specific REQ-XXX]
+- **Referenced Design Documents**: [relevant interfaces in interfaces.ts]
 
-## 3. 制約条件（EARS非機能要件・アーキテクチャ設計ベース）
+## 3. Constraints (Based on EARS Non-functional Requirements and Architecture Design)
 
-- 🟢🟡🔴 各項目の信頼性レベルを記載
-- パフォーマンス要件（NFR-XXXから抽出）
-- セキュリティ要件（NFR-XXXから抽出）
-- 互換性要件（REQ-XXX MUSTから抽出）
-- アーキテクチャ制約（architecture.mdから抽出）
-- データベース制約（database-schema.sqlから抽出）
-- API制約（api-endpoints.mdから抽出）
-- **参照したEARS要件**: [具体的なNFR-XXX, REQ-XXX]
-- **参照した設計文書**: [architecture.md, database-schema.sql等の該当セクション]
+- 🟢🟡🔴 Record reliability level for each item
+- Performance requirements (extracted from NFR-XXX)
+- Security requirements (extracted from NFR-XXX)
+- Compatibility requirements (extracted from REQ-XXX MUST)
+- Architecture constraints (extracted from architecture.md)
+- Database constraints (extracted from database-schema.sql)
+- API constraints (extracted from api-endpoints.md)
+- **Referenced EARS Requirements**: [specific NFR-XXX, REQ-XXX]
+- **Referenced Design Documents**: [relevant sections of architecture.md, database-schema.sql, etc.]
 
-## 4. 想定される使用例（EARSEdgeケース・データフローベース）
+## 4. Expected Use Cases (Based on EARS Edge Cases and Data Flow)
 
-- 🟢🟡🔴 各項目の信頼性レベルを記載
-- 基本的な使用パターン（通常要件REQ-XXXから抽出）
-- データフロー（dataflow.mdから抽出）
-- エッジケース（EDGE-XXXから抽出）
-- エラーケース（EDGE-XXXエラー処理から抽出）
-- **参照したEARS要件**: [具体的なEDGE-XXX]
-- **参照した設計文書**: [dataflow.md の該当フロー図]
+- 🟢🟡🔴 Record reliability level for each item
+- Basic usage patterns (extracted from normal requirements REQ-XXX)
+- Data flow (extracted from dataflow.md)
+- Edge cases (extracted from EDGE-XXX)
+- Error cases (extracted from EDGE-XXX error handling)
+- **Referenced EARS Requirements**: [specific EDGE-XXX]
+- **Referenced Design Documents**: [relevant flow diagrams in dataflow.md]
 
-## 5. EARS要件・設計文書との対応関係
+## 5. Correspondence with EARS Requirements and Design Documents
 
-既存のEARS要件定義書・設計文書を参照した場合、以下の対応関係を明記してください：
+When referencing existing EARS requirements documents and design documents, clearly specify the following correspondences:
 
-- **参照したユーザストーリー**: [ストーリー名]
-- **参照した機能要件**: [REQ-001, REQ-002, ...]
-- **参照した非機能要件**: [NFR-001, NFR-101, ...]
-- **参照したEdgeケース**: [EDGE-001, EDGE-101, ...]
-- **参照した受け入れ基準**: [具体的なテスト項目]
-- **参照した設計文書**:
-  - **アーキテクチャ**: [architecture.md の該当セクション]
-  - **データフロー**: [dataflow.md の該当フロー図]
-  - **型定義**: [interfaces.ts の該当インターフェース]
-  - **データベース**: [database-schema.sql の該当テーブル]
-  - **API仕様**: [api-endpoints.md の該当エンドポイント]
+- **Referenced User Stories**: [story names]
+- **Referenced Functional Requirements**: [REQ-001, REQ-002, ...]
+- **Referenced Non-functional Requirements**: [NFR-001, NFR-101, ...]
+- **Referenced Edge Cases**: [EDGE-001, EDGE-101, ...]
+- **Referenced Acceptance Criteria**: [specific test items]
+- **Referenced Design Documents**:
+  - **Architecture**: [relevant sections of architecture.md]
+  - **Data Flow**: [relevant flow diagrams in dataflow.md]
+  - **Type Definitions**: [relevant interfaces in interfaces.ts]
+  - **Database**: [relevant tables in database-schema.sql]
+  - **API Specifications**: [relevant endpoints in api-endpoints.md]
 
-整理後、以下を実行してください：
+After organizing, please execute the following:
 
-1. 要件定義書をdocs/implements/{{task_id}}/{feature_name}-requirements.mdに保存（既存ファイルがある場合は追記）
-2. TODOステータスを更新（要件定義完了をマーク）
-3. **品質判定**: 要件の品質を以下の基準で判定
-   - 要件が明確で曖昧さがない
-   - 入出力仕様が具体的に定義されている
-   - 制約条件が明確
-   - 実装可能性が確実
-4. **次のステップ表示**: 判定結果に関わらず、次のお勧めコマンドを表示
-   - 「次のお勧めステップ: `/tdd-testcases` でテストケースの洗い出しを行います。」
+1. Save requirements document to docs/implements/{{task_id}}/{feature_name}-requirements.md (append if existing file is present)
+2. Update TODO status (mark requirements definition as complete)
+3. **Quality Assessment**: Assess requirements quality based on the following criteria
+   - Requirements are clear and unambiguous
+   - Input/output specifications are specifically defined
+   - Constraints are clear
+   - Implementation feasibility is certain
+4. **Show Next Steps**: Regardless of assessment results, display recommended next command
+   - "Recommended next step: `/tdd-testcases` to identify test cases."
 
-## 品質判定基準
-
-```
-✅ 高品質:
-- 要件の曖昧さ: なし
-- 入出力定義: 完全
-- 制約条件: 明確
-- 実装可能性: 確実
-
-⚠️ 要改善:
-- 要件に曖昧な部分がある
-- 入出力の詳細が不明確
-- 技術的制約が不明
-- ユーザー意図の確認が必要
-```
-
-## TODO更新パターン
+## Quality Assessment Criteria
 
 ```
-- 現在のTODOを「completed」にマーク
-- 要件定義フェーズの完了をTODO内容に反映
-- 次のフェーズ「テストケース洗い出し」をTODOに追加
-- 品質判定結果をTODO内容に記録
+✅ High Quality:
+- Requirements ambiguity: None
+- Input/output definition: Complete
+- Constraints: Clear
+- Implementation feasibility: Certain
+
+⚠️ Needs Improvement:
+- Requirements have ambiguous parts
+- Input/output details are unclear
+- Technical constraints are unknown
+- User intent confirmation needed
 ```
 
-次のステップ: `/tdd-testcases` でテストケースの洗い出しを行います。
+## TODO Update Pattern
+
+```
+- Mark current TODO as "completed"
+- Reflect completion of requirements definition phase in TODO content
+- Add next phase "Test case identification" to TODO
+- Record quality assessment results in TODO content
+```
+
+Next step: `/tdd-testcases` to identify test cases.

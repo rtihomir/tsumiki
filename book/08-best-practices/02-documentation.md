@@ -1,99 +1,99 @@
-# 8.2 ドキュメント化と保守性
+# 8.2 Documentation and Maintainability
 
-AITDDにおいて、持続可能で保守性の高いソフトウェアを構築するためのドキュメンテーション戦略と実践手法を解説します。
+This section explains documentation strategies and practical methods for building sustainable and maintainable software in AITDD.
 
-## TDDプロセス連動ドキュメンテーション
+## TDD Process-Linked Documentation
 
-### 各ステップでのドキュメント自動生成
+### Automatic Document Generation at Each Step
 
-AIDDのTDD拡張プロセス（Red-Green-Refactor-Validation）において、各ステップでAIにドキュメントを出力させる体系的アプローチを採用します。
+We adopt a systematic approach where AI generates documentation at each step of the AIDD extended TDD process (Red-Green-Refactor-Validation).
 
-#### ステップ別ドキュメント生成戦略
+#### Step-by-Step Document Generation Strategy
 
-**Redステップ**: テスト要件とテストケースの設計文書
-- テストケースの設計意図
-- 期待する動作の仕様書
-- テスト対象機能の要件定義
+**Red Step**: Test requirements and test case design documents
+- Design intent of test cases
+- Specifications of expected behavior
+- Requirements definition for target functionality
 
-**Greenステップ**: 実装仕様と実装内容の説明
-- 実装方針とアプローチ
-- 主要なアルゴリズムの説明
-- 実装における技術的判断の根拠
+**Green Step**: Implementation specifications and implementation content explanation
+- Implementation policies and approaches
+- Explanation of major algorithms
+- Rationale for technical decisions in implementation
 
-**Refactorステップ**: リファクタリング方針と変更点
-- リファクタリングの目的と効果
-- 変更した部分の詳細説明
-- 品質向上の観点
+**Refactor Step**: Refactoring policies and change points
+- Purpose and effects of refactoring
+- Detailed explanation of changed parts
+- Quality improvement perspectives
 
-**Validationステップ**: 品質チェック結果と検証レポート
-- 品質確認項目とその結果
-- 発見された問題点と対処法
-- 最終的な品質評価
+**Validation Step**: Quality check results and verification reports
+- Quality verification items and their results
+- Identified issues and remediation methods
+- Final quality assessment
 
-### 自動化されたドキュメント作成手順
+### Automated Document Creation Process
 
-#### プロンプト組み込み方式
+#### Prompt Integration Method
 ```
-# Greenステップのプロンプト例
-実装時に以下のドキュメントも同時に生成してください：
-- implementation-notes.md: 実装方針と技術的判断
-- api-spec.md: APIの仕様詳細
-- deployment-guide.md: デプロイメント手順
+# Example Green Step Prompt
+Please also generate the following documents simultaneously during implementation:
+- implementation-notes.md: Implementation policies and technical decisions
+- api-spec.md: API specification details
+- deployment-guide.md: Deployment procedures
 ```
 
-#### AI主導の内容決定
-- **ファイルに書く内容はAIが自動判断**: 開発者は具体的な内容を指定する必要がない
-- **一貫性の確保**: ステップ間での情報連携による一貫した文書作成
-- **労力削減**: 手動でのドキュメント作成作業を最小化
-- **品質維持**: AIの文章生成能力による高品質な文書
+#### AI-Driven Content Determination
+- **AI Automatically Determines File Content**: Developers don't need to specify concrete content
+- **Consistency Assurance**: Consistent document creation through information coordination between steps
+- **Effort Reduction**: Minimize manual document creation work
+- **Quality Maintenance**: High-quality documents through AI's text generation capabilities
 
-### ファイル連携による継続性確保
+### Continuity Assurance Through File Integration
 
-#### 前ステップ情報の引き継ぎ
-実践的な情報継承方法：
+#### Inheriting Previous Step Information
+Practical information inheritance methods:
 
 ```bash
-# プロンプト例：前ステップの成果物を参照
-以下のファイルを読み込んで、一貫性を保ちながら次のステップを実行してください：
-- test-design.md (Redステップの成果)
-- implementation-notes.md (Greenステップの成果)
+# Prompt Example: Reference previous step outputs
+Please read the following files and execute the next step while maintaining consistency:
+- test-design.md (Red step output)
+- implementation-notes.md (Green step output)
 ```
 
-#### 自動ファイル管理手順
-- **ファイル名パターン指定**: 各ステップの指示時にファイル名パターンを記述
-- **自動読み込み**: AIが自動的に必要なファイルを読み込む
-- **複数ファイル同時参照**: 必要に応じて複数のファイルを同時に参照
-- **コンテキスト継承**: 前ステップの成果を次ステップに自動引き継ぎ
+#### Automatic File Management Process
+- **File Name Pattern Specification**: Describe file name patterns when instructing each step
+- **Automatic Loading**: AI automatically loads necessary files
+- **Simultaneous Multi-File Reference**: Reference multiple files simultaneously as needed
+- **Context Inheritance**: Automatically inherit previous step results to next step
 
-## AI生成コードのコメント戦略
+## AI-Generated Code Comment Strategy
 
-### 豊富なコメント生成
+### Rich Comment Generation
 
-#### コメント生成方針
-AIを活用した効果的なコメント戦略：
+#### Comment Generation Policy
+Effective comment strategy utilizing AI:
 
-- **多めのコメント**: AIにコード生成時に詳細なコメントを同時生成依頼
-- **機能説明**: 各関数・メソッドの目的と動作の明確化
-- **実装意図**: なぜその実装方法を選択したかの背景
-- **使用方法**: 呼び出し方や注意点の記載
+- **Abundant Comments**: Request AI to simultaneously generate detailed comments during code generation
+- **Functionality Explanation**: Clarify purpose and behavior of each function/method
+- **Implementation Intent**: Background on why that implementation method was chosen
+- **Usage Instructions**: Document calling methods and precautions
 
-#### サンプルベースのコメント生成
+#### Sample-Based Comment Generation
 ```typescript
-// サンプル：コメント付き実装例をAIに提示
+// Sample: Present commented implementation example to AI
 /**
- * ユーザー認証を行う
- * @param credentials - 認証情報（ユーザー名とパスワード）
- * @returns Promise<AuthResult> - 認証結果
- * @throws AuthenticationError - 認証失敗時
+ * Perform user authentication
+ * @param credentials - Authentication information (username and password)
+ * @returns Promise<AuthResult> - Authentication result
+ * @throws AuthenticationError - When authentication fails
  */
 async function authenticate(credentials: UserCredentials): Promise<AuthResult> {
-    // 入力値の妥当性確認
+    // Validate input values
     validateCredentials(credentials);
     
-    // データベースからユーザー情報を取得
+    // Retrieve user information from database
     const user = await userRepository.findByUsername(credentials.username);
     
-    // パスワードの照合
+    // Compare passwords
     const isValid = await bcrypt.compare(credentials.password, user.hashedPassword);
     
     if (!isValid) {
@@ -104,98 +104,98 @@ async function authenticate(credentials: UserCredentials): Promise<AuthResult> {
 }
 ```
 
-#### 一貫性の確保
-- **パターンに基づく生成**: AIがサンプルのコメントスタイルに合わせて生成
-- **一貫性の確保**: プロジェクト全体で統一されたコメントスタイル
-- **品質維持**: サンプルベースによる高品質コメントの維持
+#### Consistency Assurance
+- **Pattern-Based Generation**: AI generates according to sample comment style
+- **Consistency Assurance**: Unified comment style across the entire project
+- **Quality Maintenance**: Maintain high-quality comments through sample-based approach
 
-### コメントの種類と活用
+### Comment Types and Utilization
 
-#### コメントの分類
-- **概要コメント**: ファイル・クラス・関数レベルの概要
-- **実装コメント**: 複雑な処理の詳細説明
-- **TODOコメント**: 将来の改善点や検討事項
-- **注意コメント**: 重要な制約や注意事項
+#### Comment Classification
+- **Overview Comments**: File, class, and function level overviews
+- **Implementation Comments**: Detailed explanations of complex processing
+- **TODO Comments**: Future improvements and considerations
+- **Warning Comments**: Important constraints and precautions
 
-## トレーサビリティ確保
+## Traceability Assurance
 
-### 設計決定の記録
+### Recording Design Decisions
 
-#### 情報保存戦略
-設計の意思決定プロセスを追跡可能にするための体系的アプローチ：
+#### Information Preservation Strategy
+Systematic approach to make design decision processes traceable:
 
-- **出力ファイルによる記録**: 各ステップでの成果物を文書化
-- **プロンプトと結果の保存**: AIとのやり取りを構造化して保存
-- **設計意図の明文化**: なぜその設計を選択したかの背景
+- **Recording through Output Files**: Document outputs from each step
+- **Save Prompts and Results**: Structure and save AI interactions
+- **Clarify Design Intent**: Background on why that design was chosen
 
-#### 実践的な記録方法
+#### Practical Recording Methods
 ```markdown
-# design-decisions.md の例
+# Example design-decisions.md
 
-## 認証システムの設計決定
+## Authentication System Design Decision
 
-### 決定内容
-JWT（JSON Web Token）をセッション管理に採用
+### Decision Content
+Adopt JWT (JSON Web Token) for session management
 
-### 背景
-- ステートレスな認証が必要
-- マイクロサービス間での認証情報共有
-- モバイルアプリとの連携要件
+### Background
+- Need for stateless authentication
+- Authentication information sharing between microservices
+- Mobile app integration requirements
 
-### 検討した代替案
-1. セッションベース認証（却下：分散環境に不適）
-2. OAuth 2.0（却下：外部依存が増加）
+### Alternative Options Considered
+1. Session-based authentication (rejected: unsuitable for distributed environments)
+2. OAuth 2.0 (rejected: increased external dependencies)
 
-### 実装上の注意点
-- トークンの有効期限は1時間に設定
-- リフレッシュトークンによる自動更新機能
+### Implementation Considerations
+- Token expiration set to 1 hour
+- Automatic refresh functionality using refresh tokens
 ```
 
-#### 参照可能性の確保
-- **元情報へのアクセス**: 後から設計経緯を振り返り可能
-- **段階的詳細化**: 大まかな方針から詳細実装まで追跡可能
-- **意思決定ポイント**: 重要な判断の根拠と経緯
+#### Referenceability Assurance
+- **Access to Original Information**: Ability to review design background later
+- **Gradual Detailing**: Traceable from broad policies to detailed implementation
+- **Decision Points**: Basis and background of important judgments
 
-## 長期保守性の考慮
+## Long-Term Maintainability Considerations
 
-### AI生成コード識別の不要性
+### Unnecessary AI-Generated Code Identification
 
-#### 基本方針
-保守性の観点から、コードの生成方法ではなく品質と機能を重視：
+#### Basic Policy
+From a maintainability perspective, focus on quality and functionality rather than generation method:
 
-- **AI生成判断は不要**: コードの品質と機能が重要
-- **統一的品質基準**: 生成方法に関わらず同一の品質基準を適用
-- **価値重視**: 誰が・どう作ったかより、何ができるかを重視
+- **AI Generation Judgment Unnecessary**: Code quality and functionality are important
+- **Unified Quality Standards**: Apply same quality standards regardless of generation method
+- **Value-Focused**: Focus on what can be done rather than who made it or how
 
-### メンテナンス時のAI活用
+### AI Utilization During Maintenance
 
-#### 継続的AI活用戦略
+#### Continuous AI Utilization Strategy
 ```bash
-# メンテナンス時の実践例
-# 1. 既存コードの解析
+# Practical examples during maintenance
+# 1. Analyze existing code
 claude code analyze --target="user-service" --output="analysis-report.md"
 
-# 2. 設計文書の参照
+# 2. Reference design documents
 claude code review --docs="design-decisions.md" --code="src/auth/"
 
-# 3. 修正方針の策定
-claude code plan --requirement="新しい認証方式の追加" --existing-docs="."
+# 3. Formulate modification policies
+claude code plan --requirement="Add new authentication method" --existing-docs="."
 ```
 
-#### 保守効率の向上
-- **文書化された情報**: 詳細なコメントと設計文書の活用
-- **AI支援による理解**: 既存コードの解析と修正方針策定
-- **継続的改善**: メンテナンス時の知見も文書化
+#### Maintenance Efficiency Improvement
+- **Documented Information**: Utilize detailed comments and design documents
+- **AI-Assisted Understanding**: Existing code analysis and modification policy formulation
+- **Continuous Improvement**: Document maintenance insights as well
 
-## 実装のポイント
+## Implementation Points
 
-### ドキュメント生成の自動化
+### Documentation Generation Automation
 
-#### プロセス組み込み
-TDD各ステップでのドキュメント生成を標準化：
+#### Process Integration
+Standardize document generation at each TDD step:
 
 ```yaml
-# .aitdd-config.yml の例
+# Example .aitdd-config.yml
 documentation:
   auto_generate: true
   templates:
@@ -208,67 +208,67 @@ documentation:
   
   formats:
     - markdown
-    - pdf  # レビュー用
+    - pdf  # For review
 ```
 
-### コメント品質の確保
+### Comment Quality Assurance
 
-#### 詳細度の調整指針
-- **機能の複雑さに応じたコメント量**: 単純な処理は簡潔に、複雑な処理は詳細に
-- **将来の保守担当者を意識した説明レベル**: 3ヶ月後の自分が理解できるレベル
-- **技術的背景の適切な記載**: なぜその技術を選択したかの説明
+#### Detail Level Adjustment Guidelines
+- **Comment Volume According to Functionality Complexity**: Concise for simple processing, detailed for complex processing
+- **Explanation Level for Future Maintainers**: Level that can be understood by yourself 3 months later
+- **Appropriate Recording of Technical Background**: Explanation of why that technology was chosen
 
-### 情報管理の体系化
+### Information Management Systematization
 
-#### 文書構造の統一
+#### Document Structure Unification
 ```
 project-root/
 ├── docs/
-│   ├── development-process/    # TDDプロセスで生成される文書
-│   ├── design-decisions/       # 設計決定の記録
-│   ├── api-specifications/     # API仕様書
-│   └── deployment/            # デプロイメント文書
+│   ├── development-process/    # Documents generated by TDD process
+│   ├── design-decisions/       # Design decision records
+│   ├── api-specifications/     # API specifications
+│   └── deployment/            # Deployment documents
 ├── src/
-│   └── (コメント付きソースコード)
+│   └── (Source code with comments)
 └── tests/
-    └── (テストケースと説明文書)
+    └── (Test cases and explanatory documents)
 ```
 
-## 効果と利点
+## Effects and Benefits
 
-### 開発効率の向上
-- **同時ドキュメント化**: コード生成と同時に文書作成
-- **作業の自動化**: 手動ドキュメント作成作業の削減
-- **品質向上**: 一貫した品質のドキュメント生成
+### Development Efficiency Improvement
+- **Simultaneous Documentation**: Document creation concurrent with code generation
+- **Work Automation**: Reduction of manual documentation work
+- **Quality Improvement**: Generation of consistently high-quality documents
 
-### 保守性の確保
-- **理解容易性**: 詳細なコメントによる理解促進
-- **変更影響分析**: 設計意図の把握による影響範囲特定
-- **継続的改善**: AI活用による効率的なメンテナンス
+### Maintainability Assurance
+- **Ease of Understanding**: Promote understanding through detailed comments
+- **Change Impact Analysis**: Identify impact scope by understanding design intent
+- **Continuous Improvement**: Efficient maintenance through AI utilization
 
-### 知識の蓄積
-- **組織資産化**: 設計知識とノウハウの体系的蓄積
-- **再利用性**: 類似プロジェクトでの活用
-- **学習効果**: 開発者のスキル向上支援
+### Knowledge Accumulation
+- **Organizational Asset Creation**: Systematic accumulation of design knowledge and know-how
+- **Reusability**: Utilization in similar projects
+- **Learning Effects**: Support developer skill improvement
 
-## 実践チェックリスト
+## Practical Checklist
 
-### ドキュメンテーション準備
+### Documentation Preparation
 ```
-□ TDDプロセスでのドキュメント生成設定完了
-□ コメントスタイルのサンプル準備
-□ ファイル連携のためのディレクトリ構造設計
-□ 設計決定記録のテンプレート作成
+□ Complete documentation generation settings for TDD process
+□ Prepare comment style samples
+□ Design directory structure for file integration
+□ Create design decision record templates
 ```
 
-### 品質確保
+### Quality Assurance
 ```
-□ 生成されたドキュメントの妥当性確認プロセス
-□ コメントの詳細度が適切かの判断基準
-□ トレーサビリティが確保できているかの確認
-□ 長期保守を見据えた情報の整理
+□ Process for verifying validity of generated documents
+□ Criteria for judging appropriate comment detail level
+□ Verify traceability is ensured
+□ Organize information with long-term maintenance in mind
 ```
 
 ---
 
-このドキュメンテーション戦略により、AITDDで開発されたソフトウェアの長期的な保守性と品質を確保できます。
+This documentation strategy ensures long-term maintainability and quality of software developed with AITDD.

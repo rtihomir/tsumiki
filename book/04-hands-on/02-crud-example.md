@@ -1,19 +1,19 @@
-# 4.2 CRUD操作の実装例
+# 4.2 CRUD Operations Implementation Example
 
-## 学習目標
+## Learning Objectives
 
-この章では、より実践的なCRUD（Create, Read, Update, Delete）操作の実装を通じて以下を身につけます：
+Through implementing more practical CRUD (Create, Read, Update, Delete) operations in this chapter, you will acquire the following skills:
 
-- 複数機能の統合におけるAITDDの活用
-- データ管理ロジックの設計と実装
-- 実際のアプリケーション開発に近い体験
-- バイブコーディングとの違いを体感
+- Utilizing AITDD for integrating multiple features
+- Designing and implementing data management logic
+- Experience close to actual application development
+- Understanding the differences from vibe coding
 
-## プロジェクト概要：シンプルなタスク管理システム
+## Project Overview: Simple Task Management System
 
-### 実装する機能
+### Features to Implement
 
-メモリベースの簡単なタスク管理システムを作成します：
+Create a simple memory-based task management system:
 
 ```typescript
 interface Task {
@@ -26,202 +26,202 @@ interface Task {
 }
 ```
 
-**CRUD操作**：
-- **Create**：新しいタスクの作成
-- **Read**：タスクの取得（全件、単件、条件検索）
-- **Update**：タスクの更新
-- **Delete**：タスクの削除
+**CRUD Operations**:
+- **Create**: Creating new tasks
+- **Read**: Retrieving tasks (all, single, conditional search)
+- **Update**: Updating tasks
+- **Delete**: Deleting tasks
 
-### 技術的複雑さのレベル
+### Level of Technical Complexity
 
-前章の計算機能と比較して以下の複雑さが追加されます：
-- データの永続化（メモリベース）
-- 複数のエンティティ操作
-- バリデーションの組み合わせ
-- エラーハンドリングの多様化
+Compared to the previous chapter's calculation features, the following complexities are added:
+- Data persistence (memory-based)
+- Multiple entity operations
+- Validation combinations
+- Diversified error handling
 
-## 実践ハンズオン
+## Hands-On Practice
 
-### ステップ1：TODO作成と機能分解
+### Step 1: TODO Creation and Feature Decomposition
 
-AITDDの重要な教訓として、**3機能程度の統合が実用的な限界**であることが分かっています。そのため、機能を適切な粒度に分解します。
+An important lesson from AITDD is that **integration of about 3 features is the practical limit**. Therefore, we decompose features into appropriate granularity.
 
 ```markdown
-# TODO: タスク管理システムCRUD実装
+# TODO: Task Management System CRUD Implementation
 
-## フェーズ1：基盤実装
-- [ ] Taskインターフェースの定義
-- [ ] TaskManagerクラスの基本構造
-- [ ] メモリストレージの実装
+## Phase 1: Foundation Implementation
+- [ ] Task interface definition
+- [ ] TaskManager class basic structure
+- [ ] Memory storage implementation
 
-## フェーズ2：基本CRUD（3機能まで）
-- [ ] Create: 新しいタスク作成
-- [ ] Read: 全タスク取得
-- [ ] Read: IDによる単件取得
+## Phase 2: Basic CRUD (up to 3 features)
+- [ ] Create: New task creation
+- [ ] Read: Get all tasks
+- [ ] Read: Get single task by ID
 
-## フェーズ3：拡張CRUD（残り機能）
-- [ ] Update: タスクの更新
-- [ ] Delete: タスクの削除
-- [ ] Read: 条件検索（完了状態等）
+## Phase 3: Extended CRUD (remaining features)
+- [ ] Update: Task updates
+- [ ] Delete: Task deletion
+- [ ] Read: Conditional search (completion status, etc.)
 
-## 技術要件
-- TypeScript使用
-- Jest でのテスト
-- メモリベースのデータ管理
-- 適切なエラーハンドリング
+## Technical Requirements
+- Use TypeScript
+- Testing with Jest
+- Memory-based data management
+- Appropriate error handling
 ```
 
-**ポイント**：
-- フェーズ分けにより統合の複雑さを制御
-- 各フェーズが独立してテスト可能
-- 段階的な機能追加が可能
+**Key Points**:
+- Control integration complexity through phasing
+- Each phase can be tested independently
+- Gradual feature addition possible
 
-### ステップ2：フェーズ1の実装
+### Step 2: Phase 1 Implementation
 
-#### 仕様作成
+#### Specification Creation
 
-**AIへのプロンプト**：
+**AI Prompt**:
 ```
-タスク管理システムの基盤部分の仕様を作成してください。
+Please create specifications for the foundation part of the task management system.
 
-要件：
-- Taskインターフェースの定義
-- TaskManagerクラスの設計
-- メモリベースのストレージ機能
-- TypeScriptでの型安全性確保
+Requirements:
+- Task interface definition
+- TaskManager class design
+- Memory-based storage functionality
+- Ensure type safety with TypeScript
 
-以下のTODOを参考にしてください：
-[フェーズ1のTODOを貼り付け]
+Please reference the following TODO:
+[Paste Phase 1 TODO]
 ```
 
-**生成された仕様例**：
+**Generated Specification Example**:
 ```markdown
-# タスク管理システム基盤仕様
+# Task Management System Foundation Specifications
 
-## Taskインターフェース
+## Task Interface
 ```typescript
 interface Task {
-  id: string;          // UUID形式のユニークID
-  title: string;       // タスクタイトル（1-100文字）
-  description: string; // タスク説明（0-500文字）
-  completed: boolean;  // 完了状態
-  createdAt: Date;     // 作成日時
-  updatedAt: Date;     // 更新日時
+  id: string;          // UUID format unique ID
+  title: string;       // Task title (1-100 characters)
+  description: string; // Task description (0-500 characters)
+  completed: boolean;  // Completion status
+  createdAt: Date;     // Creation date/time
+  updatedAt: Date;     // Update date/time
 }
 ```
 
-## TaskManagerクラス
-- メモリベースのタスク管理
-- タスクの永続化（配列）
-- IDの自動生成
-- 基本的なバリデーション
+## TaskManager Class
+- Memory-based task management
+- Task persistence (array)
+- Automatic ID generation
+- Basic validation
 
-## エラー処理
-- タスクが見つからない場合：TaskNotFoundError
-- バリデーション失敗：ValidationError
-- 不正なID形式：InvalidIdError
+## Error Handling
+- Task not found: TaskNotFoundError
+- Validation failure: ValidationError
+- Invalid ID format: InvalidIdError
 ```
 
-#### テストケース作成
+#### Test Case Creation
 
-**AIプロンプト**：
+**AI Prompt**:
 ```
-以下の仕様に基づいて基盤部分のテストケースを作成してください：
+Please create test cases for the foundation part based on the following specifications:
 
-[基盤仕様を貼り付け]
+[Paste foundation specifications]
 
-テスト観点：
-- インターフェースの型チェック
-- TaskManagerの初期化
-- メモリストレージの動作確認
-- エラークラスの定義確認
-```
-
-#### Red-Green-Refactor-Validation実行
-
-AIにステップバイステップで実装を依頼：
-
-1. **Red**: テスト失敗を確認
-2. **Green**: 基盤クラスの最小実装
-3. **Refactor**: 設計の改善
-4. **Validation**: 基盤の妥当性確認
-
-### ステップ3：フェーズ2の実装（基本CRUD）
-
-#### 統合時の注意点
-
-バイブコーディングとの重要な違いとして、**構造化されたアプローチ**が必要です：
-
-**AITDD方式**：
-```
-1. 明確な仕様定義
-2. 包括的なテスト設計
-3. 段階的実装
-4. 品質チェック
-→ 統合が容易、品質が安定
+Test perspectives:
+- Interface type checking
+- TaskManager initialization
+- Memory storage operation verification
+- Error class definition verification
 ```
 
-**バイブコーディング方式（避けるべき）**：
+#### Red-Green-Refactor-Validation Execution
+
+Request step-by-step implementation from AI:
+
+1. **Red**: Confirm test failures
+2. **Green**: Minimal implementation of foundation classes
+3. **Refactor**: Design improvements
+4. **Validation**: Foundation validity verification
+
+### Step 3: Phase 2 Implementation (Basic CRUD)
+
+#### Integration Considerations
+
+An important difference from vibe coding is the need for a **structured approach**:
+
+**AITDD Approach**:
 ```
-1. 勢いでAIに実装依頼
-2. テストは後付け
-3. 統合時に問題発見
-4. 手作業での修正
-→ 3機能統合で破綻
+1. Clear specification definition
+2. Comprehensive test design
+3. Gradual implementation
+4. Quality checks
+→ Easy integration, stable quality
 ```
 
-#### Create機能の実装
+**Vibe Coding Approach (to avoid)**:
+```
+1. Impulsively request AI implementation
+2. Tests added afterwards
+3. Problems discovered during integration
+4. Manual fixes
+→ Breakdown at 3-feature integration
+```
 
-**仕様**：
+#### Create Feature Implementation
+
+**Specifications**:
 ```markdown
-## タスク作成機能
+## Task Creation Feature
 
-### メソッド：createTask(taskData)
-- 引数：{ title: string, description: string }
-- 戻り値：作成されたTask
-- バリデーション：
-  - titleは1-100文字必須
-  - descriptionは0-500文字
-- 自動設定：id, createdAt, updatedAt, completed=false
+### Method: createTask(taskData)
+- Parameters: { title: string, description: string }
+- Return value: Created Task
+- Validation:
+  - title is required 1-100 characters
+  - description is 0-500 characters
+- Auto-set: id, createdAt, updatedAt, completed=false
 ```
 
-**AIプロンプト例**：
+**AI Prompt Example**:
 ```
-以下の仕様でcreateTaskメソッドのテストケースと実装を作成してください：
+Please create test cases and implementation for the createTask method according to the following specifications:
 
-[仕様を貼り付け]
+[Paste specifications]
 
-要求：
-1. 包括的なテストケース（正常系、異常系、境界値）
-2. Red-Green-Refactor-Validationサイクルで実装
-3. 既存の基盤コードとの整合性確保
-4. TypeScriptの型安全性活用
+Requirements:
+1. Comprehensive test cases (normal, error, boundary values)
+2. Implement with Red-Green-Refactor-Validation cycle
+3. Ensure consistency with existing foundation code
+4. Utilize TypeScript type safety
 ```
 
-#### Read機能の実装
+#### Read Feature Implementation
 
-**全件取得と単件取得**を同時に実装：
+**Implement both get all and get single simultaneously**:
 
-**仕様**：
+**Specifications**:
 ```markdown
-## タスク取得機能
+## Task Retrieval Features
 
 ### getAllTasks(): Task[]
-- 全てのタスクを配列で返す
-- 空の場合は空配列
-- 作成日時の降順でソート
+- Returns all tasks as an array
+- Returns empty array if none exist
+- Sort by creation date in descending order
 
 ### getTaskById(id: string): Task
-- IDでタスクを検索
-- 見つからない場合：TaskNotFoundError
-- 無効なID形式：InvalidIdError
+- Search for task by ID
+- If not found: TaskNotFoundError
+- Invalid ID format: InvalidIdError
 ```
 
-### ステップ4：フェーズ3の実装（拡張CRUD）
+### Step 4: Phase 3 Implementation (Extended CRUD)
 
-#### Update機能
+#### Update Feature
 
-**部分更新をサポート**：
+**Support partial updates**:
 
 ```typescript
 interface TaskUpdateData {
@@ -233,19 +233,19 @@ interface TaskUpdateData {
 updateTask(id: string, updateData: TaskUpdateData): Task
 ```
 
-#### Delete機能
+#### Delete Feature
 
-**論理削除vs物理削除**の検討を含めた実装：
+**Implementation including consideration of logical vs physical deletion**:
 
 ```typescript
-deleteTask(id: string): boolean  // 物理削除
-// または
-softDeleteTask(id: string): Task  // 論理削除
+deleteTask(id: string): boolean  // Physical deletion
+// or
+softDeleteTask(id: string): Task  // Logical deletion
 ```
 
-#### 条件検索機能
+#### Conditional Search Feature
 
-**フィルタリング機能**：
+**Filtering functionality**:
 
 ```typescript
 interface TaskFilter {
@@ -257,40 +257,40 @@ interface TaskFilter {
 searchTasks(filter: TaskFilter): Task[]
 ```
 
-### ステップ5：統合テストと最終レビュー
+### Step 5: Integration Testing and Final Review
 
-#### 統合シナリオテスト
+#### Integration Scenario Testing
 
-実際のユースケースを想定したテスト：
+Tests assuming actual use cases:
 
 ```typescript
-describe('タスク管理統合シナリオ', () => {
-  test('一般的なタスク管理フロー', async () => {
+describe('Task Management Integration Scenarios', () => {
+  test('typical task management flow', async () => {
     const manager = new TaskManager();
     
-    // 1. タスク作成
+    // 1. Create task
     const task1 = manager.createTask({
-      title: 'プロジェクト計画',
-      description: '要件定義と設計'
+      title: 'Project Planning',
+      description: 'Requirements definition and design'
     });
     
-    // 2. タスク取得・確認
+    // 2. Get and verify tasks
     const allTasks = manager.getAllTasks();
     expect(allTasks).toHaveLength(1);
     
-    // 3. タスク更新
+    // 3. Update task
     const updatedTask = manager.updateTask(task1.id, {
       completed: true
     });
     expect(updatedTask.completed).toBe(true);
     
-    // 4. 検索機能
+    // 4. Search functionality
     const completedTasks = manager.searchTasks({
       completed: true
     });
     expect(completedTasks).toHaveLength(1);
     
-    // 5. タスク削除
+    // 5. Delete task
     const deleted = manager.deleteTask(task1.id);
     expect(deleted).toBe(true);
     expect(manager.getAllTasks()).toHaveLength(0);
@@ -298,241 +298,241 @@ describe('タスク管理統合シナリオ', () => {
 });
 ```
 
-#### パフォーマンステスト
+#### Performance Testing
 
-**大量データでの動作確認**：
+**Operation verification with large amounts of data**:
 
 ```typescript
-describe('パフォーマンステスト', () => {
-  test('1000件のタスク操作', () => {
+describe('Performance Tests', () => {
+  test('1000 task operations', () => {
     const manager = new TaskManager();
     
-    // 1000件作成
+    // Create 1000 tasks
     const startTime = Date.now();
     for (let i = 0; i < 1000; i++) {
       manager.createTask({
-        title: `タスク${i}`,
-        description: `説明${i}`
+        title: `Task${i}`,
+        description: `Description${i}`
       });
     }
     const createTime = Date.now() - startTime;
     
-    // 検索性能
+    // Search performance
     const searchStart = Date.now();
     const results = manager.searchTasks({
-      titleContains: 'タスク1'
+      titleContains: 'Task1'
     });
     const searchTime = Date.now() - searchStart;
     
-    expect(createTime).toBeLessThan(1000); // 1秒以内
-    expect(searchTime).toBeLessThan(100);  // 100ms以内
+    expect(createTime).toBeLessThan(1000); // Within 1 second
+    expect(searchTime).toBeLessThan(100);  // Within 100ms
   });
 });
 ```
 
-## トラブルシューティング
+## Troubleshooting
 
-### よくある問題と対処法
+### Common Issues and Solutions
 
-#### 問題1：AI生成コードの整合性
+#### Issue 1: AI-Generated Code Consistency
 
-**症状**：
-- 既存コードを意図せず修正
-- インターフェースの不整合
-- 命名規約の違い
+**Symptoms**:
+- Unintended modification of existing code
+- Interface inconsistencies
+- Naming convention differences
 
-**対処法**：
+**Solutions**:
 ```
-プロンプト改善例：
-"既存のコードは一切変更せず、以下のインターフェースに従って新しいメソッドのみを追加してください：
-[既存インターフェースを明示]"
-```
-
-#### 問題2：テストの品質不足
-
-**症状**：
-- 異常系テストが不足
-- 境界値テストが漏れ
-- 統合テストがない
-
-**対処法**：
-```
-レビューチェックリスト：
-- [ ] 正常系、異常系、境界値を全てカバー
-- [ ] エラーメッセージの確認
-- [ ] 実際のユースケースでのテスト
+Prompt improvement example:
+"Without modifying any existing code, please add only new methods following this interface:
+[Specify existing interface]"
 ```
 
-#### 問題3：統合時の複雑さ
+#### Issue 2: Insufficient Test Quality
 
-**症状**：
-- 3機能以上の統合で破綻
-- デバッグが困難
-- テストが通らない
+**Symptoms**:
+- Insufficient error case tests
+- Missing boundary value tests
+- No integration tests
 
-**対処法**：
+**Solutions**:
 ```
-段階的統合アプローチ：
-1. 1機能ずつ完全に実装
-2. 2機能の組み合わせをテスト
-3. 3機能目の追加時は慎重に進行
-4. 問題発生時は機能を分割
-```
-
-## AIプロンプトのベストプラクティス
-
-### 効果的なプロンプト設計
-
-**1. コンテキストの明確化**：
-```
-良い例：
-"タスク管理システムのCRUD操作において、以下の仕様に従ってcreateTaskメソッドを実装してください。
-既存のTaskインターフェースとTaskManagerクラスに追加する形で実装し、
-メモリベースのストレージを使用してください。
-
-[既存コード]
-[詳細仕様]
-[期待する出力形式]"
+Review checklist:
+- [ ] Cover all normal, error, and boundary value cases
+- [ ] Verify error messages
+- [ ] Test with actual use cases
 ```
 
-**2. 制約の明示**：
-```
-制約例：
-- "既存のコードは変更しないでください"
-- "TypeScriptの型安全性を最大限活用してください"
-- "エラーハンドリングを適切に実装してください"
-- "テストファーストで実装してください"
-```
+#### Issue 3: Integration Complexity
 
-**3. 期待する品質の指定**：
+**Symptoms**:
+- Breakdown when integrating 3+ features
+- Difficult debugging
+- Tests not passing
+
+**Solutions**:
 ```
-品質要求例：
-- "プロダクションレベルの品質で実装してください"
-- "可読性と保守性を重視してください"
-- "パフォーマンスを考慮した実装をしてください"
-- "適切なコメントを含めてください"
+Gradual integration approach:
+1. Implement one feature completely
+2. Test combination of 2 features
+3. Proceed carefully when adding 3rd feature
+4. Split features when problems occur
 ```
 
-### プロンプトテンプレート
+## AI Prompt Best Practices
 
-CRUD操作に特化したプロンプトテンプレート：
+### Effective Prompt Design
 
+**1. Context Clarification**:
 ```
-### CRUD実装プロンプトテンプレート
+Good example:
+"For CRUD operations in a task management system, please implement the createTask method according to the following specifications.
+Implement as an addition to the existing Task interface and TaskManager class,
+using memory-based storage.
 
-**基本情報**：
-- 機能: [Create/Read/Update/Delete]操作
-- 対象エンティティ: [エンティティ名]
-- 実装言語: TypeScript
-- テストフレームワーク: Jest
-
-**既存コンテキスト**：
-[既存のインターフェース・クラス定義]
-
-**実装要件**：
-[具体的な仕様]
-
-**制約条件**：
-- 既存コードは変更禁止
-- 型安全性を最大限活用
-- エラーハンドリング必須
-
-**出力要求**：
-1. テストケース（正常系・異常系・境界値）
-2. 実装コード
-3. 使用例
-4. 注意点・制限事項
+[Existing code]
+[Detailed specifications]
+[Expected output format]"
 ```
 
-## 品質管理のポイント
+**2. Explicit Constraints**:
+```
+Constraint examples:
+- "Please do not modify existing code"
+- "Please maximize TypeScript type safety"
+- "Please implement appropriate error handling"
+- "Please implement test-first"
+```
 
-### コードレビューチェックリスト
+**3. Specifying Expected Quality**:
+```
+Quality requirement examples:
+- "Please implement at production-level quality"
+- "Please prioritize readability and maintainability"
+- "Please implement with performance considerations"
+- "Please include appropriate comments"
+```
 
-**機能的品質**：
-- [ ] 仕様要件を全て満たしている
-- [ ] エラーハンドリングが適切
-- [ ] 境界値での動作が正しい
-- [ ] パフォーマンスが許容範囲内
+### Prompt Templates
 
-**技術的品質**：
-- [ ] TypeScript型安全性が確保されている
-- [ ] 命名規約に従っている
-- [ ] 適切な抽象化レベル
-- [ ] DRY原則が守られている
+CRUD operation-specific prompt template:
 
-**テスト品質**：
-- [ ] テストカバレッジが十分
-- [ ] テストが理解しやすい
-- [ ] モックの使用が適切
-- [ ] 統合テストが包括的
+```
+### CRUD Implementation Prompt Template
 
-**保守性**：
-- [ ] コードが読みやすい
-- [ ] 変更が容易な構造
-- [ ] ドキュメントが適切
-- [ ] 拡張性を考慮した設計
+**Basic Information**:
+- Feature: [Create/Read/Update/Delete] operation
+- Target Entity: [Entity name]
+- Implementation Language: TypeScript
+- Test Framework: Jest
 
-## 実践での学習効果
+**Existing Context**:
+[Existing interface and class definitions]
 
-### AITDDの強み（実感できること）
+**Implementation Requirements**:
+[Specific specifications]
 
-**開発速度**：
-- 従来のCRUD実装：1日〜2日
-- AITDD使用：1時間弱
-- **20〜48倍の効率化**を体感
+**Constraints**:
+- Existing code modification prohibited
+- Maximize type safety
+- Error handling required
 
-**品質安定性**：
-- テストファーストによる品質保証
-- リファクタリング段階での最適化
-- Validationステップでの総合品質チェック
+**Output Requirements**:
+1. Test cases (normal, error, boundary values)
+2. Implementation code
+3. Usage examples
+4. Notes and limitations
+```
 
-**学習効果**：
-- AIとの協調開発スキル
-- 効果的なプロンプト設計能力
-- 品質管理に対する感度向上
+## Quality Management Points
 
-### バイブコーディングとの明確な違い
+### Code Review Checklist
 
-**統合の容易さ**：
-- バイブコーディング：3機能統合で破綻
-- AITDD：段階的統合で安定
+**Functional Quality**:
+- [ ] Meets all specification requirements
+- [ ] Appropriate error handling
+- [ ] Correct behavior at boundary values
+- [ ] Performance within acceptable range
 
-**デバッグ効率**：
-- バイブコーディング：同じ問題の繰り返し
-- AITDD：体系的な問題解決
+**Technical Quality**:
+- [ ] TypeScript type safety ensured
+- [ ] Follows naming conventions
+- [ ] Appropriate abstraction level
+- [ ] DRY principle followed
 
-**長期的な保守性**：
-- バイブコーディング：後から手直しが必要
-- AITDD：継続的な開発が可能
+**Test Quality**:
+- [ ] Sufficient test coverage
+- [ ] Tests are understandable
+- [ ] Appropriate use of mocks
+- [ ] Comprehensive integration tests
 
-## 次章への準備
+**Maintainability**:
+- [ ] Code is readable
+- [ ] Easy to change structure
+- [ ] Appropriate documentation
+- [ ] Design considers extensibility
 
-このCRUD実装体験により、以下のスキルが身に付きます：
+## Learning Effects in Practice
 
-1. **複数機能の統合管理**
-2. **段階的な機能開発**
-3. **品質管理の重要性理解**
-4. **AIプロンプト設計の実践力**
+### AITDD Strengths (Observable Benefits)
 
-次章では、これらのスキルを活用してAPI開発という、より実践的な開発シナリオに取り組みます。外部依存や非同期処理などの新たな複雑さに対してAITDDがどのように対応できるかを学習します。
+**Development Speed**:
+- Traditional CRUD implementation: 1-2 days
+- Using AITDD: Under 1 hour
+- **Experience 20-48x efficiency improvement**
 
-## まとめ
+**Quality Stability**:
+- Quality assurance through test-first approach
+- Optimization during refactoring phase
+- Comprehensive quality check in Validation step
 
-CRUD操作の実装を通じて以下を学習しました：
+**Learning Effects**:
+- Collaborative development skills with AI
+- Effective prompt design ability
+- Improved sensitivity to quality management
 
-**プロセスの重要性**：
-- 構造化されたアプローチの価値
-- 段階的な機能追加の効果
-- 品質管理の自動化
+### Clear Differences from Vibe Coding
 
-**AI活用のコツ**：
-- 明確なコンテキスト提供
-- 適切な制約の指定
-- 継続的なプロンプト改善
+**Integration Ease**:
+- Vibe coding: Breakdown at 3-feature integration
+- AITDD: Stable with gradual integration
 
-**実践的スキル**：
-- 複数機能の統合技法
-- テスト駆動の設計思考
-- レビューと品質管理
+**Debugging Efficiency**:
+- Vibe coding: Repeated same problems
+- AITDD: Systematic problem solving
 
-これらの基盤があることで、より複雑な実開発プロジェクトでもAITDDを効果的に活用できるようになります。
+**Long-term Maintainability**:
+- Vibe coding: Requires rework later
+- AITDD: Enables continuous development
+
+## Preparation for Next Chapter
+
+Through this CRUD implementation experience, you acquire the following skills:
+
+1. **Multi-feature integration management**
+2. **Gradual feature development**
+3. **Understanding importance of quality management**
+4. **Practical AI prompt design skills**
+
+The next chapter will apply these skills to API development, a more practical development scenario. You'll learn how AITDD can handle new complexities like external dependencies and asynchronous processing.
+
+## Summary
+
+Through implementing CRUD operations, we learned the following:
+
+**Process Importance**:
+- Value of structured approach
+- Effect of gradual feature addition
+- Automation of quality management
+
+**AI Utilization Tips**:
+- Providing clear context
+- Specifying appropriate constraints
+- Continuous prompt improvement
+
+**Practical Skills**:
+- Multi-feature integration techniques
+- Test-driven design thinking
+- Review and quality management
+
+With these foundations, you can effectively utilize AITDD even in more complex real development projects.

@@ -1,171 +1,171 @@
-# 8.1 技術選択のガイドライン
+# 8.1 Technology Selection Guidelines
 
-エンジニアがAITDDを実践する際の技術選択において、適切な判断を行うための実践的なガイドラインを提供します。
+This section provides practical guidelines for engineers to make appropriate technology choices when implementing AITDD.
 
-## AIツール選択の基準
+## AI Tool Selection Criteria
 
-### 組織方針の最優先
+### Organizational Policy Takes Priority
 
-#### 会社指定AIツールの使用
-技術的な優位性よりも、組織のガバナンスとコンプライアンスを最優先に考慮します。
+#### Using Company-Designated AI Tools
+Organizational governance and compliance should be prioritized over technical advantages.
 
-- **承認済みツールのみ使用**: 会社から指示されたAIツールのみを業務で使用
-- **組織方針の遵守**: 技術的優位性より組織ルールを優先
-- **定期的方針確認**: AIツール利用ガイドラインの変更を定期確認
+- **Use Only Approved Tools**: Use only AI tools designated by the company for business purposes
+- **Organizational Policy Compliance**: Prioritize organizational rules over technical advantages
+- **Regular Policy Verification**: Regularly check for changes in AI tool usage guidelines
 
-#### 推奨ツール: Claude Sonnet 4
-現在の実践経験に基づく推奨ツールとその理由：
+#### Recommended Tool: Claude Sonnet 4
+Current recommended tool based on practical experience and rationale:
 
-- **高品質な実装生成**: TDDプロセスに適したコード生成能力
-- **Claude Code連携**: 開発環境との統合による効率化
-- **日本語対応**: 仕様記述やコメント生成の品質
-- **トークン容量**: 大規模なコンテキストでの安定動作
+- **High-Quality Implementation Generation**: Code generation capabilities suitable for TDD processes
+- **Claude Code Integration**: Efficiency improvements through development environment integration
+- **Japanese Language Support**: Quality of specification descriptions and comment generation
+- **Token Capacity**: Stable operation in large-scale contexts
 
-### 技術選択の判断基準
+### Technology Selection Criteria
 
-#### プロジェクト適用条件
+#### Project Application Conditions
 
-**適用に向いているケース**
-- **新規開発プロジェクト**: 非常に適している
-- **モダンな技術スタック**: AI支援が効果的
-- **明確な要件定義**: 仕様が明確化されている場合
-- **反復開発**: アジャイル・インクリメンタルな開発
+**Cases Well-Suited for Application**
+- **New Development Projects**: Very well-suited
+- **Modern Technology Stack**: AI assistance is effective
+- **Clear Requirements Definition**: When specifications are clearly defined
+- **Iterative Development**: Agile and incremental development
 
-**適用に向かないケース**
-- **人命に関わるプロジェクト**: 適用不可
-- **レガシーシステム**: 複雑な制約がある既存システム
-- **極めて高い品質要求**: リスク許容度が低いプロジェクト
-- **短期間の小規模修正**: AIDD導入コストが見合わない場合
+**Cases Not Suited for Application**
+- **Life-Critical Projects**: Not applicable
+- **Legacy Systems**: Existing systems with complex constraints
+- **Extremely High Quality Requirements**: Projects with low risk tolerance
+- **Short-Term Small Modifications**: When AIDD introduction costs don't justify benefits
 
-## セキュリティとコンプライアンス
+## Security and Compliance
 
-### 機密情報管理
+### Confidential Information Management
 
-#### 送信可能情報の基準
-AIツールに送信する情報の安全性を確保するための実践的基準：
+#### Criteria for Transmittable Information
+Practical standards for ensuring the safety of information sent to AI tools:
 
-- **個人情報の除外**: 個人を特定できる情報は送信対象外
-- **機密データの除外**: 会社機密に分類される情報は送信対象外
-- **一般的な技術情報**: 公開可能な技術情報のみ送信許可
+- **Exclude Personal Information**: Information that can identify individuals is not for transmission
+- **Exclude Confidential Data**: Information classified as company confidential is not for transmission
+- **General Technical Information Only**: Only publicly available technical information is permitted for transmission
 
-#### 実践的データ保護手法
+#### Practical Data Protection Methods
 ```
-送信前チェックリスト:
-□ 個人情報の有無確認
-□ 機密データの除去確認
-□ 送信の必要性評価
-□ 代替手段の検討
-```
-
-### 知的財産権の考慮
-
-#### 組織方針準拠
-- **知的財産権ポリシーの適用**: 組織の知的財産権方針に従った運用
-- **法務部門との連携**: 必要に応じて法務部門への相談
-- **契約条件の確認**: AIツール利用契約の条項確認
-
-#### リスク管理
-- **著作権リスクの認識**: AI生成コードの著作権問題の理解
-- **ライセンス条項の確認**: 使用AIツールのライセンス条項遵守
-- **商用利用の適切性**: 商用プロダクトでの利用可能性確認
-
-## チーム編成とスキル要件
-
-### 必要な役割とスキル
-
-#### 設計責任者
-**要求レベル**: それなりの経験者が設計を中心的に実施
-
-必要なスキル：
-- **API設計**: RESTful APIやGraphQLの設計経験
-- **データベース設計**: 適切なスキーマ設計能力
-- **アーキテクチャ設計**: システム全体の構造設計経験
-- **AI対応設計**: AIが対応しやすい仕組みを作る能力
-
-#### 開発メンバー
-**基本要件**: プログラミング基礎知識とAI活用への適応力
-
-- **TDDの理解**: テスト駆動開発の基本概念
-- **プロンプトスキル**: AIとの効果的な対話能力（習得可能）
-- **コードレビュー能力**: AI生成コードの適切な評価
-- **継続学習意欲**: 新しい手法への適応力
-
-### プロンプトスキル格差への対処
-
-#### 現実的な課題認識
-**「AIの反応を想像できる人とできない人の差」**
-
-主な差異：
-- AIとの対話経験による慣れの差
-- AIの特性や癖を理解している度合い
-- プロンプトの効果を事前に予測できるスキル
-- トライアンドエラーの経験値の蓄積
-
-#### 対策アプローチ
-- **継続的な実践**: 「使っていくしかない」という現実的認識
-- **段階的な習熟**: 小さなタスクから始めて経験を積む
-- **知識共有**: 成功事例とベストプラクティスの共有
-- **ペアプログラミング**: 経験者と初心者のペアによる学習促進
-
-## コスト効果の判断
-
-### 効率性の評価基準
-
-#### 開発速度の改善
-実践データに基づく効果：
-- **実装速度**: 従来の20〜48倍の向上を実現
-- **開発サイクル**: 1〜2日のタスクが1時間程度に短縮
-- **試行錯誤の容易さ**: 高速な反復により多くのアプローチを試行可能
-
-#### 新しいコスト要素
-- **品質管理コスト**: AI生成コードの確認・レビュー負荷
-- **学習コスト**: チームメンバーのAIDD習得時間
-- **ツール利用コスト**: Claude CodeのAPI料金等
-
-### 投資対効果の判断
-
-#### 基本方針
-- **基準**: 人力より圧倒的に早くなれば問題なし
-- **効果**: 開発者時間の大幅削減（1/4〜1/8に短縮）
-- **総合評価**: 実装効率 vs 品質管理コストのバランス
-
-#### 実践的な導入判断
-```
-導入検討チェックリスト:
-□ プロジェクト期間が十分にある（学習コスト考慮）
-□ チームにAI活用への理解がある
-□ 組織のAI利用方針に適合している
-□ 品質要求レベルが適切な範囲にある
-□ セキュリティリスクが管理可能である
+Pre-Transmission Checklist:
+□ Check for presence of personal information
+□ Confirm removal of confidential data
+□ Evaluate necessity of transmission
+□ Consider alternative methods
 ```
 
-## 技術スタック選択の指針
+### Intellectual Property Considerations
 
-### AI支援に適した技術
+#### Organizational Policy Compliance
+- **Apply Intellectual Property Rights Policy**: Operate according to organizational intellectual property policies
+- **Coordination with Legal Department**: Consult with legal department when necessary
+- **Verify Contract Terms**: Confirm terms of AI tool usage contracts
 
-#### 推奨技術スタック
-- **モダンなフレームワーク**: React、Vue.js、Next.js等
-- **型安全な言語**: TypeScript、Rust、Go等
-- **標準的なアーキテクチャ**: RESTful API、MVC、マイクロサービス
-- **テスト可能な設計**: 依存性注入、単体テスト可能な構造
+#### Risk Management
+- **Recognize Copyright Risks**: Understand copyright issues with AI-generated code
+- **Verify License Terms**: Comply with license terms of AI tools used
+- **Commercial Use Appropriateness**: Confirm viability for use in commercial products
 
-#### 避けるべき技術
-- **複雑なレガシー技術**: 文書化が不十分な古い技術
-- **非標準的なアーキテクチャ**: AIが理解困難な独自設計
-- **テスト困難な構造**: TDDに適さない設計
+## Team Composition and Skill Requirements
 
-### 段階的な技術導入
+### Required Roles and Skills
 
-#### 導入フェーズ
-1. **パイロットプロジェクト**: 小規模な新規機能で試行
-2. **部分適用**: 既存プロジェクトの一部機能に適用
-3. **全面展開**: チーム全体でのAITDD実践
+#### Design Lead
+**Required Level**: Experienced practitioners should centrally handle design
 
-#### 技術移行戦略
-- **既存技術との並行**: 段階的な移行によりリスク軽減
-- **知識継承**: 従来手法の知見をAITDDに活用
-- **継続的改善**: 実践を通じた手法の最適化
+Required Skills:
+- **API Design**: Experience with RESTful API or GraphQL design
+- **Database Design**: Appropriate schema design capabilities
+- **Architecture Design**: Experience with overall system structure design
+- **AI-Compatible Design**: Ability to create structures that AI can handle effectively
+
+#### Development Members
+**Basic Requirements**: Basic programming knowledge and adaptability to AI utilization
+
+- **TDD Understanding**: Basic concepts of test-driven development
+- **Prompt Skills**: Effective communication capabilities with AI (learnable)
+- **Code Review Ability**: Appropriate evaluation of AI-generated code
+- **Continuous Learning Willingness**: Adaptability to new methodologies
+
+### Addressing Prompt Skill Gaps
+
+#### Realistic Challenge Recognition
+**"The gap between those who can and cannot imagine AI responses"**
+
+Main differences:
+- Experience gaps in AI interaction through familiarity
+- Degree of understanding AI characteristics and quirks
+- Skills to predict prompt effectiveness in advance
+- Accumulated experience from trial and error
+
+#### Solution Approaches
+- **Continuous Practice**: Realistic recognition that "you have to keep using it"
+- **Gradual Proficiency**: Build experience starting with small tasks
+- **Knowledge Sharing**: Share success cases and best practices
+- **Pair Programming**: Promote learning through experienced-novice pairs
+
+## Cost-Effectiveness Assessment
+
+### Efficiency Evaluation Criteria
+
+#### Development Speed Improvement
+Effects based on practical data:
+- **Implementation Speed**: Achieved 20-48x improvement over conventional methods
+- **Development Cycle**: 1-2 day tasks reduced to about 1 hour
+- **Ease of Trial and Error**: High-speed iteration enables trying many approaches
+
+#### New Cost Elements
+- **Quality Management Costs**: Burden of verifying and reviewing AI-generated code
+- **Learning Costs**: Time for team members to acquire AIDD skills
+- **Tool Usage Costs**: Claude Code API fees, etc.
+
+### Return on Investment Assessment
+
+#### Basic Policy
+- **Standard**: No problem if overwhelmingly faster than manual work
+- **Effect**: Significant reduction in developer time (reduced to 1/4-1/8)
+- **Overall Assessment**: Balance of implementation efficiency vs. quality management costs
+
+#### Practical Implementation Decision
+```
+Implementation Consideration Checklist:
+□ Project duration is sufficient (considering learning costs)
+□ Team has understanding of AI utilization
+□ Complies with organizational AI usage policies
+□ Quality requirement level is within appropriate range
+□ Security risks are manageable
+```
+
+## Technology Stack Selection Guidelines
+
+### Technologies Suitable for AI Assistance
+
+#### Recommended Technology Stack
+- **Modern Frameworks**: React, Vue.js, Next.js, etc.
+- **Type-Safe Languages**: TypeScript, Rust, Go, etc.
+- **Standard Architectures**: RESTful API, MVC, microservices
+- **Testable Design**: Dependency injection, unit-testable structures
+
+#### Technologies to Avoid
+- **Complex Legacy Technologies**: Old technologies with insufficient documentation
+- **Non-Standard Architectures**: Proprietary designs difficult for AI to understand
+- **Test-Difficult Structures**: Designs unsuitable for TDD
+
+### Gradual Technology Introduction
+
+#### Introduction Phases
+1. **Pilot Project**: Trial with small-scale new features
+2. **Partial Application**: Apply to some features of existing projects
+3. **Full Deployment**: AITDD practice across the entire team
+
+#### Technology Migration Strategy
+- **Parallel with Existing Technology**: Risk reduction through gradual migration
+- **Knowledge Transfer**: Utilize conventional methodology insights in AITDD
+- **Continuous Improvement**: Methodology optimization through practice
 
 ---
 
-この技術選択ガイドラインを参考に、組織とプロジェクトの特性に適したAITDD実践を行ってください。
+Please use these technology selection guidelines to implement AITDD practices suited to your organization and project characteristics.

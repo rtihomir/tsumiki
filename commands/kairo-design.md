@@ -1,128 +1,128 @@
 # kairo-design
 
-## 目的
+## Purpose
 
-承認された要件定義書に基づいて、技術設計文書を生成する。データフロー図、TypeScriptインターフェース、データベーススキーマ、APIエンドポイントを含む包括的な設計を行う。
+Generate technical design documentation based on approved requirements specifications. Create comprehensive design including data flow diagrams, TypeScript interfaces, database schemas, and API endpoints.
 
-## 前提条件
+## Prerequisites
 
-- `docs/spec/` に要件定義書が存在する
-- 要件がユーザによって承認されている
+- Requirements specification exists in `docs/spec/`
+- Requirements have been approved by user
 
-## 実行内容
+## Execution Instructions
 
-**【信頼性レベル指示】**:
-各項目について、元の資料（EARS要件定義書・設計文書含む）との照合状況を以下の信号でコメントしてください：
+**【Reliability Level Instructions】**:
+For each item, comment on the verification status against source materials (including EARS requirements and design documents) using these signals:
 
-- 🟢 **青信号**: EARS要件定義書・設計文書を参考にしてほぼ推測していない場合
-- 🟡 **黄信号**: EARS要件定義書・設計文書から妥当な推測の場合
-- 🔴 **赤信号**: EARS要件定義書・設計文書にない推測の場合
+- 🟢 **Green Light**: Almost no inference when referencing EARS requirements specification and design documents
+- 🟡 **Yellow Light**: Reasonable inference from EARS requirements specification and design documents
+- 🔴 **Red Light**: Inference not based on EARS requirements specification and design documents
 
-1. **要件の分析**
-   - @agent-symbol-searcher で要件定義書を検索し、見つかったファイルをReadツールで読み込み
-   - @agent-symbol-searcher で関連する既存設計文書を確認し、見つかったファイルをReadツールで読み込み
-   - 機能要件と非機能要件を整理する
-   - システムの境界を明確にする
+1. **Requirements Analysis**
+   - Search for requirements specifications using @agent-symbol-searcher and read found files with Read tool
+   - Check related existing design documents using @agent-symbol-searcher and read found files with Read tool
+   - Organize functional and non-functional requirements
+   - Clarify system boundaries
 
-2. **アーキテクチャ設計**
-   - システム全体のアーキテクチャを決定
-   - フロントエンド/バックエンドの分離
-   - マイクロサービスの必要性を検討
+2. **Architecture Design**
+   - Determine overall system architecture
+   - Frontend/backend separation
+   - Consider necessity of microservices
 
-3. **データフロー図の作成**
-   - Mermaid記法でデータフローを可視化
-   - ユーザーインタラクションの流れ
-   - システム間のデータの流れ
+3. **Data Flow Diagram Creation**
+   - Visualize data flow using Mermaid notation
+   - User interaction flow
+   - Data flow between systems
 
-4. **TypeScriptインターフェースの定義**
-   - エンティティの型定義
-   - APIリクエスト/レスポンスの型定義
-   - 共通型の定義
+4. **TypeScript Interface Definition**
+   - Entity type definitions
+   - API request/response type definitions
+   - Common type definitions
 
-5. **データベーススキーマの設計**
-   - テーブル定義
-   - リレーションシップ
-   - インデックス戦略
-   - 正規化レベルの決定
+5. **Database Schema Design**
+   - Table definitions
+   - Relationships
+   - Index strategy
+   - Normalization level determination
 
-6. **APIエンドポイントの設計**
-   - RESTful API設計
-   - エンドポイントの命名規則
-   - HTTPメソッドの適切な使用
-   - リクエスト/レスポンスの構造
+6. **API Endpoint Design**
+   - RESTful API design
+   - Endpoint naming conventions
+   - Appropriate use of HTTP methods
+   - Request/response structure
 
-7. **ファイルの作成**
-   - `docs/design/{要件名}/` ディレクトリに以下を作成：
-     - `architecture.md` - アーキテクチャ概要
-     - `dataflow.md` - データフロー図
-     - `interfaces.ts` - TypeScript型定義
-     - `database-schema.sql` - DBスキーマ
-     - `api-endpoints.md` - API仕様
+7. **File Creation**
+   - Create the following in `docs/design/{requirement-name}/` directory:
+     - `architecture.md` - Architecture overview
+     - `dataflow.md` - Data flow diagrams
+     - `interfaces.ts` - TypeScript type definitions
+     - `database-schema.sql` - DB schema
+     - `api-endpoints.md` - API specifications
 
-## 出力フォーマット例
+## Output Format Examples
 
 ### architecture.md
 
 ```markdown
-# {要件名} アーキテクチャ設計
+# {Requirement Name} Architecture Design
 
-## システム概要
+## System Overview
 
-{システムの概要説明}
+{System overview description}
 
-## アーキテクチャパターン
+## Architecture Pattern
 
-- パターン: {選択したパターン}
-- 理由: {選択理由}
+- Pattern: {Selected pattern}
+- Reason: {Selection rationale}
 
-## コンポーネント構成
+## Component Structure
 
-### フロントエンド
+### Frontend
 
-- フレームワーク: {使用フレームワーク}
-- 状態管理: {状態管理方法}
+- Framework: {Framework used}
+- State Management: {State management approach}
 
-### バックエンド
+### Backend
 
-- フレームワーク: {使用フレームワーク}
-- 認証方式: {認証方法}
+- Framework: {Framework used}
+- Authentication: {Authentication method}
 
-### データベース
+### Database
 
-- DBMS: {使用するDBMS}
-- キャッシュ: {キャッシュ戦略}
+- DBMS: {DBMS used}
+- Cache: {Cache strategy}
 ```
 
 ### dataflow.md
 
 ```markdown
-# データフロー図
+# Data Flow Diagrams
 
-## ユーザーインタラクションフロー
+## User Interaction Flow
 
 \`\`\`mermaid
 flowchart TD
-A[ユーザー] --> B[フロントエンド]
+A[User] --> B[Frontend]
 B --> C[API Gateway]
-C --> D[バックエンド]
-D --> E[データベース]
+C --> D[Backend]
+D --> E[Database]
 \`\`\`
 
-## データ処理フロー
+## Data Processing Flow
 
 \`\`\`mermaid
 sequenceDiagram
-participant U as ユーザー
-participant F as フロントエンド
-participant B as バックエンド
-participant D as データベース
+participant U as User
+participant F as Frontend
+participant B as Backend
+participant D as Database
 
-    U->>F: アクション
-    F->>B: APIリクエスト
-    B->>D: クエリ実行
-    D-->>B: 結果返却
-    B-->>F: レスポンス
-    F-->>U: 画面更新
+    U->>F: Action
+    F->>B: API Request
+    B->>D: Execute Query
+    D-->>B: Return Result
+    B-->>F: Response
+    F-->>U: Update Screen
 
 \`\`\`
 ```
@@ -159,7 +159,7 @@ export interface ApiResponse<T> {
 ### database-schema.sql
 
 ```sql
--- ユーザーテーブル
+-- Users table
 CREATE TABLE users (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     email VARCHAR(255) UNIQUE NOT NULL,
@@ -168,20 +168,20 @@ CREATE TABLE users (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- インデックス
+-- Indexes
 CREATE INDEX idx_users_email ON users(email);
 ```
 
 ### api-endpoints.md
 
 ```markdown
-# API エンドポイント仕様
+# API Endpoint Specifications
 
-## 認証
+## Authentication
 
 ### POST /auth/login
 
-リクエスト:
+Request:
 \`\`\`json
 {
 "email": "user@example.com",
@@ -189,7 +189,7 @@ CREATE INDEX idx_users_email ON users(email);
 }
 \`\`\`
 
-レスポンス:
+Response:
 \`\`\`json
 {
 "success": true,
@@ -200,7 +200,7 @@ CREATE INDEX idx_users_email ON users(email);
 }
 \`\`\`
 
-## ユーザー管理
+## User Management
 
 ### GET /users/:id
 
@@ -211,9 +211,9 @@ CREATE INDEX idx_users_email ON users(email);
 ### DELETE /users/:id
 ```
 
-## 実行後の確認
+## Post-Execution Verification
 
-- @agent-symbol-searcher で作成した設計と既存システムとの整合性を確認
-- 作成したファイルの一覧を表示
-- 設計の主要なポイントをサマリーで表示
-- ユーザに確認を促すメッセージを表示
+- Verify consistency between created design and existing system using @agent-symbol-searcher
+- Display list of created files
+- Show summary of main design points
+- Display message prompting user confirmation

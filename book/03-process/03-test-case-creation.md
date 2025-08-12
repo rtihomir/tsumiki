@@ -1,83 +1,83 @@
-# 3.3 テストケース作成
+# 3.3 Test Case Creation
 
-## テストケース作成の重要性
+## Importance of Test Case Creation
 
-AITDDにおいて、テストケースは実装の品質を決定する重要な要素です。AIが生成するコードの品質は、テストケースの網羅性と精度に大きく依存するため、この段階で包括的なテストケースを設計することが重要です。
+In AITDD, test cases are crucial elements that determine implementation quality. Since the quality of AI-generated code heavily depends on the comprehensiveness and accuracy of test cases, designing comprehensive test cases at this stage is important.
 
-## テストケース設計の原則
+## Principles of Test Case Design
 
-### 1. 網羅性の確保
+### 1. Ensuring Comprehensiveness
 
-#### 機能の網羅性
-- **正常系**: 期待される動作すべて
-- **異常系**: エラー処理とバリデーション
-- **境界値**: 入力値の境界条件
-- **エッジケース**: 特殊な条件や例外的な状況
+#### Functional Comprehensiveness
+- **Normal cases**: All expected behaviors
+- **Error cases**: Error handling and validation
+- **Boundary values**: Boundary conditions for input values
+- **Edge cases**: Special conditions and exceptional situations
 
-#### テストレベルの網羅性
-- **単体テスト**: 個別関数・メソッドのテスト
-- **統合テスト**: コンポーネント間の連携テスト
-- **エンドツーエンドテスト**: ユーザーシナリオの完全実行
+#### Test Level Comprehensiveness
+- **Unit tests**: Testing individual functions and methods
+- **Integration tests**: Testing component interactions
+- **End-to-end tests**: Complete execution of user scenarios
 
-### 2. 明確で具体的な期待値
+### 2. Clear and Specific Expected Values
 
 ```markdown
-❌ 悪い例：「エラーが発生すること」
-✅ 良い例：「ステータスコード400とエラーメッセージ"Email already exists"が返却されること」
+❌ Bad example: "An error should occur"
+✅ Good example: "Status code 400 and error message 'Email already exists' should be returned"
 ```
 
-### 3. 独立性と再現性
-- 各テストケースは独立して実行可能
-- テスト実行順序に依存しない
-- 外部環境に依存しない
+### 3. Independence and Reproducibility
+- Each test case can be executed independently
+- Not dependent on test execution order
+- Not dependent on external environment
 
-## テストケース文書の標準フォーマット
+## Standard Format for Test Case Documents
 
-### 基本テンプレート
+### Basic Template
 
 ```markdown
-# [機能名] テストケース仕様書
+# [Feature Name] Test Case Specification
 
-## テスト概要
-- **対象機能**: テスト対象の機能名
-- **テスト目的**: 何を検証するか
-- **前提条件**: テスト実行の前提
+## Test Overview
+- **Target Feature**: Name of the feature being tested
+- **Test Purpose**: What is being verified
+- **Prerequisites**: Prerequisites for test execution
 
-## テストケース一覧
+## Test Case List
 
-### TC001: [テストケース名]
-- **分類**: 正常系/異常系/境界値
-- **目的**: このテストで検証する内容
-- **前提条件**: テスト実行前の状態
-- **テストデータ**: 入力データの詳細
-- **実行手順**: 
-  1. 具体的な手順1
-  2. 具体的な手順2
-- **期待結果**: 
-  - 期待される動作の詳細
-  - 期待される出力値
-- **事後条件**: テスト実行後の期待される状態
+### TC001: [Test Case Name]
+- **Category**: Normal/Error/Boundary Value
+- **Purpose**: What this test verifies
+- **Prerequisites**: State before test execution
+- **Test Data**: Details of input data
+- **Execution Steps**: 
+  1. Specific step 1
+  2. Specific step 2
+- **Expected Results**: 
+  - Details of expected behavior
+  - Expected output values
+- **Post-conditions**: Expected state after test execution
 ```
 
-### 具体的なテストケース例
+### Specific Test Case Example
 
-#### 例：ユーザー登録機能のテストケース
+#### Example: User Registration Feature Test Cases
 
 ```markdown
-# ユーザー登録機能 テストケース仕様書
+# User Registration Feature Test Case Specification
 
-## テスト概要
-- **対象機能**: ユーザー新規登録API (POST /api/users)
-- **テスト目的**: 新規ユーザー登録の全パターンを検証
-- **前提条件**: データベースが初期状態、APIサーバーが稼働中
+## Test Overview
+- **Target Feature**: User Registration API (POST /api/users)
+- **Test Purpose**: Verify all patterns of new user registration
+- **Prerequisites**: Database in initial state, API server running
 
-## テストケース一覧
+## Test Case List
 
-### TC001: 正常なユーザー登録
-- **分類**: 正常系
-- **目的**: 有効なデータでの新規ユーザー登録を検証
-- **前提条件**: test@example.com は未登録
-- **テストデータ**: 
+### TC001: Normal User Registration
+- **Category**: Normal case
+- **Purpose**: Verify new user registration with valid data
+- **Prerequisites**: test@example.com is not registered
+- **Test Data**: 
   ```json
   {
     "email": "test@example.com",
@@ -85,29 +85,29 @@ AITDDにおいて、テストケースは実装の品質を決定する重要な
     "password_confirmation": "SecurePass123!"
   }
   ```
-- **実行手順**: 
-  1. POST /api/users にテストデータを送信
-  2. レスポンスを確認
-  3. データベースの状態を確認
-- **期待結果**: 
-  - ステータスコード: 201
-  - レスポンス: 
+- **Execution Steps**: 
+  1. Send test data to POST /api/users
+  2. Verify response
+  3. Verify database state
+- **Expected Results**: 
+  - Status Code: 201
+  - Response: 
     ```json
     {
-      "id": 任意の正整数,
+      "id": any positive integer,
       "email": "test@example.com",
-      "created_at": "日時（ISO8601形式）"
+      "created_at": "datetime (ISO8601 format)"
     }
     ```
-  - データベース: usersテーブルに新しいレコードが作成される
-  - パスワードがハッシュ化されて保存される
-- **事後条件**: ユーザーが正常に登録され、ログイン可能
+  - Database: New record created in users table
+  - Password hashed and stored
+- **Post-conditions**: User successfully registered and can log in
 
-### TC002: メールアドレス重複エラー
-- **分類**: 異常系
-- **目的**: 既存メールアドレスでの登録時のエラー処理を検証
-- **前提条件**: test@example.com が既に登録済み
-- **テストデータ**: 
+### TC002: Email Address Duplication Error
+- **Category**: Error case
+- **Purpose**: Verify error handling when registering with existing email address
+- **Prerequisites**: test@example.com already registered
+- **Test Data**: 
   ```json
   {
     "email": "test@example.com",
@@ -115,13 +115,13 @@ AITDDにおいて、テストケースは実装の品質を決定する重要な
     "password_confirmation": "AnotherPass456!"
   }
   ```
-- **実行手順**: 
-  1. POST /api/users にテストデータを送信
-  2. レスポンスを確認
-  3. データベースの状態を確認
-- **期待結果**: 
-  - ステータスコード: 400
-  - レスポンス: 
+- **Execution Steps**: 
+  1. Send test data to POST /api/users
+  2. Verify response
+  3. Verify database state
+- **Expected Results**: 
+  - Status Code: 400
+  - Response: 
     ```json
     {
       "error": "validation_failed",
@@ -133,14 +133,14 @@ AITDDにおいて、テストケースは実装の品質を決定する重要な
       ]
     }
     ```
-  - データベース: 新しいレコードは作成されない
-- **事後条件**: 既存ユーザーデータに影響なし
+  - Database: No new record created
+- **Post-conditions**: No impact on existing user data
 
-### TC003: パスワード不一致エラー
-- **分類**: 異常系
-- **目的**: パスワードと確認パスワードの不一致時のエラー処理を検証
-- **前提条件**: 新規メールアドレスを使用
-- **テストデータ**: 
+### TC003: Password Mismatch Error
+- **Category**: Error case
+- **Purpose**: Verify error handling when password and confirmation password don't match
+- **Prerequisites**: Using new email address
+- **Test Data**: 
   ```json
   {
     "email": "new@example.com",
@@ -148,341 +148,341 @@ AITDDにおいて、テストケースは実装の品質を決定する重要な
     "password_confirmation": "DifferentPass456!"
   }
   ```
-- **期待結果**: 
-  - ステータスコード: 400
-  - エラーメッセージ: "Password confirmation does not match"
+- **Expected Results**: 
+  - Status Code: 400
+  - Error Message: "Password confirmation does not match"
 
-### TC004: 無効なメールアドレス形式
-- **分類**: 異常系・境界値
-- **目的**: メールアドレス形式バリデーションを検証
-- **テストデータ集**:
-  - "invalid-email" (@ がない)
-  - "test@" (ドメイン部がない)
-  - "@example.com" (ローカル部がない)
-  - "test..test@example.com" (連続ドット)
-- **期待結果**: すべて400エラーとなること
+### TC004: Invalid Email Address Format
+- **Category**: Error case, Boundary value
+- **Purpose**: Verify email address format validation
+- **Test Data Set**:
+  - "invalid-email" (no @)
+  - "test@" (no domain part)
+  - "@example.com" (no local part)
+  - "test..test@example.com" (consecutive dots)
+- **Expected Results**: All should result in 400 error
 
-### TC005: パスワード強度不足
-- **分類**: 異常系・境界値
-- **目的**: パスワード強度バリデーションを検証
-- **テストデータ集**:
-  - "short" (8文字未満)
-  - "onlylowercase" (小文字のみ)
-  - "ONLYUPPERCASE" (大文字のみ)
-  - "12345678" (数字のみ)
-  - "NoSymbol123" (記号なし)
-- **期待結果**: すべて400エラーとなること
+### TC005: Insufficient Password Strength
+- **Category**: Error case, Boundary value
+- **Purpose**: Verify password strength validation
+- **Test Data Set**:
+  - "short" (less than 8 characters)
+  - "onlylowercase" (lowercase only)
+  - "ONLYUPPERCASE" (uppercase only)
+  - "12345678" (numbers only)
+  - "NoSymbol123" (no symbols)
+- **Expected Results**: All should result in 400 error
 
-### TC006: 必須項目未入力
-- **分類**: 異常系
-- **目的**: 必須項目のバリデーションを検証
-- **テストデータ集**:
-  - email なし
-  - password なし
-  - password_confirmation なし
-  - 空文字列のケース
-  - null のケース
-- **期待結果**: すべて400エラーとなること
+### TC006: Missing Required Fields
+- **Category**: Error case
+- **Purpose**: Verify required field validation
+- **Test Data Set**:
+  - No email
+  - No password
+  - No password_confirmation
+  - Empty string cases
+  - null cases
+- **Expected Results**: All should result in 400 error
 
-### TC007: 境界値テスト - メールアドレス長
-- **分類**: 境界値
-- **目的**: メールアドレスの文字数制限を検証
-- **テストデータ**:
-  - 254文字（最大許可）
-  - 255文字（制限超過）
-- **期待結果**: 
-  - 254文字: 正常登録
-  - 255文字: 400エラー
+### TC007: Boundary Value Test - Email Address Length
+- **Category**: Boundary value
+- **Purpose**: Verify email address character limit
+- **Test Data**:
+  - 254 characters (maximum allowed)
+  - 255 characters (exceeding limit)
+- **Expected Results**: 
+  - 254 characters: Normal registration
+  - 255 characters: 400 error
 
-### TC008: レート制限テスト
-- **分類**: 非機能
-- **目的**: 同時登録のレート制限を検証
-- **実行手順**: 短時間で大量のリクエストを送信
-- **期待結果**: 制限を超えた場合429エラー
+### TC008: Rate Limiting Test
+- **Category**: Non-functional
+- **Purpose**: Verify rate limiting for concurrent registrations
+- **Execution Steps**: Send large number of requests in short time
+- **Expected Results**: 429 error when limit exceeded
 
-### TC009: データベース接続エラー
-- **分類**: 異常系・インフラ
-- **目的**: データベース障害時の動作を検証
-- **前提条件**: データベースが利用不可
-- **期待結果**: 500エラーとエラーログ出力
+### TC009: Database Connection Error
+- **Category**: Error case, Infrastructure
+- **Purpose**: Verify behavior during database failure
+- **Prerequisites**: Database unavailable
+- **Expected Results**: 500 error and error log output
 
-### TC010: CSRFトークン検証
-- **分類**: セキュリティ
-- **目的**: CSRF攻撃の防止を検証
-- **テストデータ**: CSRFトークンなし、または無効なトークン
-- **期待結果**: 403エラー
+### TC010: CSRF Token Verification
+- **Category**: Security
+- **Purpose**: Verify CSRF attack prevention
+- **Test Data**: No CSRF token or invalid token
+- **Expected Results**: 403 error
 ```
 
-## テストケース作成のワークフロー
+## Test Case Creation Workflow
 
-### 1. 仕様書からのテストケース抽出
+### 1. Test Case Extraction from Specifications
 
 ```markdown
-仕様書の各項目 → 対応するテストケース
+Each specification item → Corresponding test case
 
-■ 機能要件
-- 基本機能 → 正常系テストケース
-- バリデーション → 異常系テストケース
-- 入力制限 → 境界値テストケース
+■ Functional Requirements
+- Basic functions → Normal case test cases
+- Validation → Error case test cases
+- Input restrictions → Boundary value test cases
 
-■ 非機能要件
-- パフォーマンス → 負荷テストケース
-- セキュリティ → セキュリティテストケース
-- 可用性 → 障害テストケース
+■ Non-functional Requirements
+- Performance → Load test cases
+- Security → Security test cases
+- Availability → Failure test cases
 ```
 
-### 2. テストケース設計の手順
+### 2. Test Case Design Process
 
-#### ステップ1: テスト観点の整理
+#### Step 1: Organize Test Perspectives
 ```markdown
-## テスト観点一覧
+## Test Perspective List
 
-### 機能観点
-- [ ] 正常な入力での動作
-- [ ] 入力値バリデーション
-- [ ] エラーハンドリング
-- [ ] データ永続化
+### Functional Perspective
+- [ ] Operation with normal input
+- [ ] Input value validation
+- [ ] Error handling
+- [ ] Data persistence
 
-### データ観点
-- [ ] 境界値（最小、最大）
-- [ ] 特殊文字・多言語
-- [ ] NULL・空文字
-- [ ] 不正な形式
+### Data Perspective
+- [ ] Boundary values (minimum, maximum)
+- [ ] Special characters, multilingual
+- [ ] NULL, empty strings
+- [ ] Invalid formats
 
-### 状態観点
-- [ ] 初期状態
-- [ ] データ存在状態
-- [ ] エラー状態
-- [ ] 制限状態
+### State Perspective
+- [ ] Initial state
+- [ ] Data exists state
+- [ ] Error state
+- [ ] Limited state
 
-### 環境観点
-- [ ] 正常環境
-- [ ] 高負荷環境
-- [ ] 障害環境
+### Environment Perspective
+- [ ] Normal environment
+- [ ] High load environment
+- [ ] Failure environment
 ```
 
-#### ステップ2: テストケースマトリックス作成
+#### Step 2: Create Test Case Matrix
 
-| 機能 | 正常系 | 異常系 | 境界値 | セキュリティ | パフォーマンス |
-|------|--------|--------|--------|--------------|----------------|
-| ユーザー登録 | TC001 | TC002-006 | TC007 | TC010 | TC008 |
-| バリデーション | - | TC002-006 | TC004,005,007 | - | - |
-| データ保存 | TC001 | TC009 | - | - | - |
+| Function | Normal | Error | Boundary | Security | Performance |
+|----------|--------|-------|----------|----------|-------------|
+| User Registration | TC001 | TC002-006 | TC007 | TC010 | TC008 |
+| Validation | - | TC002-006 | TC004,005,007 | - | - |
+| Data Storage | TC001 | TC009 | - | - | - |
 
-#### ステップ3: 詳細テストケース作成
-- 各セルの内容を詳細なテストケースとして展開
-- 実行可能な具体的手順に落とし込み
-- 期待結果を明確に定義
+#### Step 3: Create Detailed Test Cases
+- Expand each cell content into detailed test cases
+- Break down into executable specific steps
+- Clearly define expected results
 
-### 3. AI活用によるテストケース支援
+### 3. AI-Assisted Test Case Support
 
-#### AIを活用できる領域
-- **網羅性チェック**: 漏れているテストケースの指摘
-- **テストデータ生成**: 境界値や異常値の提案
-- **期待値計算**: 複雑な計算結果の算出
-- **テストケース構造化**: フォーマットの統一
+#### Areas Where AI Can Be Utilized
+- **Coverage checking**: Point out missing test cases
+- **Test data generation**: Suggest boundary values and abnormal values
+- **Expected value calculation**: Calculate complex calculation results
+- **Test case structuring**: Unify formats
 
-#### 人間が判断すべき領域
-- **ビジネス要件の理解**: ドメイン固有の要件
-- **リスク評価**: 影響度と重要度の判定
-- **テスト優先度**: 実行順序とリソース配分
-- **品質基準**: 受け入れ基準の設定
+#### Areas Where Humans Must Make Decisions
+- **Business requirement understanding**: Domain-specific requirements
+- **Risk assessment**: Impact and importance evaluation
+- **Test prioritization**: Execution order and resource allocation
+- **Quality standards**: Acceptance criteria setting
 
-## テストケース品質のチェックポイント
+## Test Case Quality Checkpoints
 
-### 1. 完全性の確認
+### 1. Completeness Verification
 
-#### 機能カバレッジ
+#### Functional Coverage
 ```markdown
-## カバレッジチェックリスト
+## Coverage Checklist
 
-### API仕様書の各項目
-- [ ] 全エンドポイントにテストケースあり
-- [ ] 全パラメータにテストケースあり
-- [ ] 全レスポンスパターンにテストケースあり
+### Each API Specification Item
+- [ ] Test cases for all endpoints
+- [ ] Test cases for all parameters
+- [ ] Test cases for all response patterns
 
-### エラーハンドリング
-- [ ] 全エラーコードにテストケースあり
-- [ ] 全バリデーションルールにテストケースあり
-- [ ] 全例外パターンにテストケースあり
+### Error Handling
+- [ ] Test cases for all error codes
+- [ ] Test cases for all validation rules
+- [ ] Test cases for all exception patterns
 ```
 
-#### ビジネスルールカバレッジ
+#### Business Rule Coverage
 ```markdown
-### ビジネスルール検証
-- [ ] 全業務フローにテストケースあり
-- [ ] 全業務例外にテストケースあり
-- [ ] 全権限パターンにテストケースあり
+### Business Rule Verification
+- [ ] Test cases for all business flows
+- [ ] Test cases for all business exceptions
+- [ ] Test cases for all permission patterns
 ```
 
-### 2. 実行可能性の確認
+### 2. Executability Verification
 
-#### テストデータの準備可能性
-- 必要なテストデータが準備可能か
-- 外部依存サービスのモック化が可能か
-- テスト環境での実行が可能か
+#### Test Data Preparation Feasibility
+- Can necessary test data be prepared?
+- Can external dependent services be mocked?
+- Can execution in test environment be performed?
 
-#### 期待結果の検証可能性
-- 期待結果が客観的に判定可能か
-- 検証に必要なツールや方法が利用可能か
-- 自動化が困難な部分の手動確認方法
+#### Expected Result Verification Feasibility
+- Can expected results be objectively determined?
+- Are necessary tools or methods for verification available?
+- Manual verification methods for parts difficult to automate
 
-### 3. 保守性の確認
+### 3. Maintainability Verification
 
-#### テストケースの独立性
-- 各テストケースが独立して実行可能
-- テスト順序に依存しない
-- 並列実行が可能
+#### Test Case Independence
+- Each test case can be executed independently
+- Not dependent on test order
+- Parallel execution possible
 
-#### 変更への対応
-- 仕様変更時の影響範囲が明確
-- テストケースの修正が容易
-- テストデータの管理が簡単
+#### Response to Changes
+- Impact scope clear when specifications change
+- Test case modifications easy
+- Test data management simple
 
-## 人間レビューのポイント
+## Human Review Points
 
-### レビュー観点
+### Review Perspectives
 
-#### 1. ビジネス要件との整合性
-- [ ] ユーザーストーリーが適切にテストされているか
-- [ ] ビジネスルールが正しく反映されているか
-- [ ] エッジケースが業務観点で妥当か
+#### 1. Consistency with Business Requirements
+- [ ] Are user stories appropriately tested?
+- [ ] Are business rules correctly reflected?
+- [ ] Are edge cases valid from business perspective?
 
-#### 2. リスクベースの優先度
-- [ ] 高リスク機能に十分なテストケースがあるか
-- [ ] 重要な業務フローが網羅されているか
-- [ ] セキュリティ要件が適切にテストされているか
+#### 2. Risk-Based Priority
+- [ ] Are there sufficient test cases for high-risk functions?
+- [ ] Are important business flows covered?
+- [ ] Are security requirements appropriately tested?
 
-#### 3. テスト効率性
-- [ ] テストケース数が適切か（過多/過少でない）
-- [ ] 重複するテストケースがないか
-- [ ] 自動化可能な部分と手動テストの分離が適切か
+#### 3. Test Efficiency
+- [ ] Is the number of test cases appropriate (not too many/few)?
+- [ ] Are there no duplicate test cases?
+- [ ] Is separation of automatable parts and manual tests appropriate?
 
-### レビュープロセス
+### Review Process
 
-#### ステップ1: 初期レビュー
-- 仕様書との整合性確認
-- 網羅性の基本チェック
-- 明らかな漏れや問題の指摘
+#### Step 1: Initial Review
+- Verify consistency with specifications
+- Basic coverage check
+- Point out obvious omissions or problems
 
-#### ステップ2: 詳細レビュー
-- 各テストケースの妥当性確認
-- 期待結果の正確性確認
-- 実行可能性の検証
+#### Step 2: Detailed Review
+- Verify validity of each test case
+- Verify accuracy of expected results
+- Verify executability
 
-#### ステップ3: 最終承認
-- 全体的な品質確認
-- テスト実行計画の確認
-- 次フェーズへの進行判定
+#### Step 3: Final Approval
+- Overall quality verification
+- Verify test execution plan
+- Determine progression to next phase
 
-## テストケース作成のベストプラクティス
+## Test Case Creation Best Practices
 
-### 1. 段階的詳細化
+### 1. Progressive Detailed Elaboration
 
 ```markdown
-第1段階: 概要レベル
-「ユーザー登録の正常系・異常系をテストする」
+Stage 1: Overview Level
+"Test normal and error cases for user registration"
 
-第2段階: 機能レベル
-「有効データでの登録成功」
-「無効データでの登録失敗」
+Stage 2: Function Level
+"Registration success with valid data"
+"Registration failure with invalid data"
 
-第3段階: 詳細レベル
-「TC001: 正常なユーザー登録」
-「TC002: メールアドレス重複エラー」
+Stage 3: Detail Level
+"TC001: Normal user registration"
+"TC002: Email address duplication error"
 ```
 
-### 2. テストデータの戦略的設計
+### 2. Strategic Test Data Design
 
-#### データパターンの体系化
+#### Systematizing Data Patterns
 ```markdown
-## 基本データセット
-- 正常データ: 一般的な有効値
-- 境界データ: 制限値（最小/最大）
-- 異常データ: 無効値・不正値
-- 特殊データ: 特殊文字・多言語・NULL
+## Basic Data Set
+- Normal data: Common valid values
+- Boundary data: Limit values (minimum/maximum)
+- Abnormal data: Invalid values, illegal values
+- Special data: Special characters, multilingual, NULL
 ```
 
-#### 再利用可能なテストデータ
-- 共通的に使用するテストデータの定義
-- テストデータのバリエーション管理
-- データ作成の自動化
+#### Reusable Test Data
+- Define commonly used test data
+- Manage test data variations
+- Automate data creation
 
-### 3. 期待結果の精密な定義
+### 3. Precise Definition of Expected Results
 
-#### 具体的な期待値
+#### Specific Expected Values
 ```markdown
-❌ 「エラーになること」
-✅ 「HTTP 400 + {"error": "validation_failed", "field": "email"}」
+❌ "Should become an error"
+✅ "HTTP 400 + {'error': 'validation_failed', 'field': 'email'}"
 
-❌ 「正常に登録されること」
-✅ 「HTTP 201 + ユーザーID返却 + DBにレコード作成」
+❌ "Should be registered normally"
+✅ "HTTP 201 + User ID returned + Record created in DB"
 ```
 
-#### 検証可能な条件
-- 出力値の具体的な値や形式
-- データベースの状態変化
-- ログ出力の内容
-- 外部システムへの影響
+#### Verifiable Conditions
+- Specific values or formats of output
+- Database state changes
+- Log output content
+- Impact on external systems
 
-## よくある問題と対策
+## Common Problems and Solutions
 
-### 問題1: テストケースの粒度が不適切
+### Problem 1: Inappropriate Test Case Granularity
 
-**症状**: 
-- 1つのテストケースで複数の機能をテスト
-- 逆に細かすぎて管理コストが高い
+**Symptoms**: 
+- One test case tests multiple functions
+- Conversely, too detailed with high management cost
 
-**対策**: 
-- 1つのテストケース = 1つの検証観点
-- ビジネス価値のある単位でグループ化
+**Solutions**: 
+- One test case = One verification perspective
+- Group by business value units
 
-### 問題2: 期待結果が曖昧
+### Problem 2: Ambiguous Expected Results
 
-**症状**: 
-- 「正常に動作する」「エラーが発生する」など
-- 判定基準が不明確
+**Symptoms**: 
+- "Should work normally", "Error should occur", etc.
+- Unclear judgment criteria
 
-**対策**: 
-- 具体的な値や状態を明記
-- 自動テストでの判定条件を意識
+**Solutions**: 
+- Specify concrete values or states
+- Consider judgment conditions for automated testing
 
-### 問題3: テストケースの漏れ
+### Problem 3: Missing Test Cases
 
-**症状**: 
-- エッジケースが未考慮
-- エラーパターンの不足
+**Symptoms**: 
+- Edge cases not considered
+- Insufficient error patterns
 
-**対策**: 
-- チェックリストによる体系的確認
-- 同等クラス分割や境界値分析の活用
+**Solutions**: 
+- Systematic verification using checklists
+- Use equivalence class partitioning and boundary value analysis
 
-### 問題4: 保守性の不足
+### Problem 4: Insufficient Maintainability
 
-**症状**: 
-- 仕様変更時にテストケース修正が困難
-- テストデータの管理が煩雑
+**Symptoms**: 
+- Difficult to modify test cases when specifications change
+- Complex test data management
 
-**対策**: 
-- モジュール化された設計
-- 再利用可能なテストデータ設計
+**Solutions**: 
+- Modularized design
+- Reusable test data design
 
-## 次のステップへの準備
+## Preparation for Next Steps
 
-テストケース作成が完了したら、次は[Red-Green-Refactor-Validationサイクル](./04-rgr-validation-cycle.md)に進みます。
+Once test case creation is complete, proceed to [Red-Green-Refactor-Validation Cycle](./04-rgr-validation-cycle.md).
 
-### 成果物の確認
-- [ ] testcases.md が詳細に作成されている
-- [ ] 全ての仕様項目にテストケースが対応している
-- [ ] 期待結果が具体的に定義されている
-- [ ] 人間によるレビューが完了している
-- [ ] テストデータが準備可能である
+### Deliverable Verification
+- [ ] testcases.md created in detail
+- [ ] All specification items have corresponding test cases
+- [ ] Expected results specifically defined
+- [ ] Human review completed
+- [ ] Test data can be prepared
 
-### 品質チェックリスト
-- [ ] **網羅性**: 正常系・異常系・境界値がカバーされている
-- [ ] **明確性**: 期待結果が具体的で検証可能
-- [ ] **独立性**: 各テストケースが独立して実行可能
-- [ ] **実現性**: テスト環境で実行可能
-- [ ] **保守性**: 仕様変更に対応しやすい構造
+### Quality Checklist
+- [ ] **Comprehensiveness**: Normal, error, and boundary value cases covered
+- [ ] **Clarity**: Expected results concrete and verifiable
+- [ ] **Independence**: Each test case can be executed independently
+- [ ] **Feasibility**: Executable in test environment
+- [ ] **Maintainability**: Structure that easily responds to specification changes
 
-適切なテストケース作成により、AIが高品質なコードを生成するための基盤が整います。次の章では、これらのテストケースを基にした実装サイクルを詳しく解説します。
+Proper test case creation establishes the foundation for AI to generate high-quality code. The next chapter will detail the implementation cycle based on these test cases.

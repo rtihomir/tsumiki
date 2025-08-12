@@ -1,514 +1,514 @@
-# 2.2 Claude Sonnet 4の活用方法
+# 2.2 Effective Usage of Claude Sonnet 4
 
-AITDDの核心となるClaude Sonnet 4の効果的な活用方法について説明します。単にAIにコードを書かせるのではなく、人間とAIが協調して高品質なソフトウェアを開発する方法を学びます。
+This section explains how to effectively utilize Claude Sonnet 4, the core component of AITDD. You'll learn not just to have AI write code, but how humans and AI can collaborate to develop high-quality software.
 
-## Claude Sonnet 4の特徴と強み
+## Characteristics and Strengths of Claude Sonnet 4
 
-### AITDDにおける位置づけ
-- **Red-Green-Refactor-Validationサイクルの実行主体**
-- **設計からテスト、実装まで一貫して担当**
-- **高品質なコード生成と品質チェックを両立**
+### Role in AITDD
+- **Primary executor of Red-Green-Refactor-Validation cycle**
+- **Consistently handles design, testing, and implementation**
+- **Balances high-quality code generation with quality checks**
 
-### 選択理由
-- **アクセス性**: Claude Codeで自由に使用可能
-- **コーディング性能**: 必要十分なレベルの安定した性能
-- **コスト効率**: 妥当なレベルでのコスト（$20/月）
-- **AITDD適性**: トライアル重視の開発スタイルに最適
-- **統合性**: VS Code環境との優れた連携
+### Reasons for Selection
+- **Accessibility**: Available for free use in Claude Code
+- **Coding performance**: Stable performance at necessary and sufficient levels
+- **Cost efficiency**: Reasonable cost level ($20/month)
+- **AITDD suitability**: Optimal for trial-focused development style
+- **Integration**: Excellent cooperation with VS Code environment
 
-## Claude Codeの基本的な使い方
+## Basic Usage of Claude Code
 
-### 起動と基本操作
+### Startup and Basic Operations
 
-1. **Claude Codeの起動**
+1. **Launching Claude Code**
    ```bash
-   # VS Code内でClaude Codeを起動
-   # またはブラウザ版Claude経由でアクセス
+   # Launch Claude Code within VS Code
+   # or access through browser-based Claude
    ```
 
-2. **プロジェクトとの連携**
-   - プロジェクトディレクトリの指定
-   - ファイル構造の認識
-   - 既存コードの理解
+2. **Project Integration**
+   - Specify project directory
+   - Recognize file structure
+   - Understand existing code
 
-### AITDDでの基本的な対話パターン
+### Basic Interaction Patterns in AITDD
 
-#### 1. ゴール設定フェーズ
+#### 1. Goal Setting Phase
 ```
-あなた: "ユーザー管理機能のCRUD操作を実装したい。まずTODOリストを作成してください。"
+You: "I want to implement CRUD operations for user management functionality. Please create a TODO list first."
 
-Claude: "ユーザー管理機能のTODOリストを作成します：
-1. ユーザーモデルの定義
-2. ユーザー作成のテストケース作成
-3. ユーザー作成機能の実装
+Claude: "I'll create a TODO list for user management functionality:
+1. Define user model
+2. Create test cases for user creation
+3. Implement user creation functionality
 ..."
 ```
 
-#### 2. テスト作成フェーズ
+#### 2. Test Creation Phase
 ```
-あなた: "TODOの最初の項目のテストケースを作成してください。"
+You: "Please create test cases for the first item in the TODO."
 
-Claude: "ユーザーモデルのテストケースを作成します：
+Claude: "I'll create test cases for the user model:
 ```javascript
 describe('User Model', () => {
   test('should create user with valid data', () => {
-    // テストコード
+    // test code
   });
 });
 ```"
 ```
 
-#### 3. 実装フェーズ
+#### 3. Implementation Phase
 ```
-あなた: "このテストを通すためのコードを実装してください。"
+You: "Please implement the code to make this test pass."
 
-Claude: "テストを通すためのユーザーモデルを実装します：
+Claude: "I'll implement the user model to make the test pass:
 ```javascript
 class User {
   constructor(name, email) {
-    // 実装コード
+    // implementation code
   }
 }
 ```"
 ```
 
-## 効果的なプロンプト設計
+## Effective Prompt Design
 
-### プロンプト設計の基本原則
+### Basic Principles of Prompt Design
 
-#### 1. 明確な目標設定
-**良い例:**
+#### 1. Clear Goal Setting
+**Good Example:**
 ```
-"ユーザー登録API（POST /users）を実装したい。
-- バリデーション機能付き
-- エラーハンドリング含む
-- テストファーストで進めたい"
-```
-
-**悪い例:**
-```
-"ユーザー機能を作って"
+"I want to implement a user registration API (POST /users).
+- With validation functionality
+- Including error handling
+- Want to proceed test-first"
 ```
 
-#### 2. 文脈の提供
+**Bad Example:**
 ```
-"現在のプロジェクト構成：
+"Create user functionality"
+```
+
+#### 2. Providing Context
+```
+"Current project configuration:
 - Express.js + MongoDB
 - Jest for testing
-- 既存のUserモデルあり
+- Existing User model available
 
-新しく追加したい機能：
-- ユーザーのプロフィール更新API"
+New functionality to add:
+- User profile update API"
 ```
 
-#### 3. 制約の明示
+#### 3. Explicit Constraints
 ```
-"制約条件：
-- 既存のAPIとの互換性を保つ
-- セキュリティを考慮した実装
-- パフォーマンス要件: 1秒以内のレスポンス"
-```
-
-### プロンプト最適化の反復プロセス
-
-#### ステップ1: 初回実行
-1. **プロンプトを作成**
-2. **AIに実行依頼**
-3. **結果を評価**
-
-#### ステップ2: 評価と改善
-1. **期待との差分を特定**
-2. **プロンプトの問題点を分析**
-3. **改善版プロンプトを設計**
-
-#### ステップ3: 再実行
-1. **改善されたプロンプトで実行**
-2. **結果の改善度を確認**
-3. **必要に応じてさらに調整**
-
-### 実践的なプロンプトテンプレート
-
-#### 機能実装用テンプレート
-```
-【実装依頼】
-機能: [具体的な機能名]
-技術スタック: [使用技術の列挙]
-要件:
-- [要件1]
-- [要件2]
-- [要件3]
-
-制約:
-- [制約1]
-- [制約2]
-
-期待する成果物:
-- テストケース
-- 実装コード
-- ドキュメント（必要に応じて）
+"Constraints:
+- Maintain compatibility with existing APIs
+- Security-conscious implementation
+- Performance requirement: Response within 1 second"
 ```
 
-#### デバッグ用テンプレート
+### Iterative Process for Prompt Optimization
+
+#### Step 1: Initial Execution
+1. **Create prompt**
+2. **Request execution from AI**
+3. **Evaluate results**
+
+#### Step 2: Evaluation and Improvement
+1. **Identify gaps from expectations**
+2. **Analyze prompt issues**
+3. **Design improved prompt**
+
+#### Step 3: Re-execution
+1. **Execute with improved prompt**
+2. **Confirm degree of improvement**
+3. **Further adjustments as needed**
+
+### Practical Prompt Templates
+
+#### Feature Implementation Template
 ```
-【デバッグ依頼】
-問題: [具体的な問題の説明]
-エラーメッセージ: [実際のエラー]
-再現手順:
-1. [手順1]
-2. [手順2]
-3. [手順3]
+【Implementation Request】
+Feature: [Specific feature name]
+Tech Stack: [List of technologies used]
+Requirements:
+- [Requirement 1]
+- [Requirement 2]
+- [Requirement 3]
 
-関連コード: [問題のあるコード]
-期待する動作: [本来の動作]
-```
+Constraints:
+- [Constraint 1]
+- [Constraint 2]
 
-## レビューと品質管理
-
-### 人力レビューのポイント
-
-#### 1. 仕様との整合性確認
-- **設計意図の反映**: 計画した機能が正しく実装されているか
-- **要件の網羅**: すべての要件が満たされているか
-- **制約の遵守**: 設定した制約が守られているか
-
-#### 2. レビュー対象の優先順位
-1. **仕様書**: 要件との整合性が最重要
-2. **テストケース**: 仕様の適切なカバレッジ
-3. **実装コード**: コード品質と仕様適合性
-
-#### 3. レビューチェックリスト
-- [ ] 機能要件が満たされているか
-- [ ] エラーハンドリングが適切か
-- [ ] セキュリティ要件が考慮されているか
-- [ ] パフォーマンス要件が満たされているか
-- [ ] テストカバレッジが十分か
-- [ ] コードの可読性・保守性は良いか
-
-### AIが期待通りの結果を出さない場合の対処法
-
-#### フォールバック戦略
-
-**基本対応フロー:**
-1. **git reset**: 前の状態に戻す
-2. **プロンプト調整**: 指示を明確化・詳細化
-3. **再実行**: 同じツール（Claude Sonnet 4）で再試行
-4. **評価**: 結果の改善度を確認
-
-**git resetのタイミング:**
-- 最終コードが期待から大きくズレた場合
-- 修正依頼より作り直しの方が早いと判断した場合
-- 複数回の修正試行で改善が見られない場合
-
-#### プロンプト調整のテクニック
-
-**具体性の向上:**
-```
-# 改善前
-"このコードを修正して"
-
-# 改善後
-"このコードの以下の問題を修正して：
-1. バリデーションエラーが適切に処理されていない
-2. 戻り値の型が仕様と異なる
-3. エッジケースのテストが不足している"
+Expected deliverables:
+- Test cases
+- Implementation code
+- Documentation (as needed)
 ```
 
-**文脈の追加:**
+#### Debug Template
 ```
-# 改善前
-"APIを作って"
+【Debug Request】
+Problem: [Specific problem description]
+Error message: [Actual error]
+Reproduction steps:
+1. [Step 1]
+2. [Step 2]
+3. [Step 3]
 
-# 改善後
-"Express.jsを使用してRESTful APIを作成：
-- エンドポイント: POST /api/users
-- リクエスト形式: JSON
-- レスポンス形式: JSON
-- 既存のUserモデルを使用
-- MongoDB Atlas接続済み"
+Related code: [Problematic code]
+Expected behavior: [Intended behavior]
 ```
 
-## 継続的改善のための記録
+## Review and Quality Management
 
-### 成功パターンの記録
+### Key Points for Human Review
+
+#### 1. Verification of Specification Compliance
+- **Reflection of design intent**: Whether planned functionality is correctly implemented
+- **Requirement coverage**: Whether all requirements are satisfied
+- **Constraint adherence**: Whether set constraints are maintained
+
+#### 2. Review Priority Order
+1. **Specifications**: Consistency with requirements is most important
+2. **Test cases**: Appropriate coverage of specifications
+3. **Implementation code**: Code quality and specification compliance
+
+#### 3. Review Checklist
+- [ ] Are functional requirements satisfied?
+- [ ] Is error handling appropriate?
+- [ ] Are security requirements considered?
+- [ ] Are performance requirements met?
+- [ ] Is test coverage sufficient?
+- [ ] Is code readability and maintainability good?
+
+### Dealing with Unexpected AI Results
+
+#### Fallback Strategy
+
+**Basic Response Flow:**
+1. **git reset**: Return to previous state
+2. **Prompt adjustment**: Clarify and detail instructions
+3. **Re-execution**: Retry with same tool (Claude Sonnet 4)
+4. **Evaluation**: Confirm degree of improvement
+
+**When to use git reset:**
+- When final code significantly deviates from expectations
+- When recreating is judged faster than requesting modifications
+- When no improvement is seen after multiple modification attempts
+
+#### Prompt Adjustment Techniques
+
+**Improving Specificity:**
+```
+# Before improvement
+"Fix this code"
+
+# After improvement
+"Fix the following issues in this code:
+1. Validation errors are not properly handled
+2. Return value type differs from specification
+3. Edge case tests are insufficient"
+```
+
+**Adding Context:**
+```
+# Before improvement
+"Create an API"
+
+# After improvement
+"Create RESTful API using Express.js:
+- Endpoint: POST /api/users
+- Request format: JSON
+- Response format: JSON
+- Use existing User model
+- MongoDB Atlas already connected"
+```
+
+## Recording for Continuous Improvement
+
+### Recording Success Patterns
 ```markdown
-## 成功事例記録
+## Success Case Record
 
-### 日付: 2025-06-21
-### タスク: ユーザー認証API実装
-### 使用したプロンプト:
-[具体的なプロンプト内容]
+### Date: 2025-06-21
+### Task: User authentication API implementation
+### Prompt used:
+[Specific prompt content]
 
-### 結果:
-- 一発で期待通りの実装完了
-- テストも100%通過
+### Result:
+- Completed implementation as expected in one attempt
+- Tests also passed 100%
 
-### 学び:
-- 認証系は具体的なライブラリ指定が効果的
-- セキュリティ要件を事前に明示することが重要
+### Learnings:
+- Specific library specification is effective for authentication systems
+- Important to specify security requirements in advance
 ```
 
-### 失敗パターンの分析
+### Analysis of Failure Patterns
 ```markdown
-## 改善事例記録
+## Improvement Case Record
 
-### 日付: 2025-06-21
-### タスク: 複雑なクエリ最適化
-### 問題:
-- 最初の実装がパフォーマンス要件を満たさず
-- 3回の修正試行でも改善されず
+### Date: 2025-06-21
+### Task: Complex query optimization
+### Problem:
+- Initial implementation did not meet performance requirements
+- No improvement even after 3 modification attempts
 
-### 解決策:
-- git resetで初期状態に戻す
-- プロンプトにパフォーマンス要件を数値で明示
-- 参考実装例を提供
+### Solution:
+- git reset to initial state
+- Specify performance requirements numerically in prompt
+- Provide reference implementation examples
 
-### 学び:
-- 性能要件は定量的に指定する
-- 複雑なタスクは小さく分割する
+### Learnings:
+- Specify performance requirements quantitatively
+- Break complex tasks into smaller parts
 ```
 
-## Claude Sonnet 4以外のツールとの使い分け
+## Differentiation from Other Tools Besides Claude Sonnet 4
 
-### Gemini（調査用）との詳細な連携
+### Detailed Collaboration with Gemini (for Research)
 
-#### Geminiの使用場面と強み
-**使用場面:**
-- 新しいライブラリの調査
-- 技術文書の大量読み込み
-- 長いコンテキストを要求される調査タスク
-- 複数の情報源からの情報統合
+#### Gemini Use Cases and Strengths
+**Use Cases:**
+- Research on new libraries
+- Reading large amounts of technical documentation
+- Research tasks requiring long context
+- Information integration from multiple sources
 
-**Geminiの固有の強み:**
-- **長いコンテキスト**: 大量の情報を一度に処理可能
-- **情報収集能力**: 複数のソースからの情報を効果的に統合
-- **調査特化**: 技術情報の深堀りに優れた性能
+**Gemini's Unique Strengths:**
+- **Long context**: Can process large amounts of information at once
+- **Information gathering capability**: Effectively integrates information from multiple sources
+- **Research specialization**: Excellent performance in deep-diving technical information
 
-#### 実践的な連携ワークフロー
+#### Practical Collaboration Workflow
 
-**基本的な連携パターン:**
+**Basic Collaboration Pattern:**
 ```
-1. 調査課題の特定 → Gemini による情報収集
-2. 情報の整理・要約 → Gemini による分析
-3. 実装計画の立案 → Claude Sonnet 4 に情報提供
-4. AITDD実行 → Claude Sonnet 4 による一貫した実装
+1. Identify research topic → Information gathering by Gemini
+2. Organize and summarize information → Analysis by Gemini
+3. Create implementation plan → Provide information to Claude Sonnet 4
+4. Execute AITDD → Consistent implementation by Claude Sonnet 4
 ```
 
-**連携の具体例:**
+**Specific Collaboration Examples:**
 
-**例1: 新しいフレームワーク導入**
+**Example 1: Introducing New Framework**
 ```
 Gemini:
-"Next.js 14の新機能について調査し、既存のExpress.js
-アプリケーションからの移行方法を整理してください"
+"Research new features of Next.js 14 and organize migration 
+methods from existing Express.js applications"
 
-↓ 調査結果をClaude Sonnet 4に提供
+↓ Provide research results to Claude Sonnet 4
 
 Claude Sonnet 4:
-"Geminiの調査結果を基に、段階的な移行計画のTODOリストを
-作成し、AITDDで最初の機能を実装してください"
+"Based on Gemini's research results, create a TODO list for 
+gradual migration plan and implement the first feature with AITDD"
 ```
 
-**例2: 技術仕様の深掘り調査**
+**Example 2: Deep Dive into Technical Specifications**
 ```
 Gemini:
-"OAuth 2.0とJWT認証の組み合わせについて、セキュリティの
-ベストプラクティスと実装パターンを調査してください"
+"Research the combination of OAuth 2.0 and JWT authentication, 
+security best practices and implementation patterns"
 
-↓ セキュリティ要件を整理してClaude Sonnet 4に提供
+↓ Organize security requirements and provide to Claude Sonnet 4
 
 Claude Sonnet 4:
-"調査結果に基づき、セキュアな認証システムのテストケースから
-作成し、AITDD手法で実装してください"
+"Based on research results, create test cases for secure 
+authentication system and implement using AITDD methodology"
 ```
 
-#### 使い分けの判断基準
+#### Criteria for Tool Selection
 
-**Geminiを使うべき場面:**
-- [ ] 新技術・新ライブラリの初回調査
-- [ ] 複数の選択肢の比較検討が必要
-- [ ] 長い技術文書の読み込みが必要
-- [ ] 複雑な要件の整理が必要
-- [ ] 先行事例の調査が必要
+**When to use Gemini:**
+- [ ] Initial research on new technologies/libraries
+- [ ] Need for comparative analysis of multiple options
+- [ ] Need to read long technical documents
+- [ ] Need to organize complex requirements
+- [ ] Need to research precedent cases
 
-**Claude Sonnet 4を使うべき場面:**
-- [ ] 具体的な実装作業
-- [ ] テストケースの作成
-- [ ] コードレビューと品質チェック
-- [ ] デバッグとトラブルシューティング
-- [ ] リファクタリング作業
+**When to use Claude Sonnet 4:**
+- [ ] Specific implementation work
+- [ ] Test case creation
+- [ ] Code review and quality checks
+- [ ] Debugging and troubleshooting
+- [ ] Refactoring work
 
-### 実践的な運用ノウハウ
+### Practical Operational Know-how
 
-#### プロンプト設計の発展的テクニック
+#### Advanced Prompt Design Techniques
 
-**コンテキスト継続の技術:**
+**Context Continuation Technique:**
 ```
-# セッション開始時
-"以下のプロジェクト構成を記憶してください：
+# At session start
+"Please remember the following project configuration:
 - Express.js + MongoDB + Jest
-- ユーザー認証機能実装済み
-- 今回の目標：ユーザープロフィール管理機能の追加"
+- User authentication functionality already implemented
+- Current goal: Add user profile management functionality"
 
-# 継続セッションでの参照
-"先ほど伝えたプロジェクト構成を前提に、
-プロフィール更新APIのテストケースを作成してください"
+# Reference in continued session
+"Based on the project configuration I mentioned earlier,
+please create test cases for the profile update API"
 ```
 
-**段階的詳細化の技術:**
+**Progressive Detailed Technique:**
 ```
-# フェーズ1: 概要レベル
-"ユーザー管理システムの全体設計を考えてください"
+# Phase 1: Overview level
+"Please consider the overall design of the user management system"
 
-# フェーズ2: 機能レベル
-"先ほどの設計から、プロフィール更新機能の詳細仕様を作成してください"
+# Phase 2: Function level
+"From the previous design, please create detailed specifications for the profile update functionality"
 
-# フェーズ3: 実装レベル
-"仕様を基に、テストケースとAPIエンドポイントを実装してください"
-```
-
-#### エラー対応の発展的戦略
-
-**プロンプト調整のパターン分析:**
-
-**パターン1: 具体性不足による失敗**
-```
-# 失敗例
-"APIを作って"
-→ 期待と大きく異なる実装
-
-# 成功例
-"Express.jsでPOST /api/users/profile APIを作成:
-- リクエスト: {name, email, bio}
-- バリデーション: emailフォーマット、name必須
-- レスポンス: 更新されたユーザー情報
-- エラーハンドリング: 400, 401, 500対応"
+# Phase 3: Implementation level
+"Based on the specifications, please implement test cases and API endpoints"
 ```
 
-**パターン2: 技術制約の未指定による失敗**
+#### Advanced Error Response Strategies
+
+**Prompt Adjustment Pattern Analysis:**
+
+**Pattern 1: Failure Due to Lack of Specificity**
 ```
-# 失敗例
-"データベース操作のコードを書いて"
-→ 使用していないORMでの実装
+# Failure example
+"Create an API"
+→ Implementation greatly different from expectations
 
-# 成功例
-"Mongoose 7.x を使用してUserスキーマの更新操作を実装:
-- 既存のUserモデルを使用
-- findByIdAndUpdate メソッドを使用
-- バリデーションエラーの適切な処理"
+# Success example
+"Create POST /api/users/profile API with Express.js:
+- Request: {name, email, bio}
+- Validation: email format, name required
+- Response: updated user information
+- Error handling: 400, 401, 500 responses"
 ```
 
-**プロンプト調整の実践的チェックリスト:**
-- [ ] 使用技術スタックの明示
-- [ ] 入出力形式の具体的な指定
-- [ ] エラーケースの考慮指示
-- [ ] 既存コードとの整合性確保
-- [ ] パフォーマンス要件の明示
-- [ ] セキュリティ考慮事項の指示
+**Pattern 2: Failure Due to Unspecified Technical Constraints**
+```
+# Failure example
+"Write database operation code"
+→ Implementation with unused ORM
 
-#### 継続的改善のための記録方法
+# Success example
+"Implement User schema update operation using Mongoose 7.x:
+- Use existing User model
+- Use findByIdAndUpdate method
+- Proper handling of validation errors"
+```
 
-**成功パターンのテンプレート化:**
+**Practical Checklist for Prompt Adjustment:**
+- [ ] Specification of technology stack used
+- [ ] Concrete specification of input/output formats
+- [ ] Instructions for error case consideration
+- [ ] Ensuring consistency with existing code
+- [ ] Specification of performance requirements
+- [ ] Instructions for security considerations
+
+#### Recording Methods for Continuous Improvement
+
+**Templating Success Patterns:**
 ```markdown
-## プロンプトテンプレート: API実装
+## Prompt Template: API Implementation
 
-### 基本形式
-"[フレームワーク名]で[HTTPメソッド] [エンドポイント] APIを実装:
-- リクエスト形式: [詳細]
-- レスポンス形式: [詳細]
-- バリデーション: [要件]
-- エラーハンドリング: [対応するステータスコード]
-- 既存の[モデル名]モデルを使用"
+### Basic Format
+"Implement [HTTP method] [endpoint] API with [framework]:
+- Request format: [details]
+- Response format: [details]
+- Validation: [requirements]
+- Error handling: [corresponding status codes]
+- Use existing [model name] model"
 
-### 適用例
-[具体的な使用例]
+### Application Example
+[Specific use case]
 
-### 期待される結果
-[成功時の出力パターン]
+### Expected Results
+[Success output pattern]
 ```
 
-**失敗パターンの分析記録:**
+**Analysis Recording of Failure Patterns:**
 ```markdown
-## 改善記録: [日付]
+## Improvement Record: [Date]
 
-### 問題のあったプロンプト
-[元のプロンプト]
+### Problematic Prompt
+[Original prompt]
 
-### 発生した問題
-- [具体的な問題1]
-- [具体的な問題2]
+### Problems That Occurred
+- [Specific problem 1]
+- [Specific problem 2]
 
-### 改善後のプロンプト
-[修正版プロンプト]
+### Improved Prompt
+[Modified prompt]
 
-### 改善のポイント
-- [改善点1]
-- [改善点2]
+### Improvement Points
+- [Improvement point 1]
+- [Improvement point 2]
 
-### 今後の適用指針
-[他のケースへの応用方法]
+### Future Application Guidelines
+[How to apply to other cases]
 ```
 
-### 他のAIツールとの比較の詳細
+### Detailed Comparison with Other AI Tools
 
-**なぜClaude Sonnet 4に集約するか:**
+**Why Consolidate on Claude Sonnet 4:**
 
-**1. 一貫性の重要性**
-- 同じツールによる統一されたアプローチ
-- 学習した最適化が累積的に効果を発揮
-- ツール固有の癖や制限への対応が蓄積される
+**1. Importance of Consistency**
+- Unified approach with the same tool
+- Accumulated learning optimizations have cumulative effects
+- Tool-specific quirks and limitation responses accumulate
 
-**2. 学習効率の最大化**
-- 一つのツールに習熟することで効率向上
-- プロンプト設計のノウハウが深化
-- エラーパターンと対処法の蓄積
+**2. Maximizing Learning Efficiency**
+- Efficiency improvement by mastering one tool
+- Deepening prompt design know-how
+- Accumulation of error patterns and solutions
 
-**3. コスト管理の簡素化**
-- 複数ツールより単一ツールが管理しやすい
-- 予算計画の簡素化
-- 使用量監視の一元化
+**3. Simplifying Cost Management**
+- Single tool easier to manage than multiple tools
+- Simplification of budget planning
+- Centralized usage monitoring
 
-**4. フォールバック戦略の簡潔性**
-- 複雑な判断ロジックを避けられる
-- 「どのツールで再試行するか」の判断が不要
-- 迅速な問題解決が可能
+**4. Simplicity of Fallback Strategy**
+- Can avoid complex decision logic
+- No need to decide "which tool to retry with"
+- Enables quick problem resolution
 
-**ツール統合によるメリット:**
+**Benefits of Tool Integration:**
 ```
-項目                     統合アプローチ    複数ツールアプローチ
+Item                     Integrated Approach    Multiple Tools Approach
 ─────────────────────────────────────────────────────
-学習コスト               低                高
-プロンプト最適化効率     高                低
-コスト管理複雑度         低                高
-フォールバック判断       シンプル          複雑
-ナレッジ蓄積効率         高                分散
+Learning Cost            Low                   High
+Prompt Optimization Eff. High                  Low
+Cost Management Complex. Low                   High
+Fallback Decision        Simple                Complex
+Knowledge Accumulation   High                  Distributed
 ─────────────────────────────────────────────────────
-総合的な開発効率         最適化            非効率
+Overall Dev Efficiency   Optimized             Inefficient
 ```
 
-### AIツール環境の将来対応
+### Future Response to AI Tool Environment
 
-#### 新技術への対応方針
-**評価基準の体系化:**
-- **性能評価**: 既存ワークフローでの性能比較
-- **コスト分析**: 総所有コスト（学習コスト含む）の評価
-- **統合性評価**: 現在の開発環境との親和性
-- **移行コスト**: ツール変更に伴うコストの見積もり
+#### New Technology Response Policy
+**Systematization of Evaluation Criteria:**
+- **Performance evaluation**: Performance comparison in existing workflows
+- **Cost analysis**: Evaluation of total cost of ownership (including learning costs)
+- **Integration evaluation**: Affinity with current development environment
+- **Migration cost**: Estimation of costs associated with tool changes
 
-**段階的導入アプローチ:**
-1. **情報収集期**: 3-6ヶ月の観察期間
-2. **小規模テスト**: 非重要プロジェクトでの試用
-3. **比較評価**: 定量的な性能・効率比較
-4. **段階的移行**: 明確な優位性確認後の慎重な移行
+**Phased Introduction Approach:**
+1. **Information gathering period**: 3-6 month observation period
+2. **Small-scale testing**: Trial in non-critical projects
+3. **Comparative evaluation**: Quantitative performance and efficiency comparison
+4. **Phased migration**: Careful migration after confirming clear advantages
 
-**判断の定量化:**
+**Quantification of Decisions:**
 ```
-新ツール採用の閾値:
-- 性能向上: 20%以上
-- コスト削減: 15%以上
-- 学習コスト: 2週間以内
-- 統合コスト: 現在ツールの50%以下
+Threshold for new tool adoption:
+- Performance improvement: 20% or more
+- Cost reduction: 15% or more
+- Learning cost: Within 2 weeks
+- Integration cost: 50% or less of current tool
 ```
 
-## 次のステップ
+## Next Steps
 
-Claude Sonnet 4の活用方法を理解したら、次の章「2.3 開発環境とワークフロー構築」で、AITDDを実践するための総合的な開発環境を構築しましょう。TODO管理からGitワークフローまで、体系的な開発プロセスを確立します。
+Once you understand how to utilize Claude Sonnet 4, move on to the next chapter "2.3 Development Environment and Workflow Construction" to build a comprehensive development environment for practicing AITDD. You'll establish systematic development processes from TODO management to Git workflows.

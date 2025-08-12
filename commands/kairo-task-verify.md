@@ -1,52 +1,52 @@
 # kairo-task-verify
 
-## 目的
+## Purpose
 
-作成されたタスクファイルの内容を確認し、出力フォーマット例に沿った情報が抜けていたら追加する。
+Verify the content of created task files and add any missing information according to the output format example.
 
-## 前提条件
+## Prerequisites
 
-- `docs/tasks/{要件名}-tasks.md` が存在する
-- kairo-tasksコマンドによってタスクファイルが作成済みである
+- `docs/tasks/{requirement-name}-tasks.md` exists
+- Task file has been created by kairo-tasks command
 
-## 実行内容
+## Execution Content
 
-**【信頼性レベル指示】**:
-各項目について、元の資料（EARS要件定義書・設計文書含む）との照合状況を以下の信号でコメントしてください：
+**【Reliability Level Instructions】**:
+For each item, comment on the verification status with original materials (EARS requirements definition document, design documents included) using the following signals:
 
-- 🟢 **青信号**: EARS要件定義書・設計文書を参考にしてほぼ推測していない場合
-- 🟡 **黄信号**: EARS要件定義書・設計文書から妥当な推測の場合
-- 🔴 **赤信号**: EARS要件定義書・設計文書にない推測の場合
+- 🟢 **Green signal**: When referencing EARS requirements definition document and design documents with almost no speculation
+- 🟡 **Yellow signal**: When making reasonable speculation from EARS requirements definition document and design documents
+- 🔴 **Red signal**: When speculating beyond what's in EARS requirements definition document and design documents
 
-1. **タスクファイルの確認**
-   - @agent-symbol-searcher でタスクファイルを検索し、見つかったファイルをReadツールで読み込み
-   - `docs/tasks/{要件名}-tasks.md` をReadツールで読み込み
+1. **Task File Verification**
+   - Search for task files with @agent-symbol-searcher, read found files with Read tool
+   - Read `docs/tasks/{requirement-name}-tasks.md` with Read tool
 
-2. **出力フォーマット例との比較**
-   - @agent-symbol-searcher で関連するタスクフォーマットを検索し、見つかったファイルをReadツールで読み込み
-   - kairo-tasksコマンドファイルをReadツールで読み込み、出力フォーマット例を確認
-   - 作成されたタスクファイルに不足している情報を特定
+2. **Comparison with Output Format Example**
+   - Search for related task formats with @agent-symbol-searcher, read found files with Read tool
+   - Read kairo-tasks command file with Read tool to verify output format example
+   - Identify missing information in created task file
 
-3. **不足情報の追加**
-   以下の項目が含まれているか確認し、不足していれば追加：
-   - 概要セクション（全タスク数、推定作業時間、クリティカルパス）
-   - 各タスクのチェックボックス
-   - タスクタイプ（TDD/DIRECT）の明記
-   - 要件リンク
-   - 依存タスク
-   - 実装詳細
-   - テスト要件
-   - UI/UX要件（フロントエンドタスクの場合）
-   - エラーハンドリング要件
-   - 完了条件
-   - 実行順序（Mermaidガントチャート）
-   - サブタスクテンプレート情報
+3. **Adding Missing Information**
+   Verify the following items are included and add if missing:
+   - Overview section (total task count, estimated work time, critical path)
+   - Checkboxes for each task
+   - Task type specification (TDD/DIRECT)
+   - Requirement links
+   - Dependent tasks
+   - Implementation details
+   - Test requirements
+   - UI/UX requirements (for frontend tasks)
+   - Error handling requirements
+   - Completion conditions
+   - Execution order (Mermaid Gantt chart)
+   - Subtask template information
 
-4. **ファイルの更新**
-   - 不足している情報を追加してファイルを更新
+4. **File Update**
+   - Update file by adding missing information
 
-## 実行後の確認
+## Post-Execution Verification
 
-- 更新したファイルのパスを表示
-- 追加した情報の概要を表示
-- タスクファイルが完全になったことを確認
+- Display updated file path
+- Display overview of added information
+- Verify that task file is complete

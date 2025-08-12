@@ -1,353 +1,353 @@
 # kairo-requirements
 
-## 目的
+## Purpose
 
-ユーザから提供された要件の概要を分析し、EARS（Easy Approach to Requirements Syntax）記法を使用して詳細な受け入れ基準を含む要件定義書を作成する。
+Analyze requirement overviews provided by users and create detailed requirements definition documents including acceptance criteria using EARS (Easy Approach to Requirements Syntax) notation.
 
-## 前提条件
+## Prerequisites
 
-- ユーザから要件の概要が提供されている
-- `docs/spec/` ディレクトリが存在する（なければ作成）
+- Requirement overview provided by user
+- `docs/spec/` directory exists (create if not present)
 
-## 実行内容
+## Execution Content
 
-**【信頼性レベル指示】**:
-各項目について、元の資料（EARS要件定義書・設計文書含む）との照合状況を以下の信号でコメントしてください：
+**【Reliability Level Instructions】**:
+For each item, comment on the verification status against source materials (including EARS requirements definition and design documents) using the following signals:
 
-- 🟢 **青信号**: EARS要件定義書・設計文書を参考にしてほぼ推測していない場合
-- 🟡 **黄信号**: EARS要件定義書・設計文書から妥当な推測の場合
-- 🔴 **赤信号**: EARS要件定義書・設計文書にない推測の場合
+- 🟢 **Green Signal**: When referencing EARS requirements definition and design documents with minimal guesswork
+- 🟡 **Yellow Signal**: When making reasonable inferences from EARS requirements definition and design documents
+- 🔴 **Red Signal**: When making assumptions not found in EARS requirements definition and design documents
 
-1. **要件の分析**
-   - ユーザから提供された要件の概要を理解する
-   - @agent-symbol-searcher で関連する既存要件・設計文書を検索し、見つかったファイルをReadツールで読み込み
-   - 関連するドメイン知識を適用する
-   - 不明確な点がある場合は、一般的なベストプラクティスに基づいて補完する
+1. **Requirements Analysis**
+   - Understand requirement overview provided by user
+   - Search for related existing requirements and design documents with @agent-symbol-searcher and read found files with Read tool
+   - Apply related domain knowledge
+   - When unclear points exist, supplement based on general best practices
 
-2. **ユーザストーリーの作成**
-   - WHO（誰が）、WHAT（何を）、WHY（なぜ）の形式で記述
-   - 各機能の価値を明確にする
+2. **User Story Creation**
+   - Describe in WHO (who), WHAT (what), WHY (why) format
+   - Clarify value of each function
 
-3. **EARS記法による要件定義**
-   - **通常要件（SHALL）**: システムが通常実行すべき動作
-   - **条件付き要件（WHEN/IF-THEN）**: 特定の条件下での動作
-   - **不要要件（WHERE）**: 特定の状態での動作
-   - **オプション要件（MAY）**: 任意の機能
-   - **制約要件（MUST）**: システムの制約事項
+3. **Requirements Definition Using EARS Notation**
+   - **Normal Requirements (SHALL)**: Actions the system should normally execute
+   - **Conditional Requirements (WHEN/IF-THEN)**: Actions under specific conditions
+   - **State Requirements (WHERE)**: Actions in specific states
+   - **Optional Requirements (MAY)**: Optional functions
+   - **Constraint Requirements (MUST)**: System constraint matters
 
-4. **Edgeケースの定義**
-   - 異常系の処理
-   - 境界値の処理
-   - エラーハンドリング
-   - パフォーマンス要件
+4. **Edge Case Definition**
+   - Exception processing
+   - Boundary value processing
+   - Error handling
+   - Performance requirements
 
-5. **ファイルの作成**
-   - `docs/spec/{要件名}-requirements.md`: 機能要件と関連文書へのリンク
-   - `docs/spec/{要件名}-user-stories.md`: 詳細なユーザストーリー
-   - `docs/spec/{要件名}-acceptance-criteria.md`: 受け入れ基準とテスト項目
-   - マークダウン形式で構造化された文書を作成
+5. **File Creation**
+   - `docs/spec/{requirement name}-requirements.md`: Functional requirements and links to related documents
+   - `docs/spec/{requirement name}-user-stories.md`: Detailed user stories
+   - `docs/spec/{requirement name}-acceptance-criteria.md`: Acceptance criteria and test items
+   - Create structured documents in markdown format
 
-## 出力フォーマット例
+## Output Format Examples
 
-### 1. requirements.md（メインファイル）
+### 1. requirements.md (Main File)
 
 ```markdown
-# {要件名} 要件定義書
+# {Requirement Name} Requirements Definition
 
-## 概要
+## Overview
 
-{要件の概要}
+{Requirement overview}
 
-## 関連文書
+## Related Documents
 
-- **ユーザストーリー**: [📖 {要件名}-user-stories.md]({要件名}-user-stories.md)
-- **受け入れ基準**: [✅ {要件名}-acceptance-criteria.md]({要件名}-acceptance-criteria.md)
+- **User Stories**: [📖 {requirement name}-user-stories.md]({requirement name}-user-stories.md)
+- **Acceptance Criteria**: [✅ {requirement name}-acceptance-criteria.md]({requirement name}-acceptance-criteria.md)
 
-## 機能要件（EARS記法）
+## Functional Requirements (EARS Notation)
 
-### 通常要件
+### Normal Requirements
 
-- REQ-001: システムは {通常の動作} しなければならない
-- REQ-002: システムは {通常の動作} しなければならない
+- REQ-001: The system shall {normal action}
+- REQ-002: The system shall {normal action}
 
-### 条件付き要件
+### Conditional Requirements
 
-- REQ-101: {条件} の場合、システムは {動作} しなければならない
-- REQ-102: {条件} の場合、システムは {動作} しなければならない
+- REQ-101: When {condition}, the system shall {action}
+- REQ-102: When {condition}, the system shall {action}
 
-### 状態要件
+### State Requirements
 
-- REQ-201: {状態} にある場合、システムは {動作} しなければならない
+- REQ-201: Where {state}, the system shall {action}
 
-### オプション要件
+### Optional Requirements
 
-- REQ-301: システムは {オプション機能} してもよい
+- REQ-301: The system may {optional function}
 
-### 制約要件
+### Constraint Requirements
 
-- REQ-401: システムは {制約事項} しなければならない
+- REQ-401: The system must {constraint matter}
 
-## 非機能要件
+## Non-Functional Requirements
 
-### パフォーマンス
+### Performance
 
-- NFR-001: {パフォーマンス要件}
+- NFR-001: {Performance requirement}
 
-### セキュリティ
+### Security
 
-- NFR-101: {セキュリティ要件}
+- NFR-101: {Security requirement}
 
-### ユーザビリティ
+### Usability
 
-- NFR-201: {ユーザビリティ要件}
+- NFR-201: {Usability requirement}
 
-## Edgeケース
+## Edge Cases
 
-### エラー処理
+### Error Handling
 
-- EDGE-001: {エラーケース}
+- EDGE-001: {Error case}
 
-### 境界値
+### Boundary Values
 
-- EDGE-101: {境界値ケース}
+- EDGE-101: {Boundary value case}
 ```
 
-### 2. user-stories.md（詳細なユーザストーリー）
+### 2. user-stories.md (Detailed User Stories)
 
 ```markdown
-# {要件名} ユーザストーリー
+# {Requirement Name} User Stories
 
-## 概要
+## Overview
 
-このドキュメントは{要件名}機能の詳細なユーザストーリーを記載します。
+This document describes detailed user stories for {requirement name} functionality.
 
-## ユーザー種別の定義
+## User Type Definitions
 
-### プライマリユーザー
+### Primary Users
 
-- **エンドユーザー**: {エンドユーザーの詳細説明}
-- **管理者**: {管理者の詳細説明}
-- **開発者**: {開発者の詳細説明}
+- **End User**: {End user detailed description}
+- **Administrator**: {Administrator detailed description}
+- **Developer**: {Developer detailed description}
 
-### セカンダリユーザー
+### Secondary Users
 
-- **システム管理者**: {システム管理者の詳細説明}
-- **外部システム**: {外部システムの詳細説明}
+- **System Administrator**: {System administrator detailed description}
+- **External System**: {External system detailed description}
 
-## ユーザストーリー
+## User Stories
 
-### 📚 エピック1: {大きな機能グループ}
+### 📚 Epic 1: {Large Function Group}
 
-#### ストーリー1.1: {具体的なストーリー名}
+#### Story 1.1: {Specific Story Name}
 
-**ユーザストーリー**:
-- **私は** {ユーザー種別} **として**
-- **{具体的な状況・コンテキスト} において**
-- **{実現したい行動・操作} をしたい**
-- **そうすることで** {得られる価値・解決される問題}
+**User Story**:
+- **As a** {user type}
+- **In** {specific situation/context}
+- **I want to** {desired action/operation}
+- **So that** {obtained value/problem solved}
 
-**詳細説明**:
-- **背景**: {なぜこの機能が必要なのか}
-- **前提条件**: {このストーリーの前提となる状況}
-- **利用シーン**: {具体的な利用場面の例}
-- **期待する体験**: {ユーザーが期待する体験の詳細}
+**Detailed Description**:
+- **Background**: {Why this feature is needed}
+- **Prerequisites**: {Prerequisite situations for this story}
+- **Usage Scenarios**: {Examples of specific usage situations}
+- **Expected Experience**: {Details of experience users expect}
 
-**関連要件**: REQ-001, REQ-002
+**Related Requirements**: REQ-001, REQ-002
 
-**優先度**: 高/中/低
+**Priority**: High/Medium/Low
 
-**見積もり**: {ストーリーポイントまたは工数}
+**Estimation**: {Story points or effort}
 
-#### ストーリー1.2: {具体的なストーリー名}
+#### Story 1.2: {Specific Story Name}
 
-{同様の形式で記載}
+{Same format as above}
 
-### 📚 エピック2: {大きな機能グループ}
+### 📚 Epic 2: {Large Function Group}
 
-{同様の形式で記載}
+{Same format as above}
 
-## ユーザージャーニー
+## User Journey
 
-### ジャーニー1: {代表的な利用フロー}
+### Journey 1: {Representative Usage Flow}
 
 ```mermaid
 journey
-    title {ユーザージャーニーのタイトル}
-    section {フェーズ1}
-      {アクション1}: 5: {ユーザー種別}
-      {アクション2}: 3: {ユーザー種別}
-    section {フェーズ2}
-      {アクション3}: 4: {ユーザー種別}
-      {アクション4}: 5: {ユーザー種別}
+    title {User Journey Title}
+    section {Phase 1}
+      {Action 1}: 5: {User Type}
+      {Action 2}: 3: {User Type}
+    section {Phase 2}
+      {Action 3}: 4: {User Type}
+      {Action 4}: 5: {User Type}
 ```
 
-**詳細**:
-1. **{アクション1}**: {詳細な説明}
-2. **{アクション2}**: {詳細な説明}
+**Details**:
+1. **{Action 1}**: {Detailed description}
+2. **{Action 2}**: {Detailed description}
 
-## ペルソナ定義
+## Persona Definition
 
-### ペルソナ1: {代表的ユーザー名}
+### Persona 1: {Representative User Name}
 
-- **基本情報**: {年齢、職業、技術レベル等}
-- **ゴール**: {このユーザーが達成したいこと}
-- **課題**: {現在抱えている問題}
-- **行動パターン**: {典型的な行動の特徴}
-- **利用環境**: {使用するデバイス、環境等}
+- **Basic Information**: {Age, occupation, technical level, etc.}
+- **Goals**: {What this user wants to achieve}
+- **Challenges**: {Problems currently faced}
+- **Behavior Patterns**: {Typical behavioral characteristics}
+- **Usage Environment**: {Devices used, environment, etc.}
 
-## 非機能的ユーザー要求
+## Non-Functional User Requirements
 
-### ユーザビリティ要求
+### Usability Requirements
 
-- **学習容易性**: {初回利用時の学習コスト}
-- **効率性**: {熟練後の作業効率}
-- **記憶しやすさ**: {再利用時の記憶のしやすさ}
-- **エラー対応**: {エラー時の対応しやすさ}
-- **満足度**: {主観的な満足度}
+- **Learnability**: {Learning cost for first-time use}
+- **Efficiency**: {Work efficiency after becoming proficient}
+- **Memorability**: {Ease of remembering when reusing}
+- **Error Recovery**: {Ease of handling errors}
+- **Satisfaction**: {Subjective satisfaction}
 
-### アクセシビリティ要求
+### Accessibility Requirements
 
-- **視覚**: {視覚障害者への配慮}
-- **聴覚**: {聴覚障害者への配慮}
-- **運動**: {運動機能障害者への配慮}
-- **認知**: {認知障害者への配慮}
+- **Visual**: {Consideration for visually impaired}
+- **Auditory**: {Consideration for hearing impaired}
+- **Motor**: {Consideration for motor impaired}
+- **Cognitive**: {Consideration for cognitively impaired}
 ```
 
-### 3. acceptance-criteria.md（受け入れ基準）
+### 3. acceptance-criteria.md (Acceptance Criteria)
 
 ```markdown
-# {要件名} 受け入れ基準
+# {Requirement Name} Acceptance Criteria
 
-## 概要
+## Overview
 
-このドキュメントは{要件名}機能の受け入れ基準とテスト項目を記載します。
+This document describes acceptance criteria and test items for {requirement name} functionality.
 
-## 機能テスト基準
+## Functional Test Criteria
 
-### REQ-001: {要件名} の受け入れ基準
+### REQ-001: {Requirement Name} Acceptance Criteria
 
-**Given（前提条件）**:
-- {テスト実行前の状態}
-- {必要な初期データ}
+**Given (Prerequisites)**:
+- {State before test execution}
+- {Required initial data}
 
-**When（実行条件）**:
-- {実行するアクション}
-- {入力するデータ}
+**When (Execution Conditions)**:
+- {Actions to execute}
+- {Data to input}
 
-**Then（期待結果）**:
-- {期待される出力・状態}
-- {確認すべき副作用}
+**Then (Expected Results)**:
+- {Expected output/state}
+- {Side effects to verify}
 
-**テストケース**:
-- [ ] 正常系: {正常なケースの詳細}
-- [ ] 異常系: {異常なケースの詳細}
-- [ ] 境界値: {境界値テストの詳細}
+**Test Cases**:
+- [ ] Normal cases: {Normal case details}
+- [ ] Error cases: {Error case details}
+- [ ] Boundary values: {Boundary value test details}
 
-### REQ-002: {要件名} の受け入れ基準
+### REQ-002: {Requirement Name} Acceptance Criteria
 
-{同様の形式で記載}
+{Same format as above}
 
-## 非機能テスト基準
+## Non-Functional Test Criteria
 
-### パフォーマンステスト
+### Performance Testing
 
-**NFR-001: {パフォーマンス要件}**
+**NFR-001: {Performance Requirement}**
 
-- [ ] 応答時間: {具体的な時間基準}
-- [ ] スループット: {処理量の基準}
-- [ ] 同時接続数: {同時利用者数の基準}
-- [ ] リソース使用量: {CPU・メモリ使用量の基準}
+- [ ] Response time: {Specific time criteria}
+- [ ] Throughput: {Processing volume criteria}
+- [ ] Concurrent connections: {Concurrent user criteria}
+- [ ] Resource usage: {CPU/memory usage criteria}
 
-**テスト方法**:
-- 負荷テストツール: {使用するツール}
-- テストシナリオ: {具体的なテスト手順}
-- 合格基準: {定量的な合格ライン}
+**Test Method**:
+- Load testing tool: {Tool to use}
+- Test scenario: {Specific test procedure}
+- Pass criteria: {Quantitative pass line}
 
-### セキュリティテスト
+### Security Testing
 
-**NFR-101: {セキュリティ要件}**
+**NFR-101: {Security Requirement}**
 
-- [ ] 認証: {認証機能のテスト項目}
-- [ ] 認可: {権限制御のテスト項目}
-- [ ] データ保護: {データ暗号化のテスト項目}
-- [ ] 脆弱性: {セキュリティ脆弱性のテスト項目}
+- [ ] Authentication: {Authentication function test items}
+- [ ] Authorization: {Access control test items}
+- [ ] Data protection: {Data encryption test items}
+- [ ] Vulnerabilities: {Security vulnerability test items}
 
-## ユーザビリティテスト基準
+## Usability Test Criteria
 
-### UX/UIテスト
+### UX/UI Testing
 
-- [ ] 直感的操作性: {操作の分かりやすさ}
-- [ ] レスポンシブデザイン: {各デバイスでの表示}
-- [ ] アクセシビリティ: {WCAG 2.1準拠}
-- [ ] エラーメッセージ: {分かりやすいエラー表示}
+- [ ] Intuitive operation: {Ease of operation}
+- [ ] Responsive design: {Display on each device}
+- [ ] Accessibility: {WCAG 2.1 compliance}
+- [ ] Error messages: {Clear error display}
 
-**テスト方法**:
-- ユーザビリティテスト: {実施方法}
-- A/Bテスト: {比較テストの方法}
-- アクセシビリティチェック: {使用するツール}
+**Test Method**:
+- Usability testing: {Implementation method}
+- A/B testing: {Comparison test method}
+- Accessibility check: {Tools to use}
 
-## Edgeケーステスト基準
+## Edge Case Test Criteria
 
-### EDGE-001: {エラーケース} の受け入れ基準
+### EDGE-001: {Error Case} Acceptance Criteria
 
-**テストシナリオ**:
-- {異常な状況の設定}
-- {期待されるエラーハンドリング}
-- {ユーザーへの適切な通知}
+**Test Scenario**:
+- {Setting abnormal situations}
+- {Expected error handling}
+- {Appropriate notification to users}
 
-**合格基準**:
-- [ ] システムがクラッシュしない
-- [ ] 適切なエラーメッセージが表示される
-- [ ] データの整合性が保たれる
-- [ ] 復旧可能な状態を維持する
+**Pass Criteria**:
+- [ ] System does not crash
+- [ ] Appropriate error messages are displayed
+- [ ] Data integrity is maintained
+- [ ] Recoverable state is maintained
 
-## 統合テスト基準
+## Integration Test Criteria
 
-### システム間連携テスト
+### Inter-System Integration Testing
 
-- [ ] 外部API連携: {外部システムとの連携テスト}
-- [ ] データベース連携: {DB操作の整合性テスト}
-- [ ] ファイルシステム: {ファイル操作のテスト}
+- [ ] External API integration: {Integration testing with external systems}
+- [ ] Database integration: {DB operation consistency testing}
+- [ ] File system: {File operation testing}
 
-## リグレッションテスト基準
+## Regression Test Criteria
 
-### 既存機能影響確認
+### Existing Function Impact Verification
 
-- [ ] 既存機能の動作確認: {影響範囲の特定と確認}
-- [ ] パフォーマンス劣化確認: {既存機能の性能確認}
-- [ ] セキュリティ設定確認: {セキュリティ機能の継続確認}
+- [ ] Existing function operation verification: {Impact scope identification and verification}
+- [ ] Performance degradation verification: {Existing function performance verification}
+- [ ] Security setting verification: {Continuous verification of security functions}
 
-## 受け入れテスト実行チェックリスト
+## Acceptance Test Execution Checklist
 
-### テスト実行前
+### Before Test Execution
 
-- [ ] テスト環境の準備完了
-- [ ] テストデータの準備完了
-- [ ] テストツールの準備完了
-- [ ] 実行担当者の確認完了
+- [ ] Test environment preparation complete
+- [ ] Test data preparation complete
+- [ ] Test tool preparation complete
+- [ ] Execution personnel confirmation complete
 
-### テスト実行中
+### During Test Execution
 
-- [ ] 全機能テストの実行
-- [ ] 全非機能テストの実行
-- [ ] 問題発見時の記録
-- [ ] 修正後の再テスト
+- [ ] All functional tests executed
+- [ ] All non-functional tests executed
+- [ ] Problem recording when discovered
+- [ ] Re-testing after fixes
 
-### テスト完了後
+### After Test Completion
 
-- [ ] テスト結果の記録
-- [ ] 残存問題の整理
-- [ ] 受け入れ可否の判定
-- [ ] ステークホルダーへの報告
+- [ ] Test result recording
+- [ ] Remaining problem organization
+- [ ] Acceptance decision
+- [ ] Stakeholder reporting
 ```
 
-## 実行後の確認
+## Post-Execution Verification
 
-- @agent-symbol-searcher で作成した要件との関連性を確認
-- 作成した3つのファイルのパスを表示
-  - `docs/spec/{要件名}-requirements.md`
-  - `docs/spec/{要件名}-user-stories.md` 
-  - `docs/spec/{要件名}-acceptance-criteria.md`
-- 主要な要件の数とユーザストーリー数を報告
-- 各ファイル内のリンクが正しく設定されていることを確認
-- ユーザに確認を促すメッセージを表示
+- Verify relevance to requirements created with @agent-symbol-searcher
+- Display paths of the three created files
+  - `docs/spec/{requirement name}-requirements.md`
+  - `docs/spec/{requirement name}-user-stories.md` 
+  - `docs/spec/{requirement name}-acceptance-criteria.md`
+- Report number of main requirements and user stories
+- Confirm links within each file are correctly set
+- Display message prompting user confirmation
